@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>About — VANTA AI</title>
+  <meta
+    name="description"
+    content="Learn about VANTA AI — an intelligent workspace designed to help people create, think and automate with AI."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* =========================================================
+       VANTA AI — ABOUT PAGE
+       ========================================================= */
+
+    :root {
+      --v-bg: #070a12;
+      --v-surface: #0d1220;
+      --v-surface-2: #111827;
+      --v-primary: #7c5cff;
+      --v-cyan: #22d3ee;
+      --v-text: #f5f7ff;
+      --v-muted: #8992a8;
+      --v-border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--v-bg);
+      color: var(--v-text);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .about-page {
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .about-container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* HERO */
+
+    .about-hero {
+      position: relative;
+      padding: 150px 0 110px;
+    }
+
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      width: 620px;
+      height: 620px;
+      top: -260px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(
+          circle,
+          rgba(124, 92, 255, 0.16) 0%,
+          rgba(34, 211, 238, 0.06) 35%,
+          transparent 70%
+        );
+      pointer-events: none;
+      filter: blur(10px);
+    }
+
+    .about-hero-inner {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border: 1px solid rgba(124, 92, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(124, 92, 255, 0.07);
+      color: #c7bdff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .about-eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--v-cyan);
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.8);
+    }
+
+    .about-title {
+      margin: 26px 0 20px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .about-title span {
+      background: linear-gradient(
+        100deg,
+        #ffffff 10%,
+        #a99aff 55%,
+        #62e7f7 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .about-lead {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--v-muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    /* INTRO */
+
+    .about-intro {
+      padding: 50px 0 110px;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .intro-visual {
+      position: relative;
+      min-height: 480px;
+      border: 1px solid var(--v-border);
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 30% 20%,
+          rgba(124, 92, 255, 0.18),
+          transparent 40%
+        ),
+        radial-gradient(
+          circle at 80% 80%,
+          rgba(34, 211, 238, 0.12),
+          transparent 42%
+        ),
+        var(--v-surface);
+    }
+
+    .visual-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.4;
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.035) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.035) 1px,
+          transparent 1px
+        );
+      background-size: 42px 42px;
+    }
+
+    .visual-orb {
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #ffffff 0%,
+          #a89aff 12%,
+          #7c5cff 32%,
+          rgba(124, 92, 255, 0.3) 58%,
+          transparent 72%
+        );
+      filter: blur(1px);
+      box-shadow:
+        0 0 80px rgba(124, 92, 255, 0.35),
+        0 0 140px rgba(34, 211, 238, 0.12);
+    }
+
+    .visual-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 330px;
+      height: 330px;
+      transform: translate(-50%, -50%) rotate(-20deg);
+      border: 1px solid rgba(124, 92, 255, 0.35);
+      border-radius: 50%;
+    }
+
+    .visual-ring::before {
+      content: "";
+      position: absolute;
+      inset: 25px;
+      border: 1px solid rgba(34, 211, 238, 0.18);
+      border-radius: 50%;
+    }
+
+    .visual-label {
+      position: absolute;
+      left: 28px;
+      bottom: 26px;
+      padding: 12px 15px;
+      border: 1px solid var(--v-border);
+      border-radius: 12px;
+      background: rgba(7, 10, 18, 0.72);
+      backdrop-filter: blur(14px);
+      color: #cbd3e6;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .intro-copy .section-kicker,
+    .values-heading .section-kicker {
+      color: #a99aff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .intro-copy h2,
+    .values-heading h2 {
+      margin: 14px 0 20px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .intro-copy p {
+      margin: 0 0 18px;
+      color: var(--v-muted);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    /* PRINCIPLES */
+
+    .principles {
+      padding: 110px 0;
+      border-top: 1px solid var(--v-border);
+      border-bottom: 1px solid var(--v-border);
+      background:
+        radial-gradient(
+          circle at 10% 50%,
+          rgba(124, 92, 255, 0.06),
+          transparent 30%
+        ),
+        var(--v-surface);
+    }
+
+    .values-heading {
+      max-width: 720px;
+      margin-bottom: 50px;
+    }
+
+    .values-heading p {
+      margin: 0;
+      color: var(--v-muted);
+      line-height: 1.8;
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .principle-card {
+      padding: 30px;
+      border: 1px solid var(--v-border);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.018);
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .principle-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124, 92, 255, 0.35);
+      background: rgba(124, 92, 255, 0.045);
+    }
+
+    .principle-number {
+      color: var(--v-cyan);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    .principle-card h3 {
+      margin: 25px 0 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+    }
+
+    .principle-card p {
+      margin: 0;
+      color: var(--v-muted);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    /* MISSION */
+
+    .mission {
+      padding: 120px 0;
+    }
+
+    .mission-box {
+      position: relative;
+      padding: 70px;
+      border: 1px solid var(--v-border);
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(124, 92, 255, 0.11),
+          rgba(34, 211, 238, 0.035)
+        ),
+        var(--v-surface);
+    }
+
+    .mission-box::after {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      right: -150px;
+      top: -180px;
+      border-radius: 50%;
+      background: rgba(124, 92, 255, 0.13);
+      filter: blur(70px);
+      pointer-events: none;
+    }
+
+    .mission-box h2 {
+      position: relative;
+      z-index: 1;
+      max-width: 850px;
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .mission-box h2 span {
+      color: #9f91ff;
+    }
+
+    .mission-box p {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 25px 0 0;
+      color: var(--v-muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    /* CTA */
+
+    .about-cta {
+      padding: 20px 0 120px;
+    }
+
+    .cta-inner {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .cta-inner h2 {
+      margin: 0 0 16px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(34px, 5vw, 58px);
+      letter-spacing: -0.04em;
+    }
+
+    .cta-inner p {
+      margin: 0 auto 30px;
+      max-width: 600px;
+      color: var(--v-muted);
+      line-height: 1.8;
+    }
+
+    .about-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .about-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .about-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .about-btn-primary {
+      color: #ffffff;
+      background: linear-gradient(
+        135deg,
+        var(--v-primary),
+        #6042dc
+      );
+      box-shadow: 0 12px 30px rgba(124, 92, 255, 0.2);
+    }
+
+    .about-btn-secondary {
+      color: var(--v-text);
+      border: 1px solid var(--v-border);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .about-hero {
+        padding-top: 120px;
+      }
+
+      .intro-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .intro-visual {
+        min-height: 400px;
+      }
+
+      .principles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mission-box {
+        padding: 45px 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .about-container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .about-hero {
+        padding: 100px 0 80px;
+      }
+
+      .about-lead {
+        font-size: 16px;
+      }
+
+      .about-intro,
+      .principles,
+      .mission {
+        padding: 80px 0;
+      }
+
+      .intro-visual {
+        min-height: 330px;
+      }
+
+      .visual-orb {
+        width: 150px;
+        height: 150px;
+      }
+
+      .visual-ring {
+        width: 240px;
+        height: 240px;
+      }
+
+      .principle-card {
+        padding: 24px;
+      }
+
+      .mission-box {
+        padding: 35px 22px;
+      }
+
+      .about-cta {
+        padding-bottom: 80px;
+      }
+
+      .about-actions {
+        flex-direction: column;
+      }
+
+      .about-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="about-page">
+
+    <!-- =======================================================
+         HEADER
+         ======================================================= -->
+
+    <header class="site-header" id="siteHeader">
+      <div class="about-container">
+
+        <a href="index.html" class="logo">
+          VANTA<span>AI</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <a href="about.html" class="active">About</a>
+          <a href="solutions.html">Solutions</a>
+          <a href="workflow.html">Workflow</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="login.html" class="header-login">
+            Login
+          </a>
+
+          <a href="login.html" class="header-cta">
+            Get Started
+          </a>
+        </div>
+
+        <button
+          class="mobile-menu-btn"
+          id="mobileMenuBtn"
+          type="button"
+          aria-label="Open navigation"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+    </header>
+
+
+    <!-- =======================================================
+         HERO
+         ======================================================= -->
+
+    <main>
+
+      <section class="about-hero">
+        <div class="about-container">
+
+          <div class="about-hero-inner">
+
+            <div class="about-eyebrow">
+              About VANTA AI
+            </div>
+
+            <h1 class="about-title">
+              Intelligence built for
+              <span>real work.</span>
+            </h1>
+
+            <p class="about-lead">
+              VANTA AI is an intelligent workspace designed to
+              bring powerful AI capabilities into one focused,
+              simple and professional environment.
+            </p>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- =====================================================
+           INTRO
+           ===================================================== -->
+
+      <section class="about-intro">
+        <div class="about-container">
+
+          <div class="intro-grid">
+
+            <div class="intro-visual" aria-hidden="true">
+
+              <div class="visual-grid"></div>
+
+              <div class="visual-ring"></div>
+
+              <div class="visual-orb"></div>
+
+              <div class="visual-label">
+                Human × Intelligence
+              </div>
+
+            </div>
+
+            <div class="intro-copy">
+
+              <div class="section-kicker">
+                Why VANTA
+              </div>
+
+              <h2>
+                AI should feel like a workspace,
+                not another complicated tool.
+              </h2>
+
+              <p>
+                Modern AI is powerful, but using multiple
+                disconnected tools can quickly become
+                overwhelming.
+              </p>
+
+              <p>
+                VANTA AI is designed around a different idea:
+                bring useful intelligence into a focused
+                environment where people can create,
+                experiment and turn ideas into useful output.
+              </p>
+
+              <p>
+                The goal is not to replace human thinking.
+                It is to make that thinking faster, clearer
+                and more productive.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- =====================================================
+           PRINCIPLES
+           ===================================================== -->
+
+      <section class="principles">
+        <div class="about-container">
+
+          <div class="values-heading">
+
+            <div class="section-kicker">
+              Our approach
+            </div>
+
+            <h2>
+              Built around a few simple principles.
+            </h2>
+
+            <p>
+              Every part of VANTA AI is intended to keep the
+              experience focused, useful and easy to understand.
+            </p>
+
+          </div>
+
+          <div class="principles-grid">
+
+            <article class="principle-card">
+
+              <div class="principle-number">
+                01
+              </div>
+
+              <h3>
+                Simplicity
+              </h3>
+
+              <p>
+                Powerful technology should not require a
+                complicated interface. VANTA keeps the
+                experience clean and focused.
+              </p>
+
+            </article>
+
+
+            <article class="principle-card">
+
+              <div class="principle-number">
+                02
+              </div>
+
+              <h3>
+                Useful Intelligence
+              </h3>
+
+              <p>
+                AI should help users accomplish something
+                meaningful — from generating ideas to
+                accelerating everyday work.
+              </p>
+
+            </article>
+
+
+            <article class="principle-card">
+
+              <div class="principle-number">
+                03
+              </div>
+
+              <h3>
+                Human Control
+              </h3>
+
+              <p>
+                The person remains in control. AI provides
+                assistance, while decisions, direction and
+                creativity stay with the user.
+              </p>
+
+            </article>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- =====================================================
+           MISSION
+           ===================================================== -->
+
+      <section class="mission">
+        <div class="about-container">
+
+          <div class="mission-box">
+
+            <h2>
+              Make advanced AI feel
+              <span>accessible.</span>
+            </h2>
+
+            <p>
+              VANTA AI is being built to make intelligent
+              technology easier to use for creators,
+              professionals, businesses and anyone who wants
+              to do more with their ideas.
+            </p>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- =====================================================
+           CTA
+           ===================================================== -->
+
+      <section class="about-cta">
+        <div class="about-container">
+
+          <div class="cta-inner">
+
+            <h2>
+              Ready to work smarter?
+            </h2>
+
+            <p>
+              Start exploring VANTA AI and discover what an
+              intelligent workspace can become.
+            </p>
+
+            <div class="about-actions">
+
+              <a
+                href="login.html"
+                class="about-btn about-btn-primary"
+              >
+                Get Started
+              </a>
+
+              <a
+                href="contact.html"
+                class="about-btn about-btn-secondary"
+              >
+                Contact Us
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- =======================================================
+         FOOTER
+         ======================================================= -->
+
+    <footer class="site-footer">
+      <div class="about-container">
+
+        <div class="footer-inner">
+
+          <div>
+            <a href="index.html" class="logo">
+              VANTA<span>AI</span>
+            </a>
+
+            <p>
+              Intelligent tools for real work.
+            </p>
+          </div>
+
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="solutions.html">Solutions</a>
+            <a href="workflow.html">Workflow</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="contact.html">Contact</a>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <span>
+            © <span id="year"></span> VANTA AI. All rights reserved.
+          </span>
+
+          <a href="login.html">
+            VANTA Workspace →
+          </a>
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+
+
+  <!-- =========================================================
+       SCRIPTS
+       ========================================================= -->
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>

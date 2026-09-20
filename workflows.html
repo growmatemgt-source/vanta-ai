@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Workflow — VANTA AI</title>
+
+  <meta
+    name="description"
+    content="Discover how VANTA AI turns ideas into structured, useful AI-powered output."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* =========================================================
+       VANTA AI — WORKFLOW PAGE
+       ========================================================= */
+
+    :root {
+      --v-bg: #070a12;
+      --v-surface: #0d1220;
+      --v-surface-2: #111827;
+      --v-primary: #7c5cff;
+      --v-cyan: #22d3ee;
+      --v-text: #f5f7ff;
+      --v-muted: #8992a8;
+      --v-border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--v-bg);
+      color: var(--v-text);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .workflow-page {
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .workflow-container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .workflow-hero {
+      position: relative;
+      padding: 150px 0 105px;
+      overflow: hidden;
+    }
+
+    .workflow-hero::before {
+      content: "";
+      position: absolute;
+      width: 760px;
+      height: 500px;
+      top: -260px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(
+          circle,
+          rgba(124, 92, 255, 0.2) 0%,
+          rgba(34, 211, 238, 0.07) 38%,
+          transparent 72%
+        );
+      filter: blur(14px);
+      pointer-events: none;
+    }
+
+    .workflow-hero-content {
+      position: relative;
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .workflow-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(124, 92, 255, 0.3);
+      border-radius: 999px;
+      background: rgba(124, 92, 255, 0.07);
+      color: #c7bdff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .workflow-eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--v-cyan);
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.8);
+    }
+
+    .workflow-hero h1 {
+      margin: 26px 0 20px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(48px, 7vw, 82px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .workflow-hero h1 span {
+      background:
+        linear-gradient(
+          100deg,
+          #ffffff 10%,
+          #a99aff 55%,
+          #62e7f7 100%
+        );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .workflow-hero p {
+      max-width: 700px;
+      margin: 0 auto;
+      color: var(--v-muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       PROCESS
+       ========================================================= */
+
+    .workflow-process {
+      padding: 35px 0 120px;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .process-card {
+      position: relative;
+      min-height: 290px;
+      padding: 27px;
+      border: 1px solid var(--v-border);
+      border-radius: 22px;
+      background: var(--v-surface);
+      overflow: hidden;
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .process-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124, 92, 255, 0.38);
+      background:
+        radial-gradient(
+          circle at 80% 10%,
+          rgba(124, 92, 255, 0.1),
+          transparent 42%
+        ),
+        var(--v-surface);
+    }
+
+    .process-card::after {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      right: -75px;
+      bottom: -75px;
+      border-radius: 50%;
+      background: rgba(34, 211, 238, 0.07);
+      filter: blur(30px);
+      pointer-events: none;
+    }
+
+    .process-number {
+      color: #68728b;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    .process-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 55px;
+      height: 55px;
+      margin: 27px 0 24px;
+      border: 1px solid rgba(124, 92, 255, 0.28);
+      border-radius: 15px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(124, 92, 255, 0.15),
+          rgba(34, 211, 238, 0.06)
+        );
+      color: #b8adff;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .process-card h2 {
+      margin: 0 0 10px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 23px;
+      letter-spacing: -0.025em;
+    }
+
+    .process-card p {
+      margin: 0;
+      color: var(--v-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       VISUAL WORKFLOW
+       ========================================================= */
+
+    .workflow-visual {
+      padding: 110px 0;
+      border-top: 1px solid var(--v-border);
+      border-bottom: 1px solid var(--v-border);
+      background: var(--v-surface);
+    }
+
+    .visual-heading {
+      max-width: 720px;
+      margin-bottom: 55px;
+    }
+
+    .section-kicker {
+      color: #a99aff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .visual-heading h2 {
+      margin: 14px 0 17px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .visual-heading p {
+      margin: 0;
+      color: var(--v-muted);
+      line-height: 1.8;
+    }
+
+    .flow-diagram {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .flow-column {
+      display: grid;
+      gap: 14px;
+    }
+
+    .flow-box {
+      position: relative;
+      min-height: 145px;
+      padding: 24px;
+      border: 1px solid var(--v-border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .flow-box.highlight {
+      border-color: rgba(124, 92, 255, 0.3);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(124, 92, 255, 0.1),
+          rgba(34, 211, 238, 0.025)
+        );
+    }
+
+    .flow-box small {
+      display: block;
+      margin-bottom: 12px;
+      color: #78829a;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .flow-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 18px;
+    }
+
+    .flow-box span {
+      color: var(--v-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .flow-arrow {
+      position: absolute;
+      top: 50%;
+      right: -25px;
+      z-index: 3;
+      transform: translateY(-50%);
+      color: #7767df;
+      font-size: 25px;
+    }
+
+    /* =========================================================
+       PRINCIPLES
+       ========================================================= */
+
+    .workflow-principles {
+      padding: 120px 0;
+    }
+
+    .principles-layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .principles-intro h2 {
+      margin: 14px 0 18px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(35px, 4.5vw, 54px);
+      line-height: 1.06;
+      letter-spacing: -0.045em;
+    }
+
+    .principles-intro p {
+      margin: 0;
+      color: var(--v-muted);
+      line-height: 1.8;
+    }
+
+    .principles-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .principle {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 17px;
+      padding: 22px;
+      border: 1px solid var(--v-border);
+      border-radius: 17px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .principle-index {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(124, 92, 255, 0.11);
+      color: #b5aaff;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .principle h3 {
+      margin: 0 0 6px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 17px;
+    }
+
+    .principle p {
+      margin: 0;
+      color: var(--v-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* =========================================================
+       CTA
+       ========================================================= */
+
+    .workflow-cta {
+      padding: 0 0 120px;
+    }
+
+    .cta-box {
+      position: relative;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 65px 35px;
+      text-align: center;
+      border: 1px solid var(--v-border);
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(124, 92, 255, 0.12),
+          transparent 55%
+        ),
+        var(--v-surface);
+    }
+
+    .cta-box h2 {
+      margin: 0 0 15px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(35px, 5vw, 55px);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .cta-box p {
+      max-width: 600px;
+      margin: 0 auto 28px;
+      color: var(--v-muted);
+      line-height: 1.8;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 49px;
+      padding: 0 23px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-primary {
+      color: #fff;
+      background: linear-gradient(
+        135deg,
+        var(--v-primary),
+        #6042dc
+      );
+      box-shadow: 0 12px 30px rgba(124, 92, 255, 0.2);
+    }
+
+    .cta-secondary {
+      color: var(--v-text);
+      border: 1px solid var(--v-border);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 1000px) {
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .principles-layout {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .flow-diagram {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-arrow {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .workflow-container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .workflow-hero {
+        padding: 100px 0 80px;
+      }
+
+      .workflow-hero p {
+        font-size: 16px;
+      }
+
+      .workflow-process,
+      .workflow-visual,
+      .workflow-principles {
+        padding: 80px 0;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-card {
+        min-height: auto;
+      }
+
+      .cta-box {
+        padding: 45px 22px;
+      }
+
+      .cta-actions {
+        flex-direction: column;
+      }
+
+      .cta-btn {
+        width: 100%;
+      }
+
+      .workflow-cta {
+        padding-bottom: 80px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="workflow-page">
+
+    <!-- =======================================================
+         HEADER
+         ======================================================= -->
+
+    <header class="site-header" id="siteHeader">
+      <div class="workflow-container">
+
+        <a href="index.html" class="logo">
+          VANTA<span>AI</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="solutions.html">Solutions</a>
+          <a href="workflow.html" class="active">Workflow</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+
+          <a href="login.html" class="header-login">
+            Login
+          </a>
+
+          <a href="login.html" class="header-cta">
+            Get Started
+          </a>
+
+        </div>
+
+        <button
+          class="mobile-menu-btn"
+          id="mobileMenuBtn"
+          type="button"
+          aria-label="Open navigation"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+    </header>
+
+
+    <!-- =======================================================
+         MAIN
+         ======================================================= -->
+
+    <main>
+
+      <!-- HERO -->
+
+      <section class="workflow-hero">
+
+        <div class="workflow-container">
+
+          <div class="workflow-hero-content">
+
+            <div class="workflow-eyebrow">
+              How VANTA AI Works
+            </div>
+
+            <h1>
+              Simple input.
+              <span>Intelligent output.</span>
+            </h1>
+
+            <p>
+              VANTA AI is built around a simple workflow that
+              keeps you in control — describe what you need,
+              generate, refine and put the result to work.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- FOUR STEPS -->
+
+      <section class="workflow-process">
+
+        <div class="workflow-container">
+
+          <div class="process-grid">
+
+            <article class="process-card">
+
+              <div class="process-number">
+                STEP 01
+              </div>
+
+              <div class="process-icon">
+                01
+              </div>
+
+              <h2>
+                Describe
+              </h2>
+
+              <p>
+                Start with a clear request. Give VANTA AI the
+                context, goal or problem you want to work on.
+              </p>
+
+            </article>
+
+
+            <article class="process-card">
+
+              <div class="process-number">
+                STEP 02
+              </div>
+
+              <div class="process-icon">
+                02
+              </div>
+
+              <h2>
+                Generate
+              </h2>
+
+              <p>
+                VANTA AI processes your request and creates
+                structured output designed around your goal.
+              </p>
+
+            </article>
+
+
+            <article class="process-card">
+
+              <div class="process-number">
+                STEP 03
+              </div>
+
+              <div class="process-icon">
+                03
+              </div>
+
+              <h2>
+                Refine
+              </h2>
+
+              <p>
+                Continue the conversation, adjust the direction
+                and improve the result until it fits your needs.
+              </p>
+
+            </article>
+
+
+            <article class="process-card">
+
+              <div class="process-number">
+                STEP 04
+              </div>
+
+              <div class="process-icon">
+                04
+              </div>
+
+              <h2>
+                Use
+              </h2>
+
+              <p>
+                Take the finished output into your project,
+                workflow, business or everyday work.
+              </p>
+
+            </article>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- VISUAL WORKFLOW -->
+
+      <section class="workflow-visual">
+
+        <div class="workflow-container">
+
+          <div class="visual-heading">
+
+            <div class="section-kicker">
+              The VANTA Flow
+            </div>
+
+            <h2>
+              Your workflow stays simple.
+            </h2>
+
+            <p>
+              The goal is not to add another complicated system
+              to your day. VANTA AI keeps the interaction focused
+              so you can move from an idea to useful output with
+              fewer unnecessary steps.
+            </p>
+
+          </div>
+
+
+          <div class="flow-diagram">
+
+            <div class="flow-column">
+
+              <div class="flow-box highlight">
+
+                <small>
+                  Input
+                </small>
+
+                <strong>
+                  Your idea
+                </strong>
+
+                <span>
+                  A question, task, concept, document or
+                  problem you want to work through.
+                </span>
+
+              </div>
+
+              <div class="flow-box">
+
+                <small>
+                  Context
+                </small>
+
+                <strong>
+                  Your direction
+                </strong>
+
+                <span>
+                  Add the information and constraints that
+                  help shape the result.
+                </span>
+
+              </div>
+
+              <div class="flow-arrow">
+                →
+              </div>
+
+            </div>
+
+
+            <div class="flow-column">
+
+              <div class="flow-box highlight">
+
+                <small>
+                  Intelligence
+                </small>
+
+                <strong>
+                  VANTA AI
+                </strong>
+
+                <span>
+                  AI processes the request and creates a useful
+                  response based on the provided context.
+                </span>
+
+              </div>
+
+              <div class="flow-box">
+
+                <small>
+                  Interaction
+                </small>
+
+                <strong>
+                  Refine
+                </strong>
+
+                <span>
+                  Ask follow-up questions, change direction or
+                  improve specific parts of the result.
+                </span>
+
+              </div>
+
+              <div class="flow-arrow">
+                →
+              </div>
+
+            </div>
+
+
+            <div class="flow-column">
+
+              <div class="flow-box highlight">
+
+                <small>
+                  Output
+                </small>
+
+                <strong>
+                  Useful result
+                </strong>
+
+                <span>
+                  Turn the final response into something you can
+                  actually use in your work.
+                </span>
+
+              </div>
+
+              <div class="flow-box">
+
+                <small>
+                  Next
+                </small>
+
+                <strong>
+                  Keep building
+                </strong>
+
+                <span>
+                  Start another task, continue the project or
+                  move to the next step.
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PRINCIPLES -->
+
+      <section class="workflow-principles">
+
+        <div class="workflow-container">
+
+          <div class="principles-layout">
+
+            <div class="principles-intro">
+
+              <div class="section-kicker">
+                Designed with purpose
+              </div>
+
+              <h2>
+                AI should support the workflow, not complicate it.
+              </h2>
+
+              <p>
+                VANTA AI focuses on practical interaction,
+                clear output and user control instead of
+                unnecessary complexity.
+              </p>
+
+            </div>
+
+
+            <div class="principles-list">
+
+              <div class="principle">
+
+                <div class="principle-index">
+                  01
+                </div>
+
+                <div>
+
+                  <h3>
+                    User controlled
+                  </h3>
+
+                  <p>
+                    You decide what to ask, what to change and
+                    which result is useful.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="principle">
+
+                <div class="principle-index">
+                  02
+                </div>
+
+                <div>
+
+                  <h3>
+                    Context aware
+                  </h3>
+
+                  <p>
+                    Better context helps produce output that is
+                    more relevant to the task.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="principle">
+
+                <div class="principle-index">
+                  03
+                </div>
+
+                <div>
+
+                  <h3>
+                    Iterative
+                  </h3>
+
+                  <p>
+                    A first response does not have to be the
+                    final response. Keep refining.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="principle">
+
+                <div class="principle-index">
+                  04
+                </div>
+
+                <div>
+
+                  <h3>
+                    Practical
+                  </h3>
+
+                  <p>
+                    The objective is useful output that can move
+                    real work forward.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="principle">
+
+                <div class="principle-index">
+                  05
+                </div>
+
+                <div>
+
+                  <h3>
+                    Focused
+                  </h3>
+
+                  <p>
+                    Keep the interface clear so attention stays
+                    on the task instead of the tool.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CTA -->
+
+      <section class="workflow-cta">
+
+        <div class="workflow-container">
+
+          <div class="cta-box">
+
+            <h2>
+              Ready to work with VANTA AI?
+            </h2>
+
+            <p>
+              Enter the workspace and experience the workflow
+              for yourself.
+            </p>
+
+            <div class="cta-actions">
+
+              <a
+                href="login.html"
+                class="cta-btn cta-primary"
+              >
+                Open VANTA AI
+              </a>
+
+              <a
+                href="solutions.html"
+                class="cta-btn cta-secondary"
+              >
+                Explore Solutions
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =======================================================
+         FOOTER
+         ======================================================= -->
+
+    <footer class="site-footer">
+
+      <div class="workflow-container">
+
+        <div class="footer-inner">
+
+          <div>
+
+            <a href="index.html" class="logo">
+              VANTA<span>AI</span>
+            </a>
+
+            <p>
+              Intelligent tools for real work.
+            </p>
+
+          </div>
+
+          <div class="footer-links">
+
+            <a href="about.html">About</a>
+            <a href="solutions.html">Solutions</a>
+            <a href="workflow.html">Workflow</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="contact.html">Contact</a>
+
+          </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+          <span>
+            © <span id="year"></span>
+            VANTA AI. All rights reserved.
+          </span>
+
+          <a href="login.html">
+            VANTA Workspace →
+          </a>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+  </div>
+
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>

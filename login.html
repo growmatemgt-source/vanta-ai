@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login — VANTA AI</title>
+    <meta name="description" content="Sign in or create your VANTA AI account.">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ============================================================
+           VANTA AI — AUTH PAGE
+           ============================================================ */
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(124, 92, 255, 0.16),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 75%,
+                    rgba(34, 211, 238, 0.10),
+                    transparent 35%
+                ),
+                #070A12;
+        }
+
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .auth-brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .auth-brand a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #F5F7FF;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(
+                135deg,
+                #7C5CFF,
+                #22D3EE
+            );
+            color: white;
+            font-size: 17px;
+            font-weight: 900;
+            box-shadow:
+                0 0 30px rgba(124, 92, 255, 0.25);
+        }
+
+        .auth-card {
+            position: relative;
+            overflow: hidden;
+            padding: 38px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 24px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.045),
+                    rgba(255,255,255,.015)
+                ),
+                #0D1220;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.35),
+                inset 0 1px 0 rgba(255,255,255,.04);
+        }
+
+        .auth-card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -100px;
+            right: -80px;
+            background: #7C5CFF;
+            opacity: .10;
+            filter: blur(60px);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .auth-heading {
+            position: relative;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .auth-heading h1 {
+            margin: 0 0 9px;
+            color: #F5F7FF;
+            font-size: 30px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+
+        .auth-heading p {
+            margin: 0;
+            color: #8992A8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            padding: 5px;
+            margin-bottom: 25px;
+            background: rgba(255,255,255,.035);
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 13px;
+        }
+
+        .auth-tab {
+            border: 0;
+            border-radius: 9px;
+            padding: 11px;
+            background: transparent;
+            color: #8992A8;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .auth-tab.active {
+            color: #F5F7FF;
+            background: rgba(124,92,255,.18);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #DDE2F0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 14px;
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 11px;
+            outline: none;
+            background: rgba(255,255,255,.035);
+            color: #F5F7FF;
+            font: inherit;
+            font-size: 14px;
+            transition: .2s ease;
+        }
+
+        .input-wrap input::placeholder {
+            color: #5F687D;
+        }
+
+        .input-wrap input:focus {
+            border-color: rgba(124,92,255,.75);
+            background: rgba(124,92,255,.045);
+            box-shadow:
+                0 0 0 3px rgba(124,92,255,.10);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: #8992A8;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .forgot-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -4px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-btn {
+            border: 0;
+            padding: 0;
+            background: transparent;
+            color: #22D3EE;
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .auth-submit {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 14px;
+            background: linear-gradient(
+                135deg,
+                #7C5CFF,
+                #5D7BFF
+            );
+            color: white;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .2s ease;
+            box-shadow:
+                0 12px 30px rgba(124,92,255,.20);
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-1px);
+            box-shadow:
+                0 15px 35px rgba(124,92,255,.30);
+        }
+
+        .auth-submit:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-message {
+            display: none;
+            margin-top: 16px;
+            padding: 11px 13px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .auth-message.show {
+            display: block;
+        }
+
+        .auth-message.success {
+            border: 1px solid rgba(34,211,238,.20);
+            background: rgba(34,211,238,.07);
+            color: #7DECFB;
+        }
+
+        .auth-message.error {
+            border: 1px solid rgba(255,90,120,.20);
+            background: rgba(255,90,120,.07);
+            color: #FF9CAE;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #697287;
+            font-size: 12px;
+        }
+
+        .auth-footer a {
+            color: #22D3EE;
+            text-decoration: none;
+        }
+
+        .terms {
+            margin-top: 18px;
+            text-align: center;
+            color: #596276;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 520px) {
+            .auth-page {
+                padding: 25px 15px;
+            }
+
+            .auth-card {
+                padding: 28px 20px;
+                border-radius: 20px;
+            }
+
+            .auth-heading h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="auth-page">
+
+        <div class="auth-container">
+
+            <!-- BRAND -->
+            <div class="auth-brand">
+                <a href="index.html">
+                    <span class="auth-logo">V</span>
+                    <span>VANTA AI</span>
+                </a>
+            </div>
+
+            <!-- AUTH CARD -->
+            <section class="auth-card">
+
+                <div class="auth-heading">
+                    <h1 id="authTitle">Welcome back</h1>
+                    <p id="authSubtitle">
+                        Sign in to continue to your VANTA AI account.
+                    </p>
+                </div>
+
+                <!-- TABS -->
+                <div class="auth-tabs">
+                    <button
+                        type="button"
+                        class="auth-tab active"
+                        id="loginTab"
+                    >
+                        Login
+                    </button>
+
+                    <button
+                        type="button"
+                        class="auth-tab"
+                        id="signupTab"
+                    >
+                        Create account
+                    </button>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" class="auth-form active">
+
+                    <div class="form-group">
+                        <label for="loginEmail">Email address</label>
+
+                        <div class="input-wrap">
+                            <input
+                                type="email"
+                                id="loginEmail"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+
+                        <div class="input-wrap">
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="loginPassword"
+                            >
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="forgot-row">
+                        <button
+                            type="button"
+                            class="forgot-btn"
+                            id="forgotPassword"
+                        >
+                            Forgot password?
+                        </button>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="loginButton"
+                    >
+                        Sign in
+                    </button>
+
+                </form>
+
+                <!-- SIGNUP FORM -->
+                <form id="signupForm" class="auth-form">
+
+                    <div class="form-group">
+                        <label for="signupName">Full name</label>
+
+                        <div class="input-wrap">
+                            <input
+                                type="text"
+                                id="signupName"
+                                placeholder="Your name"
+                                autocomplete="name"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupEmail">Email address</label>
+
+                        <div class="input-wrap">
+                            <input
+                                type="email"
+                                id="signupEmail"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+
+                        <div class="input-wrap">
+                            <input
+                                type="password"
+                                id="signupPassword"
+                                placeholder="Minimum 6 characters"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="signupPassword"
+                            >
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="signupButton"
+                    >
+                        Create account
+                    </button>
+
+                </form>
+
+                <!-- MESSAGE -->
+                <div
+                    id="authMessage"
+                    class="auth-message"
+                    role="alert"
+                ></div>
+
+            </section>
+
+            <div class="terms">
+                By continuing, you agree to use VANTA AI responsibly.
+            </div>
+
+            <div class="auth-footer">
+                <a href="index.html">← Back to VANTA AI</a>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- VANTA CONFIG -->
+    <script src="js/config.js"></script>
+
+
+    <script>
+/* ============================================================
+   VANTA AI — AUTHENTICATION
+   ============================================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* --------------------------------------------------------
+       ELEMENTS
+       -------------------------------------------------------- */
+
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+
+    const authTitle = document.getElementById("authTitle");
+    const authSubtitle = document.getElementById("authSubtitle");
+
+    const loginButton = document.getElementById("loginButton");
+    const signupButton = document.getElementById("signupButton");
+
+    const forgotPassword = document.getElementById("forgotPassword");
+
+
+    /* --------------------------------------------------------
+       MESSAGE HELPERS
+       -------------------------------------------------------- */
+
+    function showMessage(message, type) {
+
+        const box = document.getElementById("authMessage");
+
+        box.textContent = message;
+        box.className = "auth-message show " + type;
+    }
+
+
+    function clearMessage() {
+
+        const box = document.getElementById("authMessage");
+
+        box.textContent = "";
+        box.className = "auth-message";
+    }
+
+
+    function setLoading(button, loading, text) {
+
+        button.disabled = loading;
+        button.textContent = text;
+    }
+
+
+    /* --------------------------------------------------------
+       TAB SWITCHING
+       IMPORTANT: THIS RUNS BEFORE SUPABASE CHECK
+       -------------------------------------------------------- */
+
+    function showLogin() {
+
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+
+        loginForm.classList.add("active");
+        signupForm.classList.remove("active");
+
+        authTitle.textContent = "Welcome back";
+
+        authSubtitle.textContent =
+            "Sign in to continue to your VANTA AI account.";
+
+        clearMessage();
+    }
+
+
+    function showSignup() {
+
+        signupTab.classList.add("active");
+        loginTab.classList.remove("active");
+
+        signupForm.classList.add("active");
+        loginForm.classList.remove("active");
+
+        authTitle.textContent = "Create your account";
+
+        authSubtitle.textContent =
+            "Start using VANTA AI with a new account.";
+
+        clearMessage();
+    }
+
+
+    loginTab.addEventListener("click", showLogin);
+    signupTab.addEventListener("click", showSignup);
+
+
+    /* --------------------------------------------------------
+       PASSWORD VISIBILITY
+       -------------------------------------------------------- */
+
+    document
+        .querySelectorAll(".password-toggle")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const target =
+                    document.getElementById(
+                        button.dataset.target
+                    );
+
+                if (target.type === "password") {
+
+                    target.type = "text";
+                    button.textContent = "Hide";
+
+                } else {
+
+                    target.type = "password";
+                    button.textContent = "Show";
+                }
+
+            });
+
+        });
+
+
+    /* --------------------------------------------------------
+       SUPABASE CHECK
+       -------------------------------------------------------- */
+
+    const supabaseClient = window.vantaSupabase;
+
+    if (!supabaseClient) {
+
+        console.error(
+            "VANTA Supabase client not found."
+        );
+
+        showMessage(
+            "Authentication system could not load. Please make sure VANTA AI is running through a local server.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* --------------------------------------------------------
+       LOGIN
+       -------------------------------------------------------- */
+
+    loginForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+        if (!email || !password) {
+
+            showMessage(
+                "Please enter your email and password.",
+                "error"
+            );
+
+            return;
+        }
+
+        setLoading(
+            loginButton,
+            true,
+            "Signing in..."
+        );
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if (error) {
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+                return;
+            }
+
+            if (data.session) {
+
+                showMessage(
+                    "Login successful. Redirecting...",
+                    "success"
+                );
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }, 700);
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Something went wrong while signing in.",
+                "error"
+            );
+
+        } finally {
+
+            setLoading(
+                loginButton,
+                false,
+                "Sign in"
+            );
+        }
+
+    });
+
+
+    /* --------------------------------------------------------
+       SIGNUP
+       -------------------------------------------------------- */
+
+    signupForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const name =
+            document
+                .getElementById("signupName")
+                .value
+                .trim();
+
+        const email =
+            document
+                .getElementById("signupEmail")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("signupPassword")
+                .value;
+
+
+        if (!name || !email || !password) {
+
+            showMessage(
+                "Please complete all fields.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (password.length < 6) {
+
+            showMessage(
+                "Password must be at least 6 characters.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        setLoading(
+            signupButton,
+            true,
+            "Creating account..."
+        );
+
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient.auth.signUp({
+
+                email,
+                password,
+
+                options: {
+
+                    data: {
+                        full_name: name
+                    }
+
+                }
+
+            });
+
+
+            if (error) {
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (data.session) {
+
+                showMessage(
+                    "Account created successfully. Redirecting...",
+                    "success"
+                );
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }, 700);
+
+            } else {
+
+                showMessage(
+                    "Account created. Please check your email to confirm your account.",
+                    "success"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Something went wrong while creating your account.",
+                "error"
+            );
+
+        } finally {
+
+            setLoading(
+                signupButton,
+                false,
+                "Create account"
+            );
+        }
+
+    });
+
+
+    /* --------------------------------------------------------
+       FORGOT PASSWORD
+       -------------------------------------------------------- */
+
+    forgotPassword.addEventListener("click", async () => {
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim();
+
+
+        if (!email) {
+
+            showMessage(
+                "Enter your email address first.",
+                "error"
+            );
+
+            document
+                .getElementById("loginEmail")
+                .focus();
+
+            return;
+        }
+
+
+        try {
+
+            const {
+                error
+            } = await supabaseClient.auth
+                .resetPasswordForEmail(email, {
+
+                    redirectTo:
+                        window.location.origin +
+                        "/reset-password.html"
+
+                });
+
+
+            if (error) {
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showMessage(
+                "Password reset instructions have been sent to your email.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Unable to send password reset instructions.",
+                "error"
+            );
+
+        }
+
+    });
+
+
+    /* --------------------------------------------------------
+       CHECK EXISTING SESSION
+       -------------------------------------------------------- */
+
+    supabaseClient.auth
+        .getSession()
+        .then(({ data }) => {
+
+            if (data.session) {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+
+        })
+        .catch(error => {
+
+            console.error(
+                "Session check failed:",
+                error
+            );
+
+        });
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard — VANTA AI</title>
+    <meta name="description" content="VANTA AI workspace dashboard.">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ============================================================
+           VANTA AI — DASHBOARD
+           ============================================================ */
+
+        :root {
+            --dash-bg: #070A12;
+            --dash-surface: #0D1220;
+            --dash-surface-2: #111827;
+            --dash-primary: #7C5CFF;
+            --dash-cyan: #22D3EE;
+            --dash-text: #F5F7FF;
+            --dash-muted: #8992A8;
+            --dash-line: rgba(255,255,255,.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(124,92,255,.10),
+                    transparent 30%
+                ),
+                var(--dash-bg);
+            color: var(--dash-text);
+            font-family: Arial, sans-serif;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ============================================================
+           SIDEBAR
+           ============================================================ */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            padding: 24px 16px;
+            background: rgba(13,18,32,.92);
+            border-right: 1px solid var(--dash-line);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 10px 30px;
+            text-decoration: none;
+            color: var(--dash-text);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+        }
+
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: linear-gradient(
+                135deg,
+                var(--dash-primary),
+                var(--dash-cyan)
+            );
+            color: white;
+            font-weight: 900;
+            box-shadow: 0 0 25px rgba(124,92,255,.20);
+        }
+
+        .nav-label {
+            padding: 0 10px;
+            margin: 4px 0 10px;
+            color: #535D73;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .sidebar-nav button {
+            width: 100%;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            padding: 12px 13px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: transparent;
+            color: var(--dash-muted);
+            text-align: left;
+            cursor: pointer;
+            transition:
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease,
+                transform .2s ease;
+        }
+
+        .sidebar-nav button:hover {
+            background: rgba(255,255,255,.035);
+            color: var(--dash-text);
+            transform: translateX(2px);
+        }
+
+        .sidebar-nav button.active {
+            background: rgba(124,92,255,.12);
+            border-color: rgba(124,92,255,.18);
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .user-mini {
+            padding: 13px;
+            border: 1px solid var(--dash-line);
+            border-radius: 14px;
+            background: rgba(255,255,255,.025);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: linear-gradient(
+                135deg,
+                var(--dash-primary),
+                #4C8DFF
+            );
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .user-info {
+            min-width: 0;
+        }
+
+        .user-name {
+            overflow: hidden;
+            color: var(--dash-text);
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .user-email {
+            overflow: hidden;
+            margin-top: 3px;
+            color: #667087;
+            font-size: 10px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* ============================================================
+           MAIN
+           ============================================================ */
+
+        .main {
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 76px;
+            padding: 0 34px;
+            border-bottom: 1px solid var(--dash-line);
+            background: rgba(7,10,18,.70);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 17px;
+            letter-spacing: -.3px;
+        }
+
+        .page-title p {
+            margin: 4px 0 0;
+            color: var(--dash-muted);
+            font-size: 11px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 10px;
+            border: 1px solid rgba(34,211,238,.12);
+            border-radius: 20px;
+            background: rgba(34,211,238,.05);
+            color: #7DECFB;
+            font-size: 10px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22D3EE;
+            box-shadow: 0 0 10px rgba(34,211,238,.7);
+        }
+
+        .logout-btn {
+            border: 1px solid var(--dash-line);
+            border-radius: 9px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,.025);
+            color: var(--dash-muted);
+            cursor: pointer;
+            font-size: 11px;
+            transition: .2s ease;
+        }
+
+        .logout-btn:hover {
+            color: white;
+            border-color: rgba(255,255,255,.16);
+            background: rgba(255,255,255,.045);
+        }
+
+        .logout-btn:disabled {
+            opacity: .55;
+            cursor: wait;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 34px;
+        }
+
+        /* ============================================================
+           VIEWS
+           ============================================================ */
+
+        .view {
+            display: none;
+            animation: viewIn .25s ease;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes viewIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================================
+           WELCOME
+           ============================================================ */
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            margin: 0;
+            font-size: 27px;
+            letter-spacing: -1px;
+        }
+
+        .welcome p {
+            margin: 7px 0 0;
+            color: var(--dash-muted);
+            font-size: 13px;
+        }
+
+        /* ============================================================
+           STATS
+           ============================================================ */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .stat-card {
+            padding: 20px;
+            border: 1px solid var(--dash-line);
+            border-radius: 16px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.012)
+                ),
+                var(--dash-surface);
+            transition:
+                transform .2s ease,
+                border-color .2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124,92,255,.18);
+        }
+
+        .stat-label {
+            color: var(--dash-muted);
+            font-size: 11px;
+        }
+
+        .stat-value {
+            margin-top: 10px;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .stat-note {
+            margin-top: 5px;
+            color: #59657C;
+            font-size: 10px;
+        }
+
+        /* ============================================================
+           AI WORKSPACE
+           ============================================================ */
+
+        .workspace {
+            min-height: 310px;
+            padding: 25px;
+            border: 1px solid var(--dash-line);
+            border-radius: 18px;
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(124,92,255,.10),
+                    transparent 30%
+                ),
+                var(--dash-surface);
+        }
+
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .workspace-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .workspace-header p {
+            margin: 5px 0 0;
+            color: var(--dash-muted);
+            font-size: 11px;
+        }
+
+        .ai-badge {
+            flex-shrink: 0;
+            padding: 7px 10px;
+            border-radius: 8px;
+            background: rgba(124,92,255,.10);
+            color: #B6A7FF;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .prompt-box {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .prompt-box textarea {
+            width: 100%;
+            min-height: 115px;
+            resize: vertical;
+            padding: 14px;
+            border: 1px solid var(--dash-line);
+            border-radius: 13px;
+            outline: none;
+            background: rgba(0,0,0,.16);
+            color: white;
+            line-height: 1.5;
+            font-size: 12px;
+            transition: .2s ease;
+        }
+
+        .prompt-box textarea::placeholder {
+            color: #505A70;
+        }
+
+        .prompt-box textarea:focus {
+            border-color: rgba(124,92,255,.55);
+            box-shadow: 0 0 0 3px rgba(124,92,255,.07);
+        }
+
+        .generate-btn {
+            min-width: 120px;
+            border: 0;
+            border-radius: 11px;
+            padding: 13px 15px;
+            background: linear-gradient(
+                135deg,
+                var(--dash-primary),
+                #5C7CFF
+            );
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
+            transition: .2s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(124,92,255,.22);
+        }
+
+        .generate-btn:disabled {
+            opacity: .6;
+            cursor: wait;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .ai-response {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            border: 1px solid rgba(34,211,238,.10);
+            border-radius: 12px;
+            background: rgba(34,211,238,.025);
+            color: #C7D0E3;
+            font-size: 12px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .ai-response.show {
+            display: block;
+        }
+
+        /* ============================================================
+           SECTION HEADER
+           ============================================================ */
+
+        .section-head {
+            margin-bottom: 22px;
+        }
+
+        .section-head-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .section-head p {
+            margin: 6px 0 0;
+            color: var(--dash-muted);
+            font-size: 12px;
+        }
+
+        /* ============================================================
+           PROJECTS
+           ============================================================ */
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .project-card {
+            position: relative;
+            min-height: 190px;
+            padding: 20px;
+            border: 1px solid var(--dash-line);
+            border-radius: 16px;
+            background: var(--dash-surface);
+            transition:
+                transform .2s ease,
+                border-color .2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124,92,255,.18);
+        }
+
+        .project-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: rgba(124,92,255,.10);
+            color: #B8AAFF;
+            font-size: 16px;
+        }
+
+        .project-status {
+            padding: 5px 8px;
+            border: 1px solid rgba(34,211,238,.10);
+            border-radius: 20px;
+            background: rgba(34,211,238,.04);
+            color: #7DECFB;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        .project-card h3 {
+            margin: 0;
+            padding-right: 5px;
+            font-size: 14px;
+        }
+
+        .project-card p {
+            margin: 6px 0 0;
+            color: var(--dash-muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .project-delete {
+            margin-top: 17px;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 8px;
+            padding: 7px 10px;
+            background: rgba(255,255,255,.025);
+            color: #727C91;
+            cursor: pointer;
+            font-size: 10px;
+            transition: .2s ease;
+        }
+
+        .project-delete:hover {
+            border-color: rgba(255,100,130,.25);
+            background: rgba(255,80,110,.05);
+            color: #FF9CAE;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 55px 25px;
+            border: 1px dashed rgba(255,255,255,.10);
+            border-radius: 16px;
+            background: rgba(255,255,255,.015);
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 14px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: rgba(124,92,255,.10);
+            color: #B8AAFF;
+            font-size: 20px;
+        }
+
+        .empty-state h3 {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .empty-state p {
+            margin: 7px 0 0;
+            color: var(--dash-muted);
+            font-size: 11px;
+        }
+
+        /* ============================================================
+           CREATE PROJECT BUTTON
+           ============================================================ */
+
+        .create-project-btn {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 15px;
+            background: linear-gradient(
+                135deg,
+                var(--dash-primary),
+                #5C7CFF
+            );
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
+            box-shadow: 0 8px 22px rgba(124,92,255,.16);
+            transition: .2s ease;
+        }
+
+        .create-project-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 28px rgba(124,92,255,.25);
+        }
+
+        /* ============================================================
+           MODAL
+           ============================================================ */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0,0,0,.62);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: modalFade .2s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 480px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 19px;
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(124,92,255,.12),
+                    transparent 35%
+                ),
+                #0D1220;
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.45),
+                0 0 50px rgba(124,92,255,.07);
+            transform: translateY(0);
+            animation: modalUp .22s ease;
+        }
+
+        @keyframes modalUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .modal-head h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .modal-head p {
+            margin: 6px 0 0;
+            color: var(--dash-muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--dash-line);
+            border-radius: 9px;
+            background: rgba(255,255,255,.025);
+            color: var(--dash-muted);
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .modal-close:hover {
+            color: white;
+            background: rgba(255,255,255,.06);
+        }
+
+        .modal-field {
+            margin-bottom: 17px;
+        }
+
+        .modal-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #DCE2EF;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .modal-field input,
+        .modal-field textarea {
+            width: 100%;
+            border: 1px solid var(--dash-line);
+            border-radius: 10px;
+            outline: none;
+            background: rgba(0,0,0,.18);
+            color: white;
+            font-size: 12px;
+            transition: .2s ease;
+        }
+
+        .modal-field input {
+            padding: 12px;
+        }
+
+        .modal-field textarea {
+            min-height: 110px;
+            resize: vertical;
+            padding: 12px;
+            line-height: 1.5;
+        }
+
+        .modal-field input::placeholder,
+        .modal-field textarea::placeholder {
+            color: #505A70;
+        }
+
+        .modal-field input:focus,
+        .modal-field textarea:focus {
+            border-color: rgba(124,92,255,.55);
+            box-shadow: 0 0 0 3px rgba(124,92,255,.07);
+        }
+
+        .modal-message {
+            min-height: 17px;
+            margin-bottom: 10px;
+            color: #FF9CAE;
+            font-size: 10px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+        }
+
+        .modal-cancel {
+            border: 1px solid var(--dash-line);
+            border-radius: 9px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,.025);
+            color: var(--dash-muted);
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .modal-submit {
+            border: 0;
+            border-radius: 9px;
+            padding: 10px 15px;
+            background: var(--dash-primary);
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .modal-submit:hover {
+            background: #6E4EF0;
+        }
+
+        .modal-submit:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        /* ============================================================
+           SETTINGS
+           ============================================================ */
+
+        .settings-card {
+            max-width: 720px;
+            padding: 25px;
+            border: 1px solid var(--dash-line);
+            border-radius: 17px;
+            background: var(--dash-surface);
+        }
+
+        .settings-row {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--dash-line);
+        }
+
+        .settings-row:first-child {
+            padding-top: 0;
+        }
+
+        .settings-row:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .settings-row label {
+            display: block;
+            margin-bottom: 8px;
+            color: #DCE2EF;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .settings-row input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--dash-line);
+            border-radius: 9px;
+            outline: none;
+            background: rgba(0,0,0,.12);
+            color: white;
+            font-size: 12px;
+            transition: .2s ease;
+        }
+
+        .settings-row input:focus {
+            border-color: rgba(124,92,255,.55);
+            box-shadow: 0 0 0 3px rgba(124,92,255,.07);
+        }
+
+        .settings-row input:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .save-btn {
+            margin-top: 15px;
+            border: 0;
+            border-radius: 9px;
+            padding: 10px 15px;
+            background: var(--dash-primary);
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
+
+        .save-btn:hover {
+            background: #6E4EF0;
+            transform: translateY(-1px);
+        }
+
+        .save-btn:disabled {
+            opacity: .6;
+            cursor: wait;
+            transform: none;
+        }
+
+        .settings-message {
+            min-height: 15px;
+            margin-top: 10px;
+            color: #7DECFB;
+            font-size: 11px;
+        }
+
+        /* ============================================================
+           MOBILE
+           ============================================================ */
+
+        .mobile-menu-btn {
+            display: none;
+            border: 1px solid var(--dash-line);
+            border-radius: 9px;
+            padding: 8px 10px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255,255,255,.05);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: 90;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* ============================================================
+           TABLET
+           ============================================================ */
+
+        @media (max-width: 1050px) {
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        /* ============================================================
+           MOBILE
+           ============================================================ */
+
+        @media (max-width: 760px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform .25s ease;
+                box-shadow: 20px 0 50px rgba(0,0,0,.30);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 22px 18px;
+            }
+
+            .status-pill {
+                display: none;
+            }
+
+            .stats-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prompt-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .generate-btn {
+                width: 100%;
+            }
+
+            .workspace-header {
+                align-items: flex-start;
+            }
+
+            .section-head-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .create-project-btn {
+                width: 100%;
+            }
+
+        }
+
+        /* ============================================================
+           SMALL MOBILE
+           ============================================================ */
+
+        @media (max-width: 480px) {
+
+            .topbar {
+                height: 68px;
+            }
+
+            .page-title p {
+                display: none;
+            }
+
+            .page-title h1 {
+                font-size: 15px;
+            }
+
+            .welcome h2 {
+                font-size: 23px;
+            }
+
+            .workspace {
+                padding: 18px;
+            }
+
+            .settings-card {
+                padding: 20px;
+            }
+
+            .stat-card {
+                padding: 17px;
+            }
+
+            .modal-card {
+                padding: 20px;
+            }
+
+        }
+
+        /* ============================================================
+           REDUCED MOTION
+           ============================================================ */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+                animation-duration: .01ms !important;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ============================================================
+         SIDEBAR
+         ============================================================ -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <a href="index.html" class="brand">
+            <span class="brand-icon">V</span>
+            <span>VANTA AI</span>
+        </a>
+
+        <div class="nav-label">Workspace</div>
+
+        <nav class="sidebar-nav">
+
+            <button
+                class="nav-btn active"
+                data-view="overview"
+                type="button"
+            >
+                <span class="nav-icon">⌂</span>
+                <span>Overview</span>
+            </button>
+
+            <button
+                class="nav-btn"
+                data-view="ai"
+                type="button"
+            >
+                <span class="nav-icon">✦</span>
+                <span>AI Workspace</span>
+            </button>
+
+            <button
+                class="nav-btn"
+                data-view="projects"
+                type="button"
+            >
+                <span class="nav-icon">▣</span>
+                <span>Projects</span>
+            </button>
+
+        </nav>
+
+        <div
+            class="nav-label"
+            style="margin-top:25px;"
+        >
+            Account
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <button
+                class="nav-btn"
+                data-view="settings"
+                type="button"
+            >
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-mini">
+
+                <div
+                    class="avatar"
+                    id="sidebarAvatar"
+                >
+                    U
+                </div>
+
+                <div class="user-info">
+
+                    <div
+                        class="user-name"
+                        id="sidebarName"
+                    >
+                        Loading...
+                    </div>
+
+                    <div
+                        class="user-email"
+                        id="sidebarEmail"
+                    >
+                        Loading...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ============================================================
+         MOBILE OVERLAY
+         ============================================================ -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ============================================================
+         MAIN
+         ============================================================ -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:12px;
+                "
+            >
+
+                <button
+                    class="mobile-menu-btn"
+                    id="mobileMenuBtn"
+                    type="button"
+                    aria-label="Open navigation"
+                    aria-expanded="false"
+                >
+                    ☰
+                </button>
+
+                <div class="page-title">
+
+                    <h1 id="pageTitle">
+                        Overview
+                    </h1>
+
+                    <p>
+                        Your VANTA AI workspace
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="status-pill">
+
+                    <span class="status-dot"></span>
+
+                    System online
+
+                </div>
+
+                <button
+                    class="logout-btn"
+                    id="logoutBtn"
+                    type="button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <div class="content">
+
+
+            <!-- ====================================================
+                 OVERVIEW
+                 ==================================================== -->
+
+            <section
+                class="view active"
+                id="view-overview"
+            >
+
+                <div class="welcome">
+
+                    <h2>
+                        Welcome back,
+                        <span id="welcomeName">
+                            there
+                        </span>.
+                    </h2>
+
+                    <p>
+                        Your AI workspace is ready.
+                    </p>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Projects
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="projectCount"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-note">
+                            Your active projects
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            AI generations
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="generationCount"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-note">
+                            AI requests completed
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Account
+                        </div>
+
+                        <div class="stat-value">
+                            Active
+                        </div>
+
+                        <div class="stat-note">
+                            Supabase authenticated
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Plan
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="planValue"
+                        >
+                            Free
+                        </div>
+
+                        <div class="stat-note">
+                            VANTA AI workspace
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="workspace">
+
+                    <div class="workspace-header">
+
+                        <div>
+
+                            <h3>
+                                AI Workspace
+                            </h3>
+
+                            <p>
+                                Describe what you want to create.
+                            </p>
+
+                        </div>
+
+                        <div class="ai-badge">
+                            VANTA AI
+                        </div>
+
+                    </div>
+
+
+                    <div class="prompt-box">
+
+                        <textarea
+                            id="aiPrompt"
+                            placeholder="Example: Create a short product description for a premium AI automation service..."
+                        ></textarea>
+
+
+                        <button
+                            class="generate-btn"
+                            id="generateBtn"
+                            type="button"
+                        >
+                            Generate
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="ai-response"
+                        id="aiResponse"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================================
+                 AI WORKSPACE
+                 ==================================================== -->
+
+            <section
+                class="view"
+                id="view-ai"
+            >
+
+                <div class="section-head">
+
+                    <h2>
+                        AI Workspace
+                    </h2>
+
+                    <p>
+                        Use the VANTA AI workspace to build and generate content.
+                    </p>
+
+                </div>
+
+
+                <div class="workspace">
+
+                    <div class="workspace-header">
+
+                        <div>
+
+                            <h3>
+                                New AI Generation
+                            </h3>
+
+                            <p>
+                                Enter a prompt and start working.
+                            </p>
+
+                        </div>
+
+                        <div class="ai-badge">
+                            READY
+                        </div>
+
+                    </div>
+
+
+                    <div class="prompt-box">
+
+                        <textarea
+                            id="aiPromptFull"
+                            placeholder="Tell VANTA AI what you need..."
+                        ></textarea>
+
+
+                        <button
+                            class="generate-btn"
+                            id="generateBtnFull"
+                            type="button"
+                        >
+                            Generate
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="ai-response"
+                        id="aiResponseFull"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================================
+                 PROJECTS
+                 ==================================================== -->
+
+            <section
+                class="view"
+                id="view-projects"
+            >
+
+                <div class="section-head">
+
+                    <div class="section-head-row">
+
+                        <div>
+
+                            <h2>
+                                Projects
+                            </h2>
+
+                            <p>
+                                Create and manage your VANTA AI projects.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="create-project-btn"
+                            id="createProjectBtn"
+                            type="button"
+                        >
+                            + New project
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="projects-grid"
+                    id="projectsGrid"
+                >
+
+                    <div class="empty-state">
+
+                        <div class="empty-state-icon">
+                            ✦
+                        </div>
+
+                        <h3>
+                            No projects yet
+                        </h3>
+
+                        <p>
+                            Create your first VANTA AI project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================================
+                 SETTINGS
+                 ==================================================== -->
+
+            <section
+                class="view"
+                id="view-settings"
+            >
+
+                <div class="section-head">
+
+                    <h2>
+                        Settings
+                    </h2>
+
+                    <p>
+                        Manage your VANTA AI account information.
+                    </p>
+
+                </div>
+
+
+                <div class="settings-card">
+
+                    <div class="settings-row">
+
+                        <label for="settingsName">
+                            Full name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="settingsName"
+                            placeholder="Your name"
+                            autocomplete="name"
+                        />
+
+                    </div>
+
+
+                    <div class="settings-row">
+
+                        <label for="settingsEmail">
+                            Email address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="settingsEmail"
+                            disabled
+                            autocomplete="email"
+                        />
+
+                    </div>
+
+
+                    <button
+                        class="save-btn"
+                        id="saveSettings"
+                        type="button"
+                    >
+                        Save changes
+                    </button>
+
+
+                    <div
+                        class="settings-message"
+                        id="settingsMessage"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ================================================================
+     CREATE PROJECT MODAL
+     ================================================================ -->
+
+<div
+    class="modal"
+    id="projectModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="projectModalTitle"
+    >
+
+        <div class="modal-head">
+
+            <div>
+
+                <h3 id="projectModalTitle">
+                    Create new project
+                </h3>
+
+                <p>
+                    Give your VANTA AI project a name and description.
+                </p>
+
+            </div>
+
+
+            <button
+                class="modal-close"
+                id="closeProjectModal"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-field">
+
+            <label for="projectName">
+                Project name
+            </label>
+
+            <input
+                type="text"
+                id="projectName"
+                maxlength="100"
+                placeholder="e.g. Marketing Automation"
+                autocomplete="off"
+            />
+
+        </div>
+
+
+        <div class="modal-field">
+
+            <label for="projectDescription">
+                Description
+            </label>
+
+            <textarea
+                id="projectDescription"
+                maxlength="500"
+                placeholder="What will you use this project for?"
+            ></textarea>
+
+        </div>
+
+
+        <div
+            class="modal-message"
+            id="projectModalMessage"
+        ></div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="modal-cancel"
+                id="cancelProjectBtn"
+                type="button"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="modal-submit"
+                id="saveProjectBtn"
+                type="button"
+            >
+                Create project
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================================
+     SUPABASE + VANTA AI
+     ================================================================ -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>

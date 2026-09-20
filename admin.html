@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VANTA AI — Admin</title>
+
+  <meta
+    name="description"
+    content="VANTA AI administration dashboard."
+  >
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ============================================================
+       VANTA AI — ADMIN PAGE
+       ============================================================ */
+
+    .admin-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 85% 10%,
+          rgba(124, 92, 255, 0.12),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 10% 85%,
+          rgba(34, 211, 238, 0.07),
+          transparent 28%
+        ),
+        #070A12;
+    }
+
+    .admin-shell {
+      width: min(1400px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 32px 0 60px;
+    }
+
+    .admin-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(124, 92, 255, 0.95),
+          rgba(34, 211, 238, 0.9)
+        );
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow:
+        0 10px 35px rgba(124, 92, 255, 0.2);
+    }
+
+    .admin-brand strong {
+      display: block;
+      color: #F5F7FF;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .admin-brand span {
+      display: block;
+      margin-top: 3px;
+      color: #8992A8;
+      font-size: 12px;
+    }
+
+    .admin-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-user-info {
+      text-align: right;
+    }
+
+    .admin-user-info strong {
+      display: block;
+      color: #F5F7FF;
+      font-size: 14px;
+    }
+
+    .admin-user-info span {
+      display: block;
+      margin-top: 3px;
+      color: #8992A8;
+      font-size: 12px;
+    }
+
+    .admin-avatar {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(124, 92, 255, 0.14);
+      border: 1px solid rgba(124, 92, 255, 0.28);
+      color: #BFB5FF;
+      font-weight: 700;
+    }
+
+    .admin-heading {
+      margin-bottom: 26px;
+    }
+
+    .admin-heading .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: #AFA4FF;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .admin-heading .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22D3EE;
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.8);
+    }
+
+    .admin-heading h1 {
+      margin: 0;
+      color: #F5F7FF;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .admin-heading p {
+      max-width: 700px;
+      margin: 12px 0 0;
+      color: #8992A8;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .admin-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(34, 211, 238, 0.14);
+      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.06);
+      color: #9BEAF5;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .admin-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22D3EE;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.9);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .admin-stat {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.035),
+          rgba(255,255,255,.012)
+        );
+      box-shadow: 0 16px 50px rgba(0,0,0,.16);
+    }
+
+    .admin-stat::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      right: -35px;
+      top: -35px;
+      border-radius: 50%;
+      background: rgba(124, 92, 255, 0.08);
+      filter: blur(5px);
+    }
+
+    .admin-stat-label {
+      color: #8992A8;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .admin-stat-value {
+      margin-top: 10px;
+      color: #F5F7FF;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .admin-stat-meta {
+      margin-top: 10px;
+      color: #687289;
+      font-size: 11px;
+    }
+
+    .admin-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, .75fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .admin-card {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.035),
+          rgba(255,255,255,.012)
+        );
+      box-shadow: 0 18px 60px rgba(0,0,0,.18);
+    }
+
+    .admin-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 22px 18px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .admin-card-title {
+      color: #F5F7FF;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .admin-card-subtitle {
+      margin-top: 4px;
+      color: #687289;
+      font-size: 12px;
+    }
+
+    .admin-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+    }
+
+    .admin-table th {
+      padding: 14px 22px;
+      color: #687289;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-align: left;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.015);
+    }
+
+    .admin-table td {
+      padding: 17px 22px;
+      border-top: 1px solid rgba(255,255,255,.05);
+      color: #B7BED0;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .admin-table tbody tr {
+      transition: background .2s ease;
+    }
+
+    .admin-table tbody tr:hover {
+      background: rgba(124,92,255,.035);
+    }
+
+    .admin-user-cell {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .admin-user-cell-avatar {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(124,92,255,.12);
+      border: 1px solid rgba(124,92,255,.2);
+      color: #BFB5FF;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .admin-user-cell strong {
+      display: block;
+      color: #F5F7FF;
+      font-size: 13px;
+    }
+
+    .admin-user-cell span {
+      display: block;
+      margin-top: 3px;
+      color: #687289;
+      font-size: 11px;
+    }
+
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .admin-badge.active {
+      color: #9BEAF5;
+      background: rgba(34,211,238,.07);
+      border: 1px solid rgba(34,211,238,.13);
+    }
+
+    .admin-badge.free {
+      color: #BFB5FF;
+      background: rgba(124,92,255,.08);
+      border: 1px solid rgba(124,92,255,.13);
+    }
+
+    .admin-empty {
+      padding: 45px 25px;
+      text-align: center;
+      color: #687289;
+      font-size: 13px;
+    }
+
+    .admin-side {
+      display: grid;
+      gap: 20px;
+    }
+
+    .admin-list {
+      padding: 6px 0;
+    }
+
+    .admin-list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 22px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    .admin-list-item:last-child {
+      border-bottom: 0;
+    }
+
+    .admin-list-icon {
+      width: 35px;
+      height: 35px;
+      flex: 0 0 35px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(124,92,255,.09);
+      color: #BFB5FF;
+      font-size: 13px;
+    }
+
+    .admin-list-text {
+      min-width: 0;
+    }
+
+    .admin-list-text strong {
+      display: block;
+      overflow: hidden;
+      color: #DDE2EF;
+      font-size: 12px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .admin-list-text span {
+      display: block;
+      margin-top: 3px;
+      color: #687289;
+      font-size: 10px;
+    }
+
+    .admin-action-list {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+    }
+
+    .admin-action {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 13px 14px;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 13px;
+      background: rgba(255,255,255,.02);
+      color: #B7BED0;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+      transition:
+        border-color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+    }
+
+    .admin-action:hover {
+      transform: translateY(-1px);
+      border-color: rgba(124,92,255,.28);
+      background: rgba(124,92,255,.05);
+    }
+
+    .admin-action span {
+      color: #8992A8;
+      font-size: 12px;
+    }
+
+    .admin-action strong {
+      color: #F5F7FF;
+      font-size: 12px;
+    }
+
+    .admin-notice {
+      padding: 18px 22px;
+      color: #8992A8;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .admin-notice strong {
+      color: #BFB5FF;
+    }
+
+    .admin-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 26px;
+      color: #4F596E;
+      font-size: 11px;
+    }
+
+    .admin-logout {
+      border: 0;
+      background: transparent;
+      color: #8992A8;
+      cursor: pointer;
+      font: inherit;
+      transition: color .2s ease;
+    }
+
+    .admin-logout:hover {
+      color: #F5F7FF;
+    }
+
+    .admin-loading {
+      padding: 35px 22px;
+      color: #8992A8;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .admin-error {
+      padding: 35px 22px;
+      color: #FF9A9A;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 1050px) {
+      .admin-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .admin-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .admin-shell {
+        width: min(100% - 28px, 1400px);
+        padding-top: 20px;
+      }
+
+      .admin-topbar {
+        align-items: flex-start;
+      }
+
+      .admin-user-info {
+        display: none;
+      }
+
+      .admin-heading h1 {
+        font-size: 32px;
+      }
+
+      .admin-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .admin-stat {
+        padding: 17px;
+      }
+
+      .admin-stat-value {
+        font-size: 25px;
+      }
+
+      .admin-card-header {
+        padding: 18px;
+      }
+
+      .admin-footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-brand span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="admin-page">
+
+    <div class="admin-shell">
+
+      <!-- ========================================================
+           TOP BAR
+           ======================================================== -->
+
+      <header class="admin-topbar">
+
+        <a
+          href="index.html"
+          class="admin-brand"
+          aria-label="VANTA AI home"
+        >
+          <div class="admin-brand-mark">V</div>
+
+          <div>
+            <strong>VANTA AI</strong>
+            <span>Administration</span>
+          </div>
+        </a>
+
+        <div class="admin-user">
+
+          <div class="admin-user-info">
+            <strong id="adminUserName">Administrator</strong>
+            <span id="adminUserEmail">Loading...</span>
+          </div>
+
+          <div
+            class="admin-avatar"
+            id="adminAvatar"
+          >
+            A
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- ========================================================
+           HEADING
+           ======================================================== -->
+
+      <section class="admin-heading">
+
+        <div class="eyebrow">
+          Admin Console
+        </div>
+
+        <h1>
+          Platform overview.
+        </h1>
+
+        <p>
+          Monitor VANTA AI accounts, projects, generations,
+          and platform activity from one centralized workspace.
+        </p>
+
+        <div class="admin-status">
+          <span class="admin-status-dot"></span>
+          System connected
+        </div>
+
+      </section>
+
+
+      <!-- ========================================================
+           STATS
+           ======================================================== -->
+
+      <section class="admin-grid">
+
+        <article class="admin-stat">
+          <div class="admin-stat-label">
+            Total Users
+          </div>
+
+          <div
+            class="admin-stat-value"
+            id="adminUsersCount"
+          >
+            —
+          </div>
+
+          <div class="admin-stat-meta">
+            Registered accounts
+          </div>
+        </article>
+
+
+        <article class="admin-stat">
+          <div class="admin-stat-label">
+            Total Projects
+          </div>
+
+          <div
+            class="admin-stat-value"
+            id="adminProjectsCount"
+          >
+            —
+          </div>
+
+          <div class="admin-stat-meta">
+            User-created projects
+          </div>
+        </article>
+
+
+        <article class="admin-stat">
+          <div class="admin-stat-label">
+            AI Generations
+          </div>
+
+          <div
+            class="admin-stat-value"
+            id="adminGenerationsCount"
+          >
+            —
+          </div>
+
+          <div class="admin-stat-meta">
+            Requests recorded
+          </div>
+        </article>
+
+
+        <article class="admin-stat">
+          <div class="admin-stat-label">
+            Active Today
+          </div>
+
+          <div
+            class="admin-stat-value"
+            id="adminActiveToday"
+          >
+            —
+          </div>
+
+          <div class="admin-stat-meta">
+            Accounts with activity
+          </div>
+        </article>
+
+      </section>
+
+
+      <!-- ========================================================
+           CONTENT
+           ======================================================== -->
+
+      <section class="admin-content">
+
+        <!-- USERS -->
+
+        <article class="admin-card">
+
+          <div class="admin-card-header">
+
+            <div>
+              <div class="admin-card-title">
+                Registered users
+              </div>
+
+              <div class="admin-card-subtitle">
+                Accounts currently stored in VANTA AI.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="admin-table-wrap">
+
+            <table class="admin-table">
+
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Plan</th>
+                  <th>Joined</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody id="adminUsersTable">
+
+                <tr>
+                  <td colspan="4">
+                    <div class="admin-loading">
+                      Loading users...
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </article>
+
+
+        <!-- RIGHT COLUMN -->
+
+        <div class="admin-side">
+
+
+          <!-- RECENT GENERATIONS -->
+
+          <article class="admin-card">
+
+            <div class="admin-card-header">
+
+              <div>
+                <div class="admin-card-title">
+                  Recent generations
+                </div>
+
+                <div class="admin-card-subtitle">
+                  Latest AI activity.
+                </div>
+              </div>
+
+            </div>
+
+            <div
+              class="admin-list"
+              id="adminRecentGenerations"
+            >
+
+              <div class="admin-loading">
+                Loading activity...
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- QUICK ACTIONS -->
+
+          <article class="admin-card">
+
+            <div class="admin-card-header">
+
+              <div>
+                <div class="admin-card-title">
+                  Quick actions
+                </div>
+
+                <div class="admin-card-subtitle">
+                  Navigate through the platform.
+                </div>
+              </div>
+
+            </div>
+
+            <div class="admin-action-list">
+
+              <button
+                class="admin-action"
+                id="openDashboard"
+                type="button"
+              >
+                <strong>Open dashboard</strong>
+                <span>→</span>
+              </button>
+
+              <button
+                class="admin-action"
+                id="refreshAdmin"
+                type="button"
+              >
+                <strong>Refresh data</strong>
+                <span>↻</span>
+              </button>
+
+              <button
+                class="admin-action"
+                id="adminLogout"
+                type="button"
+              >
+                <strong>Sign out</strong>
+                <span>↗</span>
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- SECURITY NOTE -->
+
+          <article class="admin-card">
+
+            <div class="admin-notice">
+              <strong>Security:</strong>
+              This administration interface is intended
+              for authorized users only. Database access is
+              controlled through Supabase authentication
+              and Row Level Security.
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- ========================================================
+           FOOTER
+           ======================================================== -->
+
+      <footer class="admin-footer">
+
+        <span>
+          VANTA AI Admin Console
+        </span>
+
+        <button
+          class="admin-logout"
+          id="adminLogoutFooter"
+          type="button"
+        >
+          Sign out
+        </button>
+
+      </footer>
+
+    </div>
+
+  </main>
+
+
+  <!-- ==========================================================
+       SCRIPTS
+       ========================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/config.js"></script>
+
+  <script src="js/admin.js"></script>
+
+</body>
+</html>

@@ -1,758 +1,967 @@
 /* ============================================================
    VANTA AI — DASHBOARD
+   Real Supabase + AI workspace logic
    ============================================================ */
 
-document.addEventListener("DOMContentLoaded", async () => {
+(() => {
   "use strict";
 
-  const supabase = window.vantaSupabase;
+  const boot = async () => {
+    const supabaseClient = window.vantaSupabase;
 
-  if (!supabase) {
-    console.error("VANTA AI: Supabase client not found.");
-    return;
-  }
-
-  /* ----------------------------------------------------------
-     ELEMENTS
-  ---------------------------------------------------------- */
-
-  const sidebar = document.getElementById("sidebar");
-  const sidebarOverlay = document.getElementById("sidebarOverlay");
-  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-
-  const navButtons = document.querySelectorAll(".nav-btn[data-view]");
-  const views = document.querySelectorAll(".dashboard-view");
-
-  const pageTitle = document.getElementById("pageTitle");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  const welcomeName = document.getElementById("welcomeName");
-  const sidebarAvatar = document.getElementById("sidebarAvatar");
-  const sidebarName = document.getElementById("sidebarName");
-  const sidebarEmail = document.getElementById("sidebarEmail");
-
-  const aiPrompt = document.getElementById("aiPrompt");
-  const generateBtn = document.getElementById("generateBtn");
-  const aiResponse = document.getElementById("aiResponse");
-
-  const aiPromptFull = document.getElementById("aiPromptFull");
-  const generateBtnFull = document.getElementById("generateBtnFull");
-  const aiResponseFull = document.getElementById("aiResponseFull");
-
-  const settingsName = document.getElementById("settingsName");
-  const settingsEmail = document.getElementById("settingsEmail");
-  const saveSettings = document.getElementById("saveSettings");
-  const settingsMessage = document.getElementById("settingsMessage");
-
-  let currentUser = null;
-  let currentProfile = null;
-
-  /* ----------------------------------------------------------
-     AUTH CHECK
-  ---------------------------------------------------------- */
-
-  const {
-    data: { session },
-    error: sessionError
-  } = await supabase.auth.getSession();
-
-  if (sessionError || !session) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  currentUser = session.user;
-
-  /* ----------------------------------------------------------
-     PROFILE
-  ---------------------------------------------------------- */
-
-  async function loadProfile() {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", currentUser.id)
-      .maybeSingle();
-
-    if (error) {
-      console.error("Profile load error:", error);
+    if (!supabaseClient) {
+      console.error("VANTA AI: Supabase client not found.");
+      window.location.href = "login.html";
       return;
     }
 
-    if (!data) {
-      const fullName =
-        currentUser.user_metadata?.full_name ||
-        currentUser.user_metadata?.name ||
-        "";
+    const $ = (id) => document.getElementById(id);
+    const $$ = (selector) => document.querySelectorAll(selector);
 
-      const { data: newProfile, error: createError } = await supabase
+    const sidebar = $("sidebar");
+    const mobileMenuBtn = $("mobileMenuBtn");
+    const navButtons = $$(".nav-btn");
+    const views = $$(".view");
+    const pageTitle = $("pageTitle");
+    const logoutBtn = $("logoutBtn");
+
+    /* ------------------------------------------------------------
+       AUTH
+       ------------------------------------------------------------ */
+
+    const {
+      data: sessionData,
+      error: sessionError
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError || !sessionData?.session) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const user = sessionData.session.user;
+
+    /* ------------------------------------------------------------
+       USER / PROFILE
+       ------------------------------------------------------------ */
+
+    let profile = null;
+
+    const loadProfile = async () => {
+      const {
+        data,
+        error
+      } = await supabaseClient
         .from("profiles")
-        .insert({
-          id: currentUser.id,
-          full_name: fullName,
-          plan: "Free"
-        })
-        .select()
-        .single();
-
-      if (createError) {
-        console.error("Profile creation error:", createError);
-        return;
-      }
-
-      currentProfile = newProfile;
-    } else {
-      currentProfile = data;
-    }
-
-    updateProfileUI();
-  }
-
-  /* ----------------------------------------------------------
-     PROFILE UI
-  ---------------------------------------------------------- */
-
-  function updateProfileUI() {
-    if (!currentProfile) return;
-
-    const fullName =
-      currentProfile.full_name ||
-      currentUser.user_metadata?.full_name ||
-      "VANTA User";
-
-    const email = currentUser.email || "";
-
-    if (welcomeName) {
-      welcomeName.textContent = fullName;
-    }
-
-    if (sidebarName) {
-      sidebarName.textContent = fullName;
-    }
-
-    if (sidebarEmail) {
-      sidebarEmail.textContent = email;
-    }
-
-    if (settingsName) {
-      settingsName.value = fullName === "VANTA User" ? "" : fullName;
-    }
-
-    if (settingsEmail) {
-      settingsEmail.value = email;
-    }
-
-    if (sidebarAvatar) {
-      const initial = fullName.trim().charAt(0).toUpperCase() || "V";
-
-      sidebarAvatar.textContent = initial;
-    }
-  }
-
-  /* ----------------------------------------------------------
-     NAVIGATION
-  ---------------------------------------------------------- */
-
-  const pageTitles = {
-    overview: "Overview",
-    ai: "AI Workspace",
-    projects: "Projects",
-    settings: "Settings"
-  };
-
-  function showView(viewName) {
-    views.forEach((view) => {
-      view.classList.remove("active");
-      view.style.display = "none";
-    });
-
-    const target = document.getElementById(`view-${viewName}`);
-
-    if (target) {
-      target.classList.add("active");
-      target.style.display = "";
-    }
-
-    navButtons.forEach((button) => {
-      button.classList.toggle(
-        "active",
-        button.dataset.view === viewName
-      );
-    });
-
-    if (pageTitle) {
-      pageTitle.textContent =
-        pageTitles[viewName] || "VANTA AI";
-    }
-
-    closeMobileMenu();
-  }
-
-  navButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      showView(button.dataset.view);
-    });
-  });
-
-  /* ----------------------------------------------------------
-     MOBILE MENU
-  ---------------------------------------------------------- */
-
-  function openMobileMenu() {
-    if (sidebar) {
-      sidebar.classList.add("open");
-    }
-
-    if (sidebarOverlay) {
-      sidebarOverlay.classList.add("active");
-    }
-
-    if (mobileMenuBtn) {
-      mobileMenuBtn.setAttribute("aria-expanded", "true");
-    }
-  }
-
-  function closeMobileMenu() {
-    if (sidebar) {
-      sidebar.classList.remove("open");
-    }
-
-    if (sidebarOverlay) {
-      sidebarOverlay.classList.remove("active");
-    }
-
-    if (mobileMenuBtn) {
-      mobileMenuBtn.setAttribute("aria-expanded", "false");
-    }
-  }
-
-  if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener("click", () => {
-      if (sidebar?.classList.contains("open")) {
-        closeMobileMenu();
-      } else {
-        openMobileMenu();
-      }
-    });
-  }
-
-  if (sidebarOverlay) {
-    sidebarOverlay.addEventListener("click", closeMobileMenu);
-  }
-
-  /* ----------------------------------------------------------
-     LOGOUT
-  ---------------------------------------------------------- */
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", async () => {
-      logoutBtn.disabled = true;
-      logoutBtn.textContent = "Logging out...";
-
-      const { error } = await supabase.auth.signOut();
+        .select(
+          "id, full_name, avatar_url, plan, created_at, updated_at"
+        )
+        .eq("id", user.id)
+        .maybeSingle();
 
       if (error) {
-        console.error("Logout error:", error);
-
-        logoutBtn.disabled = false;
-        logoutBtn.textContent = "Logout";
-        return;
+        console.error("Profile load error:", error);
       }
 
-      window.location.href = "login.html";
-    });
-  }
+      profile = data || null;
 
-  /* ----------------------------------------------------------
-     PROJECTS
-  ---------------------------------------------------------- */
+      if (!profile) {
+        const metadata = user.user_metadata || {};
 
-  async function loadProjects() {
-    const { data, error } = await supabase
-      .from("projects")
-      .select("*")
-      .eq("user_id", currentUser.id)
-      .order("created_at", {
-        ascending: false
-      });
+        const fallbackName =
+          metadata.full_name ||
+          metadata.name ||
+          user.email?.split("@")[0] ||
+          "User";
 
-    if (error) {
-      console.error("Projects load error:", error);
-      return [];
-    }
-
-    return data || [];
-  }
-
-  function renderProjects(projects) {
-    const projectsGrid =
-      document.querySelector(".projects-grid");
-
-    if (!projectsGrid) return;
-
-    if (!projects.length) {
-      projectsGrid.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">✦</div>
-          <h3>No projects yet</h3>
-          <p>Create your first AI project from the workspace.</p>
-        </div>
-      `;
-
-      return;
-    }
-
-    projectsGrid.innerHTML = projects
-      .map((project) => {
-        const date = new Date(project.created_at)
-          .toLocaleDateString();
-
-        return `
-          <article class="project-card">
-            <div class="project-card-top">
-              <span class="project-status">
-                ${escapeHtml(project.status || "active")}
-              </span>
-            </div>
-
-            <h3>${escapeHtml(project.name)}</h3>
-
-            <p>
-              ${escapeHtml(
-                project.description ||
-                "VANTA AI project"
-              )}
-            </p>
-
-            <div class="project-card-footer">
-              <span>${date}</span>
-            </div>
-          </article>
-        `;
-      })
-      .join("");
-  }
-
-  /* ----------------------------------------------------------
-     DASHBOARD STATS
-  ---------------------------------------------------------- */
-
-  async function loadStats() {
-    const { count: projectCount, error: projectError } =
-      await supabase
-        .from("projects")
-        .select("*", {
-          count: "exact",
-          head: true
-        })
-        .eq("user_id", currentUser.id);
-
-    if (projectError) {
-      console.error(
-        "Project count error:",
-        projectError
-      );
-    }
-
-    const { count: generationCount, error: generationError } =
-      await supabase
-        .from("ai_generations")
-        .select("*", {
-          count: "exact",
-          head: true
-        })
-        .eq("user_id", currentUser.id);
-
-    if (generationError) {
-      console.error(
-        "Generation count error:",
-        generationError
-      );
-    }
-
-    updateStat(
-      [
-        "projectCount",
-        "projectsCount",
-        "totalProjects"
-      ],
-      projectCount ?? 0
-    );
-
-    updateStat(
-      [
-        "generationCount",
-        "generationsCount",
-        "totalGenerations"
-      ],
-      generationCount ?? 0
-    );
-  }
-
-  function updateStat(ids, value) {
-    for (const id of ids) {
-      const element = document.getElementById(id);
-
-      if (element) {
-        element.textContent = value;
-        return;
-      }
-    }
-  }
-
-  /* ----------------------------------------------------------
-     AI GENERATION
-  ---------------------------------------------------------- */
-
-  async function generateAI(prompt, responseElement, button) {
-    if (!prompt || !prompt.trim()) {
-      showAIMessage(
-        responseElement,
-        "Please enter a prompt first."
-      );
-      return;
-    }
-
-    if (!currentUser) {
-      showAIMessage(
-        responseElement,
-        "Your session has expired. Please login again."
-      );
-      return;
-    }
-
-    const originalText = button.textContent;
-
-    button.disabled = true;
-    button.textContent = "Generating...";
-
-    responseElement.classList.add("loading");
-
-    responseElement.textContent =
-      "VANTA AI is thinking...";
-
-    let generationId = null;
-
-    try {
-      /* ------------------------------------------------------
-         STEP 1 — CREATE PENDING GENERATION
-      ------------------------------------------------------ */
-
-      const { data: generation, error: insertError } =
-        await supabase
-          .from("ai_generations")
+        const {
+          data: createdProfile,
+          error: createError
+        } = await supabaseClient
+          .from("profiles")
           .insert({
-            user_id: currentUser.id,
-            prompt: prompt.trim(),
-            status: "pending",
-            model: "vanta-ai"
+            id: user.id,
+            full_name: fallbackName,
+            plan: "Free"
           })
           .select()
           .single();
 
-      if (insertError) {
-        throw new Error(
-          `Could not create generation record: ${
-            insertError.message
-          }`
-        );
+        if (createError) {
+          console.error(
+            "Profile create error:",
+            createError
+          );
+        } else {
+          profile = createdProfile;
+        }
       }
 
-      generationId = generation.id;
+      const metadata = user.user_metadata || {};
 
-      /* ------------------------------------------------------
-         STEP 2 — CALL SUPABASE EDGE FUNCTION
-      ------------------------------------------------------ */
+      const fullName =
+        profile?.full_name ||
+        metadata.full_name ||
+        metadata.name ||
+        user.email?.split("@")[0] ||
+        "User";
 
-      const {
-        data: functionData,
-        error: functionError
-      } = await supabase.functions.invoke("vanta-ai", {
-        body: {
-          prompt: prompt.trim(),
-          generation_id: generationId
-        }
+      const email = user.email || "";
+      const plan = profile?.plan || "Free";
+
+      if ($("welcomeName")) {
+        $("welcomeName").textContent =
+          fullName.split(" ")[0];
+      }
+
+      if ($("sidebarName")) {
+        $("sidebarName").textContent =
+          fullName;
+      }
+
+      if ($("sidebarEmail")) {
+        $("sidebarEmail").textContent =
+          email;
+      }
+
+      if ($("settingsName")) {
+        $("settingsName").value =
+          fullName;
+      }
+
+      if ($("settingsEmail")) {
+        $("settingsEmail").value =
+          email;
+      }
+
+      if ($("planValue")) {
+        $("planValue").textContent =
+          plan;
+      }
+
+      if ($("accountStatus")) {
+        $("accountStatus").textContent =
+          "Active";
+      }
+
+      const initials = fullName
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((word) => word[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+
+      if ($("sidebarAvatar")) {
+        $("sidebarAvatar").textContent =
+          initials || "U";
+      }
+    };
+
+    await loadProfile();
+
+    /* ------------------------------------------------------------
+       NAVIGATION
+       ------------------------------------------------------------ */
+
+    const titles = {
+      overview: "Overview",
+      ai: "AI Workspace",
+      projects: "Projects",
+      settings: "Settings"
+    };
+
+    const switchView = (viewName) => {
+      navButtons.forEach((button) => {
+        button.classList.toggle(
+          "active",
+          button.dataset.view === viewName
+        );
       });
 
-      if (functionError) {
-        throw new Error(
-          functionError.message ||
-          "VANTA AI backend request failed."
-        );
+      views.forEach((view) => {
+        view.classList.remove("active");
+      });
+
+      const selectedView =
+        $("view-" + viewName);
+
+      if (selectedView) {
+        selectedView.classList.add("active");
       }
 
-      /* ------------------------------------------------------
-         STEP 3 — READ AI RESPONSE
-      ------------------------------------------------------ */
-
-      const aiText =
-        functionData?.response ||
-        functionData?.text ||
-        functionData?.content ||
-        functionData?.output;
-
-      if (!aiText) {
-        console.error(
-          "Unexpected Edge Function response:",
-          functionData
-        );
-
-        throw new Error(
-          "AI backend returned an empty response."
-        );
+      if (pageTitle) {
+        pageTitle.textContent =
+          titles[viewName] || "Dashboard";
       }
 
-      const model =
-        functionData?.model ||
-        "vanta-ai";
+      sidebar?.classList.remove("open");
+    };
 
-      /* ------------------------------------------------------
-         STEP 4 — SAVE COMPLETED GENERATION
-      ------------------------------------------------------ */
-
-      const { error: updateError } =
-        await supabase
-          .from("ai_generations")
-          .update({
-            response: aiText,
-            model: model,
-            status: "completed"
-          })
-          .eq("id", generationId)
-          .eq("user_id", currentUser.id);
-
-      if (updateError) {
-        console.error(
-          "Generation update error:",
-          updateError
-        );
-      }
-
-      /* ------------------------------------------------------
-         STEP 5 — SHOW RESPONSE
-      ------------------------------------------------------ */
-
-      responseElement.classList.remove("loading");
-
-      responseElement.textContent = aiText;
-
-      await loadStats();
-
-    } catch (error) {
-      console.error("VANTA AI generation error:", error);
-
-      responseElement.classList.remove("loading");
-
-      responseElement.textContent =
-        error.message ||
-        "Something went wrong while generating the response.";
-
-      /* ------------------------------------------------------
-         MARK FAILED GENERATION
-      ------------------------------------------------------ */
-
-      if (generationId) {
-        await supabase
-          .from("ai_generations")
-          .update({
-            status: "failed"
-          })
-          .eq("id", generationId)
-          .eq("user_id", currentUser.id);
-      }
-
-    } finally {
-      button.disabled = false;
-      button.textContent = originalText;
-    }
-  }
-
-  function showAIMessage(element, message) {
-    if (!element) return;
-
-    element.classList.remove("loading");
-    element.textContent = message;
-  }
-
-  /* ----------------------------------------------------------
-     AI BUTTONS
-  ---------------------------------------------------------- */
-
-  if (generateBtn && aiPrompt && aiResponse) {
-    generateBtn.addEventListener("click", () => {
-      generateAI(
-        aiPrompt.value,
-        aiResponse,
-        generateBtn
-      );
-    });
-  }
-
-  if (
-    generateBtnFull &&
-    aiPromptFull &&
-    aiResponseFull
-  ) {
-    generateBtnFull.addEventListener("click", () => {
-      generateAI(
-        aiPromptFull.value,
-        aiResponseFull,
-        generateBtnFull
-      );
-    });
-  }
-
-  /* ----------------------------------------------------------
-     ENTER KEY FOR AI PROMPT
-  ---------------------------------------------------------- */
-
-  [aiPrompt, aiPromptFull].forEach((input) => {
-    if (!input) return;
-
-    input.addEventListener("keydown", (event) => {
-      if (
-        event.key === "Enter" &&
-        !event.shiftKey
-      ) {
-        event.preventDefault();
-
-        const button =
-          input === aiPrompt
-            ? generateBtn
-            : generateBtnFull;
-
-        const response =
-          input === aiPrompt
-            ? aiResponse
-            : aiResponseFull;
-
-        if (button && response) {
-          generateAI(
-            input.value,
-            response,
-            button
+    navButtons.forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          switchView(
+            button.dataset.view ||
+            "overview"
           );
         }
-      }
+      );
     });
-  });
 
-  /* ----------------------------------------------------------
-     SETTINGS
-  ---------------------------------------------------------- */
-
-  if (saveSettings) {
-    saveSettings.addEventListener("click", async () => {
-      const name =
-        settingsName?.value.trim() || "";
-
-      saveSettings.disabled = true;
-      saveSettings.textContent = "Saving...";
-
-      if (settingsMessage) {
-        settingsMessage.textContent = "";
+    mobileMenuBtn?.addEventListener(
+      "click",
+      () => {
+        sidebar?.classList.toggle("open");
       }
+    );
 
-      try {
-        const { error: authError } =
-          await supabase.auth.updateUser({
-            data: {
-              full_name: name
-            }
-          });
+    /* ------------------------------------------------------------
+       LOGOUT
+       ------------------------------------------------------------ */
 
-        if (authError) {
-          throw authError;
-        }
+    logoutBtn?.addEventListener(
+      "click",
+      async () => {
+        logoutBtn.disabled = true;
+        logoutBtn.textContent =
+          "Logging out...";
 
-        const { data, error } =
-          await supabase
-            .from("profiles")
-            .upsert({
-              id: currentUser.id,
-              full_name: name
-            })
-            .select()
-            .single();
+        const {
+          error
+        } = await supabaseClient.auth.signOut();
 
         if (error) {
-          throw error;
+          console.error(
+            "Logout error:",
+            error
+          );
+
+          logoutBtn.disabled = false;
+          logoutBtn.textContent =
+            "Logout";
+
+          return;
         }
 
-        currentProfile = {
-          ...currentProfile,
-          ...data
-        };
+        window.location.href =
+          "login.html";
+      }
+    );
 
-        updateProfileUI();
+    /* ------------------------------------------------------------
+       DASHBOARD STATS
+       ------------------------------------------------------------ */
 
-        if (settingsMessage) {
-          settingsMessage.textContent =
-            "Settings saved successfully.";
+    const loadDashboardStats =
+      async () => {
+
+        const {
+          count: projectCount,
+          error: projectError
+        } = await supabaseClient
+          .from("projects")
+          .select("id", {
+            count: "exact",
+            head: true
+          })
+          .eq("user_id", user.id);
+
+        const {
+          count: generationCount,
+          error: generationError
+        } = await supabaseClient
+          .from("ai_generations")
+          .select("id", {
+            count: "exact",
+            head: true
+          })
+          .eq("user_id", user.id);
+
+        if (projectError) {
+          console.error(
+            "Project count error:",
+            projectError
+          );
         }
 
-      } catch (error) {
+        if (generationError) {
+          console.error(
+            "Generation count error:",
+            generationError
+          );
+        }
+
+        const projects =
+          projectError
+            ? 0
+            : projectCount || 0;
+
+        const generations =
+          generationError
+            ? 0
+            : generationCount || 0;
+
+        if ($("projectCount")) {
+          $("projectCount").textContent =
+            projects;
+        }
+
+        if ($("generationCount")) {
+          $("generationCount").textContent =
+            generations;
+        }
+
+        if ($("projectCountNote")) {
+          $("projectCountNote").textContent =
+            projects === 0
+              ? "No projects yet"
+              : `${projects} active project${
+                  projects === 1
+                    ? ""
+                    : "s"
+                }`;
+        }
+
+        if ($("generationCountNote")) {
+          $("generationCountNote").textContent =
+            generations === 0
+              ? "Start your first generation"
+              : `${generations} generation${
+                  generations === 1
+                    ? ""
+                    : "s"
+                } created`;
+        }
+
+        if (
+          $("planValue") &&
+          profile?.plan
+        ) {
+          $("planValue").textContent =
+            profile.plan;
+        }
+
+        if ($("planNote")) {
+          $("planNote").textContent =
+            "VANTA AI workspace";
+        }
+      };
+
+    /* ------------------------------------------------------------
+       PROJECTS
+       ------------------------------------------------------------ */
+
+    const loadProjects = async () => {
+      const grid =
+        document.querySelector(
+          ".projects-grid"
+        );
+
+      if (!grid) return;
+
+      const {
+        data,
+        error
+      } = await supabaseClient
+        .from("projects")
+        .select(
+          "id, name, description, status, created_at, updated_at"
+        )
+        .eq("user_id", user.id)
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+      if (error) {
         console.error(
-          "Settings save error:",
+          "Projects load error:",
           error
         );
 
-        if (settingsMessage) {
-          settingsMessage.textContent =
+        grid.innerHTML = `
+          <div class="project-card">
+            <div class="project-icon">!</div>
+            <h3>Projects unavailable</h3>
+            <p>
+              We could not load your projects right now.
+            </p>
+          </div>
+        `;
+
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        grid.innerHTML = `
+          <div class="project-card">
+            <div class="project-icon">✦</div>
+            <h3>No projects yet</h3>
+            <p>
+              Your VANTA AI projects will appear here
+              when you create them.
+            </p>
+          </div>
+        `;
+
+        return;
+      }
+
+      grid.innerHTML =
+        data
+          .map(
+            (project, index) => {
+
+              const icons = [
+                "✦",
+                "⌘",
+                "◇",
+                "◌",
+                "✧"
+              ];
+
+              const icon =
+                icons[
+                  index %
+                  icons.length
+                ];
+
+              const status =
+                project.status ||
+                "active";
+
+              const description =
+                project.description ||
+                "VANTA AI project workspace.";
+
+              return `
+                <article class="project-card">
+
+                  <div class="project-icon">
+                    ${icon}
+                  </div>
+
+                  <h3>
+                    ${escapeHtml(
+                      project.name
+                    )}
+                  </h3>
+
+                  <p>
+                    ${escapeHtml(
+                      description
+                    )}
+                  </p>
+
+                  <div
+                    style="
+                      margin-top:14px;
+                      color:#7DECFB;
+                      font-size:10px;
+                      text-transform:uppercase;
+                      letter-spacing:.12em;
+                    "
+                  >
+                    ${escapeHtml(
+                      status
+                    )}
+                  </div>
+
+                </article>
+              `;
+            }
+          )
+          .join("");
+    };
+
+    /* ------------------------------------------------------------
+       AI GENERATION
+       ------------------------------------------------------------ */
+
+    const generateAI = async (
+      promptElement,
+      responseElement,
+      button
+    ) => {
+
+      const prompt =
+        promptElement?.value
+          ?.trim() || "";
+
+      if (!prompt) {
+
+        if (responseElement) {
+          responseElement.textContent =
+            "Please enter a prompt first.";
+
+          responseElement.classList.add(
+            "show"
+          );
+        }
+
+        promptElement?.focus();
+
+        return;
+      }
+
+      if (prompt.length > 10000) {
+
+        if (responseElement) {
+          responseElement.textContent =
+            "Your prompt is too long. Please keep it under 10,000 characters.";
+
+          responseElement.classList.add(
+            "show"
+          );
+        }
+
+        return;
+      }
+
+      if (!button) return;
+
+      button.disabled = true;
+      button.textContent =
+        "Generating...";
+
+      if (responseElement) {
+        responseElement.classList.add(
+          "show"
+        );
+
+        responseElement.textContent =
+          "VANTA AI is thinking...";
+      }
+
+      try {
+
+        const {
+          data: latestSession,
+          error: sessionError
+        } =
+          await supabaseClient.auth.getSession();
+
+        if (
+          sessionError ||
+          !latestSession?.session
+        ) {
+          throw new Error(
+            "Your session has expired. Please log in again."
+          );
+        }
+
+        const generationId =
+          crypto.randomUUID();
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.functions.invoke(
+            "vanta-ai",
+            {
+              body: {
+                prompt,
+                generation_id:
+                  generationId
+              }
+            }
+          );
+
+        if (error) {
+          throw new Error(
             error.message ||
-            "Could not save settings.";
+            "AI generation failed."
+          );
+        }
+
+        if (data?.error) {
+          throw new Error(
+            data.error
+          );
+        }
+
+        const responseText =
+          typeof data?.response ===
+          "string"
+            ? data.response.trim()
+            : "";
+
+        if (!responseText) {
+          throw new Error(
+            "VANTA AI returned an empty response."
+          );
+        }
+
+        if (responseElement) {
+          responseElement.textContent =
+            responseText;
+
+          responseElement.classList.add(
+            "show"
+          );
+        }
+
+        const {
+          error: saveError
+        } =
+          await supabaseClient
+            .from("ai_generations")
+            .insert({
+              id: generationId,
+              user_id: user.id,
+              prompt,
+              response:
+                responseText,
+              model:
+                data?.model ||
+                "gpt-5-mini",
+              status:
+                "completed"
+            });
+
+        if (saveError) {
+          console.error(
+            "Generation history save error:",
+            saveError
+          );
+        }
+
+        await loadDashboardStats();
+
+      } catch (error) {
+
+        console.error(
+          "VANTA AI generation error:",
+          error
+        );
+
+        if (responseElement) {
+          responseElement.textContent =
+            error?.message ||
+            "VANTA AI could not generate a response right now.";
+
+          responseElement.classList.add(
+            "show"
+          );
         }
 
       } finally {
-        saveSettings.disabled = false;
-        saveSettings.textContent = "Save Changes";
+
+        button.disabled = false;
+
+        button.textContent =
+          "Generate";
       }
-    });
+    };
+
+    /* ------------------------------------------------------------
+       AI WORKSPACE BUTTONS
+       ------------------------------------------------------------ */
+
+    const generateBtn =
+      $("generateBtn");
+
+    const aiPrompt =
+      $("aiPrompt");
+
+    const aiResponse =
+      $("aiResponse");
+
+    generateBtn?.addEventListener(
+      "click",
+      () => {
+        generateAI(
+          aiPrompt,
+          aiResponse,
+          generateBtn
+        );
+      }
+    );
+
+    const generateBtnFull =
+      $("generateBtnFull");
+
+    const aiPromptFull =
+      $("aiPromptFull");
+
+    const aiResponseFull =
+      $("aiResponseFull");
+
+    generateBtnFull?.addEventListener(
+      "click",
+      () => {
+        generateAI(
+          aiPromptFull,
+          aiResponseFull,
+          generateBtnFull
+        );
+      }
+    );
+
+    /* ------------------------------------------------------------
+       ENTER TO GENERATE
+       Shift + Enter = new line
+       ------------------------------------------------------------ */
+
+    [
+      aiPrompt,
+      aiPromptFull
+    ].forEach(
+      (textarea, index) => {
+
+        textarea?.addEventListener(
+          "keydown",
+          (event) => {
+
+            if (
+              event.key ===
+                "Enter" &&
+              !event.shiftKey
+            ) {
+
+              event.preventDefault();
+
+              if (index === 0) {
+                generateBtn?.click();
+              } else {
+                generateBtnFull?.click();
+              }
+            }
+          }
+        );
+      }
+    );
+
+    /* ------------------------------------------------------------
+       SETTINGS
+       ------------------------------------------------------------ */
+
+    const saveSettings =
+      $("saveSettings");
+
+    const settingsName =
+      $("settingsName");
+
+    const settingsMessage =
+      $("settingsMessage");
+
+    saveSettings?.addEventListener(
+      "click",
+      async () => {
+
+        const newName =
+          settingsName?.value
+            ?.trim() || "";
+
+        if (!newName) {
+
+          if (settingsMessage) {
+            settingsMessage.textContent =
+              "Please enter your name.";
+          }
+
+          return;
+        }
+
+        saveSettings.disabled =
+          true;
+
+        saveSettings.textContent =
+          "Saving...";
+
+        try {
+
+          const {
+            error: authError
+          } =
+            await supabaseClient.auth.updateUser(
+              {
+                data: {
+                  full_name:
+                    newName,
+                  name:
+                    newName
+                }
+              }
+            );
+
+          if (authError) {
+            throw authError;
+          }
+
+          const {
+            error: profileError
+          } =
+            await supabaseClient
+              .from("profiles")
+              .upsert(
+                {
+                  id: user.id,
+                  full_name:
+                    newName,
+                  plan:
+                    profile?.plan ||
+                    "Free"
+                },
+                {
+                  onConflict:
+                    "id"
+                }
+              );
+
+          if (profileError) {
+            throw profileError;
+          }
+
+          profile = {
+            ...(profile || {}),
+            id: user.id,
+            full_name:
+              newName
+          };
+
+          if ($("welcomeName")) {
+            $("welcomeName").textContent =
+              newName.split(" ")[0];
+          }
+
+          if ($("sidebarName")) {
+            $("sidebarName").textContent =
+              newName;
+          }
+
+          const initials =
+            newName
+              .split(/\s+/)
+              .filter(Boolean)
+              .map(
+                (word) =>
+                  word[0]
+              )
+              .join("")
+              .slice(0, 2)
+              .toUpperCase();
+
+          if ($("sidebarAvatar")) {
+            $("sidebarAvatar").textContent =
+              initials || "U";
+          }
+
+          if (settingsMessage) {
+            settingsMessage.textContent =
+              "Profile updated successfully.";
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Settings save error:",
+            error
+          );
+
+          if (settingsMessage) {
+            settingsMessage.textContent =
+              error?.message ||
+              "Could not update your profile.";
+          }
+
+        } finally {
+
+          saveSettings.disabled =
+            false;
+
+          saveSettings.textContent =
+            "Save changes";
+        }
+      }
+    );
+
+    /* ------------------------------------------------------------
+       AUTH STATE LISTENER
+       ------------------------------------------------------------ */
+
+    supabaseClient.auth.onAuthStateChange(
+      (event, session) => {
+
+        if (
+          event ===
+            "SIGNED_OUT" ||
+          !session
+        ) {
+          window.location.href =
+            "login.html";
+        }
+      }
+    );
+
+    /* ------------------------------------------------------------
+       INITIAL DATA
+       ------------------------------------------------------------ */
+
+    await Promise.all([
+      loadDashboardStats(),
+      loadProjects()
+    ]);
+
+    console.log(
+      "VANTA AI — Dashboard authenticated and ready"
+    );
+  };
+
+  /* --------------------------------------------------------------
+     HTML ESCAPE
+     -------------------------------------------------------------- */
+
+  const escapeHtml = (value) => {
+
+    return String(
+      value ?? ""
+    )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+  };
+
+  /* --------------------------------------------------------------
+     START
+     -------------------------------------------------------------- */
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      { once: true }
+    );
+
+  } else {
+
+    boot();
   }
 
-  /* ----------------------------------------------------------
-     ESCAPE HTML
-  ---------------------------------------------------------- */
-
-  function escapeHtml(value) {
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  /* ----------------------------------------------------------
-     AUTH STATE
-  ---------------------------------------------------------- */
-
-  supabase.auth.onAuthStateChange(
-    async (event, session) => {
-      if (
-        event === "SIGNED_OUT" ||
-        !session
-      ) {
-        window.location.href = "login.html";
-      }
-    }
-  );
-
-  /* ----------------------------------------------------------
-     INITIAL LOAD
-  ---------------------------------------------------------- */
-
-  await loadProfile();
-
-  const projects = await loadProjects();
-
-  renderProjects(projects);
-
-  await loadStats();
-
-  showView("overview");
-
-  console.log(
-    "VANTA AI Dashboard — Ready"
-  );
-});
+})();

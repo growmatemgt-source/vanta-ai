@@ -1,455 +1,940 @@
 /* ============================================================
    VANTA AI — MAIN JAVASCRIPT
-   Production UI / UX
+   Global website interactions
    ============================================================ */
 
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
+  "use strict";
 
-    /* ========================================================
-       PAGE LOADER
-       ======================================================== */
+  /* ==========================================================
+     DOM READY
+     ========================================================== */
 
+  document.addEventListener("DOMContentLoaded", () => {
+    initPageLoader();
+    initHeader();
+    initMobileMenu();
+    initSmoothScrolling();
+    initScrollReveal();
+    initActiveNavigation();
+    initInteractiveDemo();
+    initCardInteractions();
+    initHeroInteraction();
+    initFooterYear();
+    initContactLinks();
+    initExternalLinks();
+    initKeyboardAccessibility();
+  });
+
+
+  /* ==========================================================
+     PAGE LOADER
+     ========================================================== */
+
+  function initPageLoader() {
     const loader = document.querySelector(".page-loader");
 
-    if (loader) {
-        const hideLoader = () => {
-            setTimeout(() => {
-                loader.classList.add("loaded");
-            }, 450);
-        };
+    if (!loader) return;
 
-        if (document.readyState === "complete") {
-            hideLoader();
-        } else {
-            window.addEventListener("load", hideLoader, { once: true });
-        }
-    }
-
-
-    /* ========================================================
-       HEADER — SCROLL EFFECT
-       ======================================================== */
-
-    const header = document.querySelector(".site-header");
-
-    const handleHeader = () => {
-        if (!header) return;
-
-        header.classList.toggle("scrolled", window.scrollY > 30);
+    const hideLoader = () => {
+      window.setTimeout(() => {
+        loader.classList.add("loaded");
+      }, 250);
     };
 
-    handleHeader();
-
-    window.addEventListener("scroll", handleHeader, {
-        passive: true
-    });
-
-
-    /* ========================================================
-       MOBILE MENU
-       ======================================================== */
-
-    const menuButton = document.querySelector(".mobile-menu-btn");
-    const mobileNav = document.querySelector(".mobile-nav");
-
-    if (menuButton && mobileNav) {
-
-        const closeMobileMenu = () => {
-            menuButton.classList.remove("active");
-            mobileNav.classList.remove("open");
-            menuButton.setAttribute("aria-expanded", "false");
-        };
-
-        const openMobileMenu = () => {
-            menuButton.classList.add("active");
-            mobileNav.classList.add("open");
-            menuButton.setAttribute("aria-expanded", "true");
-        };
-
-        menuButton.setAttribute("aria-expanded", "false");
-
-        menuButton.addEventListener("click", () => {
-
-            const isOpen = mobileNav.classList.contains("open");
-
-            if (isOpen) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-
-        });
-
-
-        /* Close after clicking navigation link */
-
-        mobileNav.querySelectorAll("a").forEach((link) => {
-
-            link.addEventListener("click", () => {
-                closeMobileMenu();
-            });
-
-        });
-
-
-        /* Close when clicking outside */
-
-        document.addEventListener("click", (event) => {
-
-            if (
-                mobileNav.classList.contains("open") &&
-                !mobileNav.contains(event.target) &&
-                !menuButton.contains(event.target)
-            ) {
-                closeMobileMenu();
-            }
-
-        });
-
-
-        /* Close with Escape */
-
-        document.addEventListener("keydown", (event) => {
-
-            if (event.key === "Escape") {
-                closeMobileMenu();
-            }
-
-        });
-
-
-        /* Reset on desktop */
-
-        window.addEventListener("resize", () => {
-
-            if (window.innerWidth > 900) {
-                closeMobileMenu();
-            }
-
-        });
-
-    }
-
-
-    /* ========================================================
-       SMOOTH SCROLL
-       ======================================================== */
-
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-    anchorLinks.forEach((link) => {
-
-        link.addEventListener("click", (event) => {
-
-            const targetId = link.getAttribute("href");
-
-            if (!targetId || targetId === "#") return;
-
-            let target;
-
-            try {
-                target = document.querySelector(targetId);
-            } catch {
-                return;
-            }
-
-            if (!target) return;
-
-            event.preventDefault();
-
-            const headerHeight = header
-                ? header.offsetHeight
-                : 0;
-
-            const targetPosition =
-                target.getBoundingClientRect().top +
-                window.scrollY -
-                headerHeight -
-                12;
-
-            window.scrollTo({
-                top: targetPosition,
-                behavior: "smooth"
-            });
-
-        });
-
-    });
-
-
-    /* ========================================================
-       SCROLL REVEAL
-       ======================================================== */
-
-    const revealElements = document.querySelectorAll(".reveal");
-
-    if (
-        "IntersectionObserver" in window &&
-        revealElements.length
-    ) {
-
-        const revealObserver = new IntersectionObserver(
-            (entries, observer) => {
-
-                entries.forEach((entry) => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add("revealed");
-
-                        observer.unobserve(entry.target);
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12,
-                rootMargin: "0px 0px -45px 0px"
-            }
-        );
-
-        revealElements.forEach((element) => {
-            revealObserver.observe(element);
-        });
-
+    if (document.readyState === "complete") {
+      hideLoader();
     } else {
-
-        revealElements.forEach((element) => {
-            element.classList.add("revealed");
-        });
-
+      window.addEventListener("load", hideLoader, {
+        once: true
+      });
     }
+  }
 
 
-    /* ========================================================
-       ACTIVE NAVIGATION
-       ======================================================== */
+  /* ==========================================================
+     HEADER
+     ========================================================== */
 
-    const navLinks = document.querySelectorAll(
-        '.desktop-nav a[href^="#"], .mobile-nav a[href^="#"]'
+  function initHeader() {
+    const header = document.querySelector(".site-header");
+
+    if (!header) return;
+
+    const updateHeader = () => {
+      if (window.scrollY > 30) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    };
+
+    updateHeader();
+
+    window.addEventListener(
+      "scroll",
+      updateHeader,
+      {
+        passive: true
+      }
+    );
+  }
+
+
+  /* ==========================================================
+     MOBILE MENU
+     ========================================================== */
+
+  function initMobileMenu() {
+    const menuButton =
+      document.querySelector(".mobile-menu-btn");
+
+    const mobileNav =
+      document.querySelector(".mobile-nav");
+
+    if (!menuButton || !mobileNav) return;
+
+    const closeMenu = () => {
+      menuButton.classList.remove("active");
+      mobileNav.classList.remove("open");
+
+      menuButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      document.body.classList.remove("menu-open");
+    };
+
+    const openMenu = () => {
+      menuButton.classList.add("active");
+      mobileNav.classList.add("open");
+
+      menuButton.setAttribute(
+        "aria-expanded",
+        "true"
+      );
+
+      document.body.classList.add("menu-open");
+    };
+
+    menuButton.setAttribute(
+      "aria-expanded",
+      "false"
     );
 
-    const sections = document.querySelectorAll("main section[id]");
+    menuButton.setAttribute(
+      "aria-label",
+      "Open navigation menu"
+    );
 
-    if (navLinks.length && sections.length) {
+    menuButton.addEventListener("click", () => {
+      const isOpen =
+        mobileNav.classList.contains("open");
 
-        const updateActiveNav = () => {
-
-            const scrollPosition =
-                window.scrollY +
-                (header ? header.offsetHeight : 0) +
-                120;
-
-            let currentSection = "";
-
-            sections.forEach((section) => {
-
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-
-                if (
-                    scrollPosition >= sectionTop &&
-                    scrollPosition < sectionTop + sectionHeight
-                ) {
-                    currentSection = section.id;
-                }
-
-            });
-
-            navLinks.forEach((link) => {
-
-                const href = link.getAttribute("href");
-
-                link.classList.toggle(
-                    "active",
-                    href === `#${currentSection}`
-                );
-
-            });
-
-        };
-
-        updateActiveNav();
-
-        window.addEventListener(
-            "scroll",
-            updateActiveNav,
-            { passive: true }
-        );
-
-    }
-
-
-    /* ========================================================
-       BUTTON MICRO INTERACTIONS
-       ======================================================== */
-
-    const buttons = document.querySelectorAll(".btn");
-
-    buttons.forEach((button) => {
-
-        button.addEventListener("mouseenter", () => {
-            button.style.willChange = "transform";
-        });
-
-        button.addEventListener("mouseleave", () => {
-            button.style.willChange = "auto";
-        });
-
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
+    mobileNav
+      .querySelectorAll("a")
+      .forEach((link) => {
+        link.addEventListener("click", () => {
+          closeMenu();
+        });
+      });
 
-    /* ========================================================
-       CARD HOVER EFFECT
-       ======================================================== */
+    document.addEventListener("click", (event) => {
+      const clickedInside =
+        mobileNav.contains(event.target) ||
+        menuButton.contains(event.target);
 
-    const cards = document.querySelectorAll(
-        ".solution-card, .workflow-card, .process-card, .pricing-card, .integration-card"
+      if (!clickedInside) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) {
+        closeMenu();
+      }
+    });
+  }
+
+
+  /* ==========================================================
+     SMOOTH SCROLLING
+     ========================================================== */
+
+  function initSmoothScrolling() {
+    const links =
+      document.querySelectorAll('a[href^="#"]');
+
+    links.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const href =
+          link.getAttribute("href");
+
+        if (!href || href === "#") return;
+
+        const target =
+          document.querySelector(href);
+
+        if (!target) return;
+
+        event.preventDefault();
+
+        const header =
+          document.querySelector(".site-header");
+
+        const headerHeight =
+          header
+            ? header.offsetHeight
+            : 0;
+
+        const targetPosition =
+          target.getBoundingClientRect().top +
+          window.scrollY -
+          headerHeight -
+          15;
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth"
+        });
+
+        history.replaceState(
+          null,
+          "",
+          href
+        );
+      });
+    });
+  }
+
+
+  /* ==========================================================
+     SCROLL REVEAL
+     ========================================================== */
+
+  function initScrollReveal() {
+    const elements =
+      document.querySelectorAll(
+        ".reveal, " +
+        ".solution-card, " +
+        ".automation-item, " +
+        ".industry-card, " +
+        ".process-card, " +
+        ".price-card, " +
+        ".workflow-step, " +
+        ".before-panel, " +
+        ".after-panel"
+      );
+
+    if (!elements.length) return;
+
+    const reduceMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+    if (reduceMotion) {
+      elements.forEach((element) => {
+        element.classList.add("visible");
+      });
+
+      return;
+    }
+
+    elements.forEach((element) => {
+      element.classList.add("reveal");
+    });
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((element) => {
+        element.classList.add("visible");
+      });
+
+      return;
+    }
+
+    const observer =
+      new IntersectionObserver(
+        (entries, observerInstance) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            entry.target.classList.add(
+              "visible"
+            );
+
+            observerInstance.unobserve(
+              entry.target
+            );
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: "0px 0px -45px 0px"
+        }
+      );
+
+    elements.forEach((element) => {
+      observer.observe(element);
+    });
+  }
+
+
+  /* ==========================================================
+     ACTIVE NAVIGATION
+     ========================================================== */
+
+  function initActiveNavigation() {
+    const navLinks =
+      document.querySelectorAll(
+        '.desktop-nav a[href^="#"]'
+      );
+
+    if (!navLinks.length) return;
+
+    const sections = [];
+
+    navLinks.forEach((link) => {
+      const href =
+        link.getAttribute("href");
+
+      const section =
+        document.querySelector(href);
+
+      if (section) {
+        sections.push({
+          section,
+          link
+        });
+      }
+    });
+
+    if (!sections.length) return;
+
+    const updateActiveNav = () => {
+      const scrollPosition =
+        window.scrollY + 140;
+
+      let current = null;
+
+      sections.forEach((item) => {
+        if (
+          item.section.offsetTop <=
+          scrollPosition
+        ) {
+          current = item;
+        }
+      });
+
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      if (current) {
+        current.link.classList.add(
+          "active"
+        );
+      }
+    };
+
+    updateActiveNav();
+
+    window.addEventListener(
+      "scroll",
+      updateActiveNav,
+      {
+        passive: true
+      }
     );
+  }
+
+
+  /* ==========================================================
+     INTERACTIVE VANTA DEMO
+     ========================================================== */
+
+  function initInteractiveDemo() {
+    const demoOptions =
+      document.querySelectorAll(
+        ".demo-option"
+      );
+
+    if (!demoOptions.length) return;
+
+    const demoTitle =
+      document.querySelector(
+        ".demo-result h3"
+      );
+
+    const demoDescription =
+      document.querySelector(
+        ".demo-result > p"
+      );
+
+    const demoSteps =
+      document.querySelectorAll(
+        ".demo-step"
+      );
+
+    const demoData = {
+      leads: {
+        title:
+          "Lead capture & qualification",
+
+        description:
+          "A visitor submits an enquiry. The workflow can capture the information, structure it, apply qualification rules and route the lead to the right destination.",
+
+        steps: [
+          [
+            "01",
+            "Trigger",
+            "New enquiry"
+          ],
+          [
+            "02",
+            "AI",
+            "Understand intent"
+          ],
+          [
+            "03",
+            "Action",
+            "Create lead record"
+          ],
+          [
+            "04",
+            "Outcome",
+            "Route for follow-up"
+          ]
+        ]
+      },
+
+      support: {
+        title:
+          "Customer support workflow",
+
+        description:
+          "Incoming support requests can be classified, enriched with relevant information and routed according to the type of request.",
+
+        steps: [
+          [
+            "01",
+            "Trigger",
+            "New support request"
+          ],
+          [
+            "02",
+            "AI",
+            "Classify request"
+          ],
+          [
+            "03",
+            "Action",
+            "Route response"
+          ],
+          [
+            "04",
+            "Outcome",
+            "Track resolution"
+          ]
+        ]
+      },
+
+      appointments: {
+        title:
+          "Appointment workflow",
+
+        description:
+          "An appointment request can move through qualification, scheduling and notification steps without relying on repetitive manual handling.",
+
+        steps: [
+          [
+            "01",
+            "Trigger",
+            "Booking request"
+          ],
+          [
+            "02",
+            "AI",
+            "Read request"
+          ],
+          [
+            "03",
+            "Action",
+            "Schedule / route"
+          ],
+          [
+            "04",
+            "Outcome",
+            "Notify customer"
+          ]
+        ]
+      },
+
+      reporting: {
+        title:
+          "Reporting & notifications",
+
+        description:
+          "Operational information can be collected from connected systems, organized into a useful summary and delivered to the appropriate team.",
+
+        steps: [
+          [
+            "01",
+            "Trigger",
+            "New data"
+          ],
+          [
+            "02",
+            "AI",
+            "Summarize information"
+          ],
+          [
+            "03",
+            "Action",
+            "Prepare report"
+          ],
+          [
+            "04",
+            "Outcome",
+            "Notify team"
+          ]
+        ]
+      }
+    };
+
+    const applyDemo =
+      (key) => {
+        const data =
+          demoData[key];
+
+        if (!data) return;
+
+        if (demoTitle) {
+          demoTitle.textContent =
+            data.title;
+        }
+
+        if (demoDescription) {
+          demoDescription.textContent =
+            data.description;
+        }
+
+        demoSteps.forEach(
+          (step, index) => {
+            const item =
+              data.steps[index];
+
+            if (!item) return;
+
+            const elements =
+              step.children;
+
+            if (elements[0]) {
+              elements[0].textContent =
+                item[0];
+            }
+
+            if (elements[1]) {
+              elements[1].textContent =
+                item[1];
+            }
+
+            if (elements[2]) {
+              elements[2].textContent =
+                item[2];
+            }
+          }
+        );
+      };
+
+    demoOptions.forEach((option) => {
+      option.addEventListener(
+        "click",
+        () => {
+          demoOptions.forEach(
+            (item) => {
+              item.classList.remove(
+                "active"
+              );
+            }
+          );
+
+          option.classList.add(
+            "active"
+          );
+
+          const key =
+            option.dataset.demo ||
+            option.dataset.usecase ||
+            option.getAttribute(
+              "data-target"
+            );
+
+          if (key) {
+            applyDemo(key);
+          }
+        }
+      );
+    });
+
+    const initialOption =
+      document.querySelector(
+        ".demo-option.active"
+      );
+
+    if (initialOption) {
+      const initialKey =
+        initialOption.dataset.demo ||
+        initialOption.dataset.usecase ||
+        initialOption.getAttribute(
+          "data-target"
+        );
+
+      if (initialKey) {
+        applyDemo(initialKey);
+      }
+    }
+  }
+
+
+  /* ==========================================================
+     CARD INTERACTIONS
+     ========================================================== */
+
+  function initCardInteractions() {
+    const cards =
+      document.querySelectorAll(
+        ".solution-card, " +
+        ".industry-card, " +
+        ".process-card, " +
+        ".automation-item"
+      );
+
+    if (!cards.length) return;
+
+    const reduceMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+    if (reduceMotion) return;
 
     cards.forEach((card) => {
+      card.addEventListener(
+        "mouseenter",
+        () => {
+          card.classList.add(
+            "is-hovered"
+          );
+        }
+      );
 
-        card.addEventListener("mouseenter", () => {
-            card.style.willChange = "transform";
-        });
-
-        card.addEventListener("mouseleave", () => {
-            card.style.willChange = "auto";
-        });
-
+      card.addEventListener(
+        "mouseleave",
+        () => {
+          card.classList.remove(
+            "is-hovered"
+          );
+        }
+      );
     });
+  }
 
 
-    /* ========================================================
-       HERO ORBIT — SUBTLE MOUSE MOVEMENT
-       ======================================================== */
+  /* ==========================================================
+     HERO INTERACTION
+     ========================================================== */
 
-    const heroVisual = document.querySelector(".hero-visual");
+  function initHeroInteraction() {
+    const hero =
+      document.querySelector(".hero");
 
-    if (heroVisual && window.matchMedia("(pointer: fine)").matches) {
+    const visual =
+      document.querySelector(
+        ".hero-visual"
+      );
 
-        let ticking = false;
+    if (!hero || !visual) return;
 
-        heroVisual.addEventListener("mousemove", (event) => {
-
-            if (ticking) return;
-
-            window.requestAnimationFrame(() => {
-
-                const rect = heroVisual.getBoundingClientRect();
-
-                const x =
-                    (event.clientX - rect.left) /
-                    rect.width -
-                    0.5;
-
-                const y =
-                    (event.clientY - rect.top) /
-                    rect.height -
-                    0.5;
-
-                heroVisual.style.setProperty(
-                    "--mouse-x",
-                    `${x * 12}px`
-                );
-
-                heroVisual.style.setProperty(
-                    "--mouse-y",
-                    `${y * 12}px`
-                );
-
-                ticking = false;
-
-            });
-
-            ticking = true;
-
-        });
-
-        heroVisual.addEventListener("mouseleave", () => {
-
-            heroVisual.style.setProperty(
-                "--mouse-x",
-                "0px"
-            );
-
-            heroVisual.style.setProperty(
-                "--mouse-y",
-                "0px"
-            );
-
-        });
-
-    }
-
-
-    /* ========================================================
-       CURRENT YEAR
-       ======================================================== */
-
-    const yearElement = document.querySelector("#year");
-
-    if (yearElement) {
-        yearElement.textContent =
-            new Date().getFullYear();
-    }
-
-
-    /* ========================================================
-       EXTERNAL / CTA BUTTON FEEDBACK
-       ======================================================== */
-
-    const actionLinks = document.querySelectorAll(
-        'a[href^="mailto:"], a[href^="https://wa.me/"]'
-    );
-
-    actionLinks.forEach((link) => {
-
-        link.addEventListener("click", () => {
-            link.classList.add("clicked");
-
-            setTimeout(() => {
-                link.classList.remove("clicked");
-            }, 500);
-        });
-
-    });
-
-
-    /* ========================================================
-       REDUCED MOTION ACCESSIBILITY
-       ======================================================== */
-
-    const reducedMotion = window.matchMedia(
+    const reduceMotion =
+      window.matchMedia(
         "(prefers-reduced-motion: reduce)"
-    );
+      ).matches;
 
-    if (reducedMotion.matches) {
+    if (reduceMotion) return;
 
-        document.documentElement.style.scrollBehavior =
-            "auto";
+    /*
+      Only enable the subtle mouse movement
+      on devices that actually have a mouse.
+    */
 
-        revealElements.forEach((element) => {
-            element.classList.add("revealed");
-        });
-
+    if (
+      !window.matchMedia(
+        "(hover: hover)"
+      ).matches
+    ) {
+      return;
     }
 
+    hero.addEventListener(
+      "mousemove",
+      (event) => {
+        const rect =
+          hero.getBoundingClientRect();
 
-    /* ========================================================
-       CONSOLE BRANDING
-       ======================================================== */
+        const x =
+          (event.clientX -
+            rect.left) /
+          rect.width;
 
-    console.log(
-        "%cVANTA AI",
-        "font-size:22px;font-weight:700;color:#7C5CFF;"
+        const y =
+          (event.clientY -
+            rect.top) /
+          rect.height;
+
+        const moveX =
+          (x - 0.5) * 12;
+
+        const moveY =
+          (y - 0.5) * 12;
+
+        visual.style.transform =
+          `translate3d(${moveX}px, ${moveY}px, 0)`;
+      }
     );
 
-    console.log(
-        "%cAutomation that works.",
-        "font-size:13px;color:#22D3EE;"
+    hero.addEventListener(
+      "mouseleave",
+      () => {
+        visual.style.transform =
+          "";
+      }
     );
+  }
 
-});
+
+  /* ==========================================================
+     FOOTER YEAR
+     ========================================================== */
+
+  function initFooterYear() {
+    const year =
+      document.querySelector("#year");
+
+    if (!year) return;
+
+    year.textContent =
+      new Date().getFullYear();
+  }
+
+
+  /* ==========================================================
+     CONTACT LINKS
+     ========================================================== */
+
+  function initContactLinks() {
+    /*
+      These are optional.
+      If the relevant links exist on a page,
+      they are enhanced without requiring
+      them to exist.
+    */
+
+    const whatsappLinks =
+      document.querySelectorAll(
+        "[data-whatsapp]"
+      );
+
+    whatsappLinks.forEach((link) => {
+      const number =
+        link.dataset.whatsapp;
+
+      if (!number) return;
+
+      link.setAttribute(
+        "href",
+        `https://wa.me/${number}`
+      );
+
+      link.setAttribute(
+        "target",
+        "_blank"
+      );
+
+      link.setAttribute(
+        "rel",
+        "noopener noreferrer"
+      );
+    });
+
+
+    const emailLinks =
+      document.querySelectorAll(
+        "[data-email]"
+      );
+
+    emailLinks.forEach((link) => {
+      const email =
+        link.dataset.email;
+
+      if (!email) return;
+
+      link.setAttribute(
+        "href",
+        `mailto:${email}`
+      );
+    });
+  }
+
+
+  /* ==========================================================
+     EXTERNAL LINKS
+     ========================================================== */
+
+  function initExternalLinks() {
+    const links =
+      document.querySelectorAll(
+        'a[href^="http://"], ' +
+        'a[href^="https://"]'
+      );
+
+    links.forEach((link) => {
+      const href =
+        link.getAttribute("href");
+
+      if (!href) return;
+
+      const currentHost =
+        window.location.hostname;
+
+      let linkHost = "";
+
+      try {
+        linkHost =
+          new URL(href).hostname;
+      } catch {
+        return;
+      }
+
+      if (
+        linkHost &&
+        linkHost !== currentHost
+      ) {
+        link.setAttribute(
+          "target",
+          "_blank"
+        );
+
+        link.setAttribute(
+          "rel",
+          "noopener noreferrer"
+        );
+      }
+    });
+  }
+
+
+  /* ==========================================================
+     KEYBOARD ACCESSIBILITY
+     ========================================================== */
+
+  function initKeyboardAccessibility() {
+    const interactiveElements =
+      document.querySelectorAll(
+        "button, a, input, textarea, select"
+      );
+
+    interactiveElements.forEach(
+      (element) => {
+        element.addEventListener(
+          "keydown",
+          (event) => {
+            if (
+              event.key === "Enter" &&
+              element.tagName === "BUTTON"
+            ) {
+              /*
+                Native buttons already handle Enter.
+                This simply keeps custom button-like
+                elements from becoming inert.
+              */
+            }
+          }
+        );
+      }
+    );
+  }
+
+
+  /* ==========================================================
+     BUTTON PRESS FEEDBACK
+     ========================================================== */
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      const button =
+        event.target.closest(
+          ".btn, .nav-cta, .price-button, .text-link"
+        );
+
+      if (!button) return;
+
+      button.classList.add(
+        "is-pressed"
+      );
+    }
+  );
+
+  document.addEventListener(
+    "pointerup",
+    () => {
+      document
+        .querySelectorAll(
+          ".is-pressed"
+        )
+        .forEach((element) => {
+          element.classList.remove(
+            "is-pressed"
+          );
+        });
+    }
+  );
+
+
+  /* ==========================================================
+     GLOBAL ERROR PROTECTION
+     ========================================================== */
+
+  window.addEventListener(
+    "error",
+    (event) => {
+      /*
+        Prevent a missing optional element
+        from breaking the whole page.
+      */
+
+      if (!event.error) return;
+
+      console.warn(
+        "VANTA AI page interaction warning:",
+        event.error
+      );
+    }
+  );
+
+})();

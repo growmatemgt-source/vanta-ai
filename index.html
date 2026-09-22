@@ -1,1177 +1,2165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <title>VANTA AI — Intelligent Automation</title>
 
-    <meta
-        name="description"
-        content="VANTA AI — Intelligent automation systems built for modern businesses."
-    >
+  <meta
+    name="description"
+    content="VANTA AI designs intelligent automation systems that reduce repetitive work, connect business tools, and improve operational workflows."
+  >
 
-    <meta name="theme-color" content="#08090b">
+  <meta name="theme-color" content="#070A12">
 
-    <title>VANTA AI — Intelligent Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <!-- ======================================================
-         PAGE LOADER
-         ====================================================== -->
+  <!-- =========================================================
+       PAGE LOADER
+       ========================================================= -->
 
-    <div class="page-loader" id="pageLoader">
-        <div class="loader-logo">V</div>
-        <div class="loader-line"></div>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-logo">V</div>
+    <div class="loader-line"></div>
+  </div>
+
+
+  <!-- =========================================================
+       BACKGROUND
+       ========================================================= -->
+
+  <div class="noise"></div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+
+  <header class="site-header" id="siteHeader">
+
+    <div class="container nav-container">
+
+      <a href="index.html" class="brand" aria-label="VANTA AI Home">
+        <span class="brand-mark">V</span>
+
+        <span class="brand-name">
+          VANTA<span>AI</span>
+        </span>
+      </a>
+
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+
+        <a href="#solutions">
+          Solutions
+        </a>
+
+        <a href="#automation">
+          Automate
+        </a>
+
+        <a href="#workflows">
+          Workflows
+        </a>
+
+        <a href="#process">
+          Process
+        </a>
+
+        <a href="#pricing">
+          Pricing
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
+      </nav>
+
+
+      <div class="nav-actions">
+
+        <a href="login.html" class="nav-login">
+          Log in
+        </a>
+
+        <a href="contact.html" class="nav-cta">
+          Request Audit
+          <span>↗</span>
+        </a>
+
+      </div>
+
+
+      <button
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+      </button>
+
     </div>
 
 
-    <!-- ======================================================
-         BACKGROUND
-         ====================================================== -->
+    <!-- MOBILE NAV -->
 
-    <div class="noise"></div>
+    <div class="mobile-nav" id="mobileNav">
 
-    <div class="ambient ambient-one"></div>
-    <div class="ambient ambient-two"></div>
+      <a href="#solutions">
+        Solutions
+      </a>
+
+      <a href="#automation">
+        What We Automate
+      </a>
+
+      <a href="#workflows">
+        Workflows
+      </a>
+
+      <a href="#process">
+        Process
+      </a>
+
+      <a href="#pricing">
+        Pricing
+      </a>
+
+      <a href="about.html">
+        About
+      </a>
 
 
-    <!-- ======================================================
-         HEADER
-         ====================================================== -->
+      <div class="mobile-nav-bottom">
 
-    <header class="site-header" id="siteHeader">
+        <a href="login.html">
+          Log in
+        </a>
 
-        <div class="container nav-container">
+        <a href="contact.html">
+          Request an Automation Audit ↗
+        </a>
 
-            <a href="index.html" class="brand">
-                <span class="brand-mark">V</span>
+      </div>
 
-                <span class="brand-name">
-                    VANTA<span>AI</span>
-                </span>
+    </div>
+
+  </header>
+
+
+  <!-- =========================================================
+       MAIN
+       ========================================================= -->
+
+  <main>
+
+
+    <!-- =======================================================
+         HERO
+         ======================================================= -->
+
+    <section class="hero" id="home">
+
+      <div class="container hero-container">
+
+        <div class="hero-content">
+
+          <div class="eyebrow reveal">
+
+            <span class="eyebrow-dot"></span>
+
+            AI AUTOMATION FOR MODERN BUSINESS
+
+          </div>
+
+
+          <h1 class="hero-title reveal">
+
+            <span>
+              Stop doing
+            </span>
+
+            <span>
+              work that <em>software</em> can do.
+            </span>
+
+          </h1>
+
+
+          <p class="hero-description reveal">
+
+            VANTA AI designs intelligent automation systems
+            that connect your tools, handle repetitive processes,
+            and give your team more time for work that actually matters.
+
+          </p>
+
+
+          <div class="hero-buttons reveal">
+
+            <a
+              href="#demo"
+              class="btn btn-primary"
+            >
+              See VANTA in Action
+              <span>↗</span>
             </a>
 
 
-            <nav class="desktop-nav">
-                <a href="#solutions">Solutions</a>
-                <a href="#workflows">Workflows</a>
-                <a href="#process">Process</a>
-                <a href="#pricing">Pricing</a>
-                <a href="about.html">About</a>
-            </nav>
+            <a
+              href="contact.html"
+              class="btn btn-secondary"
+            >
+              Request an Automation Audit
+            </a>
+
+          </div>
 
 
-            <div class="nav-actions">
+          <div class="hero-trust reveal">
 
-                <a
-                    href="login.html"
-                    class="nav-login"
-                >
-                    Log in
-                </a>
+            <div class="trust-avatars">
 
-                <a
-                    href="login.html"
-                    class="nav-cta"
-                >
-                    Get Started
-                    <span>↗</span>
-                </a>
+              <span>AI</span>
+              <span>CRM</span>
+              <span>API</span>
+              <span>+</span>
 
             </div>
+
+            <p>
+              Built around your existing business workflow
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- HERO SYSTEM -->
+
+        <div class="hero-visual reveal">
+
+          <div class="orbital-system">
+
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="orbit orbit-three"></div>
+
+
+            <div class="core">
+
+              <div class="core-inner">
+
+                <span class="core-v">
+                  V
+                </span>
+
+                <span class="core-status">
+                  AUTOMATION ONLINE
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="node node-one">
+              <span class="node-icon">✦</span>
+              <span>AI</span>
+            </div>
+
+
+            <div class="node node-two">
+              <span class="node-icon">↗</span>
+              <span>CRM</span>
+            </div>
+
+
+            <div class="node node-three">
+              <span class="node-icon">◎</span>
+              <span>DATA</span>
+            </div>
+
+
+            <div class="node node-four">
+              <span class="node-icon">⌁</span>
+              <span>FLOW</span>
+            </div>
+
+          </div>
+
+
+          <div class="hero-card hero-card-top">
+
+            <span class="card-label">
+              AUTOMATION
+            </span>
+
+            <strong>
+              ACTIVE
+            </strong>
+
+            <span class="card-positive">
+              AI
+            </span>
+
+          </div>
+
+
+          <div class="hero-card hero-card-bottom">
+
+            <div class="mini-status"></div>
+
+            <div>
+
+              <span class="card-label">
+                WORKFLOW STATUS
+              </span>
+
+              <strong>
+                Processing automatically
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-scroll">
+
+        <span>
+          Explore the system
+        </span>
+
+        <div class="scroll-line"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         TRUST / POSITIONING
+         ======================================================= -->
+
+    <section class="trusted-section">
+
+      <div class="container">
+
+        <p class="section-overline">
+          CONNECT THE SYSTEMS YOUR BUSINESS ALREADY USES
+        </p>
+
+
+        <div class="integration-row">
+
+          <span>
+            CRM
+          </span>
+
+          <span>
+            EMAIL
+          </span>
+
+          <span>
+            FORMS
+          </span>
+
+          <span>
+            CALENDAR
+          </span>
+
+          <span>
+            DATABASE
+          </span>
+
+          <span>
+            AI
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         DEMO
+         ======================================================= -->
+
+    <section
+      class="section"
+      id="demo"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-number">
+              01 / SEE IT IN ACTION
+            </p>
+
+            <h2>
+              See how a repetitive task becomes an
+              <span>automated workflow.</span>
+            </h2>
+
+          </div>
+
+
+          <p class="section-intro">
+
+            Choose a business scenario and explore
+            what an automation system could look like.
+            These are example workflows, not claims about
+            existing client results.
+
+          </p>
+
+        </div>
+
+
+        <div class="demo-panel">
+
+          <div class="demo-controls">
+
+            <p class="demo-label">
+              SELECT A SCENARIO
+            </p>
 
 
             <button
-                class="mobile-menu-btn"
-                id="mobileMenuBtn"
-                aria-label="Open menu"
-                type="button"
+              type="button"
+              class="demo-option active"
+              data-demo="leads"
             >
-                <span></span>
-                <span></span>
+              <span>01</span>
+              Lead handling
             </button>
 
-        </div>
 
+            <button
+              type="button"
+              class="demo-option"
+              data-demo="support"
+            >
+              <span>02</span>
+              Customer support
+            </button>
 
-        <!-- Mobile Navigation -->
 
-        <div
-            class="mobile-nav"
-            id="mobileNav"
-        >
+            <button
+              type="button"
+              class="demo-option"
+              data-demo="appointments"
+            >
+              <span>03</span>
+              Appointment flow
+            </button>
 
-            <a href="#solutions">Solutions</a>
-            <a href="#workflows">Workflows</a>
-            <a href="#process">Process</a>
-            <a href="#pricing">Pricing</a>
-            <a href="about.html">About</a>
 
-            <div class="mobile-nav-bottom">
+            <button
+              type="button"
+              class="demo-option"
+              data-demo="reporting"
+            >
+              <span>04</span>
+              Reporting
+            </button>
 
-                <a href="login.html">
-                    Log in
-                </a>
+          </div>
 
-                <a href="login.html">
-                    Get Started ↗
-                </a>
 
-            </div>
+          <div class="demo-result">
 
-        </div>
+            <div class="demo-result-top">
 
-    </header>
+              <div>
 
-
-    <!-- ======================================================
-         MAIN
-         ====================================================== -->
-
-    <main>
-
-
-        <!-- ==================================================
-             HERO
-             ================================================== -->
-
-        <section class="hero">
-
-            <div class="container hero-container">
-
-                <div class="hero-content">
-
-                    <div class="eyebrow reveal">
-
-                        <span class="eyebrow-dot"></span>
-
-                        AI AUTOMATION FOR MODERN BUSINESS
-
-                    </div>
-
-
-                    <h1 class="hero-title reveal">
-
-                        <span>Work less.</span>
-
-                        <span>
-                            <em>Automate</em> more.
-                        </span>
-
-                    </h1>
-
-
-                    <p class="hero-description reveal">
-
-                        VANTA AI builds intelligent automation systems
-                        that handle repetitive work, connect your tools,
-                        and help your business move faster.
-
-                    </p>
-
-
-                    <div class="hero-buttons reveal">
-
-                        <a
-                            href="login.html"
-                            class="btn btn-primary"
-                        >
-                            Build your system
-                            <span>↗</span>
-                        </a>
-
-
-                        <a
-                            href="#workflows"
-                            class="btn btn-secondary"
-                        >
-                            Explore workflows
-                        </a>
-
-                    </div>
-
-
-                    <div class="hero-trust reveal">
-
-                        <div class="trust-avatars">
-                            <span>V</span>
-                            <span>A</span>
-                            <span>M</span>
-                            <span>+</span>
-                        </div>
-
-                        <p>
-                            Built for ambitious teams
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- HERO VISUAL -->
-
-                <div class="hero-visual reveal">
-
-                    <div class="orbital-system">
-
-                        <div class="orbit orbit-one"></div>
-                        <div class="orbit orbit-two"></div>
-                        <div class="orbit orbit-three"></div>
-
-
-                        <div class="core">
-
-                            <div class="core-inner">
-
-                                <span class="core-v">V</span>
-
-                                <span class="core-status">
-                                    SYSTEM ONLINE
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- Floating nodes -->
-
-                        <div class="node node-one">
-                            <span class="node-icon">✦</span>
-                            <span>AI</span>
-                        </div>
-
-                        <div class="node node-two">
-                            <span class="node-icon">↗</span>
-                            <span>CRM</span>
-                        </div>
-
-                        <div class="node node-three">
-                            <span class="node-icon">◎</span>
-                            <span>DATA</span>
-                        </div>
-
-                        <div class="node node-four">
-                            <span class="node-icon">⌁</span>
-                            <span>FLOW</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="hero-card hero-card-top">
-
-                        <span class="card-label">
-                            AUTOMATIONS
-                        </span>
-
-                        <strong>24</strong>
-
-                        <span class="card-positive">
-                            +18.4%
-                        </span>
-
-                    </div>
-
-
-                    <div class="hero-card hero-card-bottom">
-
-                        <div class="mini-status"></div>
-
-                        <div>
-                            <span class="card-label">
-                                SYSTEM STATUS
-                            </span>
-
-                            <strong>
-                                All systems operational
-                            </strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="hero-scroll">
-
-                <span>Scroll to explore</span>
-
-                <div class="scroll-line"></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             TRUSTED / INTEGRATIONS
-             ================================================== -->
-
-        <section class="trusted-section">
-
-            <div class="container">
-
-                <p class="section-overline">
-                    BUILT TO CONNECT YOUR BUSINESS
-                </p>
-
-                <div class="integration-row">
-
-                    <span>NOTION</span>
-                    <span>SLACK</span>
-                    <span>STRIPE</span>
-                    <span>HUBSPOT</span>
-                    <span>SHOPIFY</span>
-                    <span>OPENAI</span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             SOLUTIONS
-             ================================================== -->
-
-        <section
-            class="section solutions-section"
-            id="solutions"
-        >
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <p class="section-number">
-                            01 / SOLUTIONS
-                        </p>
-
-                        <h2>
-                            Your business has
-                            <span>better things</span>
-                            to do.
-                        </h2>
-
-                    </div>
-
-
-                    <p class="section-intro">
-
-                        We turn repetitive processes into
-                        intelligent systems that work around
-                        the clock.
-
-                    </p>
-
-                </div>
-
-
-                <div class="solution-grid">
-
-                    <article class="solution-card large-card">
-
-                        <div class="card-top">
-
-                            <span class="solution-index">
-                                01
-                            </span>
-
-                            <span class="solution-icon">
-                                ✦
-                            </span>
-
-                        </div>
-
-                        <div class="solution-content">
-
-                            <h3>
-                                AI Assistants
-                            </h3>
-
-                            <p>
-                                Intelligent agents that answer questions,
-                                qualify leads, summarize information,
-                                and support your team.
-                            </p>
-
-                        </div>
-
-                        <a
-                            href="solutions.html"
-                            class="card-link"
-                        >
-                            Explore solution
-                            <span>↗</span>
-                        </a>
-
-                    </article>
-
-
-                    <article class="solution-card">
-
-                        <div class="card-top">
-
-                            <span class="solution-index">
-                                02
-                            </span>
-
-                            <span class="solution-icon">
-                                ⌁
-                            </span>
-
-                        </div>
-
-                        <div class="solution-content">
-
-                            <h3>
-                                Workflow Automation
-                            </h3>
-
-                            <p>
-                                Connect your tools and eliminate
-                                repetitive manual processes.
-                            </p>
-
-                        </div>
-
-                        <a
-                            href="solutions.html"
-                            class="card-link"
-                        >
-                            Explore solution
-                            <span>↗</span>
-                        </a>
-
-                    </article>
-
-
-                    <article class="solution-card">
-
-                        <div class="card-top">
-
-                            <span class="solution-index">
-                                03
-                            </span>
-
-                            <span class="solution-icon">
-                                ◇
-                            </span>
-
-                        </div>
-
-                        <div class="solution-content">
-
-                            <h3>
-                                Data Intelligence
-                            </h3>
-
-                            <p>
-                                Turn business data into useful,
-                                actionable information.
-                            </p>
-
-                        </div>
-
-                        <a
-                            href="solutions.html"
-                            class="card-link"
-                        >
-                            Explore solution
-                            <span>↗</span>
-                        </a>
-
-                    </article>
-
-
-                    <article class="solution-card">
-
-                        <div class="card-top">
-
-                            <span class="solution-index">
-                                04
-                            </span>
-
-                            <span class="solution-icon">
-                                ↗
-                            </span>
-
-                        </div>
-
-                        <div class="solution-content">
-
-                            <h3>
-                                Lead Systems
-                            </h3>
-
-                            <p>
-                                Capture, qualify and organize
-                                every opportunity automatically.
-                            </p>
-
-                        </div>
-
-                        <a
-                            href="solutions.html"
-                            class="card-link"
-                        >
-                            Explore solution
-                            <span>↗</span>
-                        </a>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             WORKFLOWS
-             ================================================== -->
-
-        <section
-            class="section workflows-section"
-            id="workflows"
-        >
-
-            <div class="container">
-
-                <div class="workflow-layout">
-
-                    <div class="workflow-copy">
-
-                        <p class="section-number">
-                            02 / WORKFLOWS
-                        </p>
-
-                        <h2>
-                            From trigger
-                            <span>to result.</span>
-                        </h2>
-
-                        <p>
-                            A VANTA workflow connects the tools
-                            your business already uses and lets
-                            intelligent automation handle the rest.
-                        </p>
-
-                        <a
-                            href="workflows.html"
-                            class="text-link"
-                        >
-                            See all workflows
-                            <span>↗</span>
-                        </a>
-
-                    </div>
-
-
-                    <div class="workflow-visual">
-
-                        <div class="workflow-line"></div>
-
-
-                        <div class="workflow-step">
-
-                            <div class="workflow-number">
-                                01
-                            </div>
-
-                            <div class="workflow-box">
-
-                                <span class="workflow-small">
-                                    TRIGGER
-                                </span>
-
-                                <strong>
-                                    New lead arrives
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="workflow-step">
-
-                            <div class="workflow-number">
-                                02
-                            </div>
-
-                            <div class="workflow-box">
-
-                                <span class="workflow-small">
-                                    AI PROCESS
-                                </span>
-
-                                <strong>
-                                    Lead is analyzed
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="workflow-step">
-
-                            <div class="workflow-number">
-                                03
-                            </div>
-
-                            <div class="workflow-box">
-
-                                <span class="workflow-small">
-                                    ACTION
-                                </span>
-
-                                <strong>
-                                    CRM is updated
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="workflow-step">
-
-                            <div class="workflow-number">
-                                04
-                            </div>
-
-                            <div class="workflow-box">
-
-                                <span class="workflow-small">
-                                    RESULT
-                                </span>
-
-                                <strong>
-                                    Team gets notified
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             PROCESS
-             ================================================== -->
-
-        <section
-            class="section process-section"
-            id="process"
-        >
-
-            <div class="container">
-
-                <div class="section-heading compact">
-
-                    <div>
-
-                        <p class="section-number">
-                            03 / PROCESS
-                        </p>
-
-                        <h2>
-                            Simple on the surface.
-                            <span>Powerful underneath.</span>
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="process-grid">
-
-                    <div class="process-item">
-
-                        <span class="process-count">
-                            01
-                        </span>
-
-                        <h3>
-                            Discover
-                        </h3>
-
-                        <p>
-                            We understand your current
-                            processes and identify the
-                            biggest automation opportunities.
-                        </p>
-
-                    </div>
-
-
-                    <div class="process-item">
-
-                        <span class="process-count">
-                            02
-                        </span>
-
-                        <h3>
-                            Design
-                        </h3>
-
-                        <p>
-                            We design an automation system
-                            around your actual business needs.
-                        </p>
-
-                    </div>
-
-
-                    <div class="process-item">
-
-                        <span class="process-count">
-                            03
-                        </span>
-
-                        <h3>
-                            Build
-                        </h3>
-
-                        <p>
-                            Your workflows are built, connected,
-                            tested and optimized.
-                        </p>
-
-                    </div>
-
-
-                    <div class="process-item">
-
-                        <span class="process-count">
-                            04
-                        </span>
-
-                        <h3>
-                            Scale
-                        </h3>
-
-                        <p>
-                            Your system keeps evolving as
-                            your business grows.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             PRICING
-             ================================================== -->
-
-        <section
-            class="section pricing-section"
-            id="pricing"
-        >
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <p class="section-number">
-                            04 / PRICING
-                        </p>
-
-                        <h2>
-                            Start small.
-                            <span>Scale intelligently.</span>
-                        </h2>
-
-                    </div>
-
-                    <p class="section-intro">
-                        Flexible systems for teams at
-                        different stages of growth.
-                    </p>
-
-                </div>
-
-
-                <div class="pricing-grid">
-
-                    <article class="price-card">
-
-                        <span class="price-label">
-                            STARTER
-                        </span>
-
-                        <h3>
-                            Foundation
-                        </h3>
-
-                        <p>
-                            For businesses ready to automate
-                            their first critical workflow.
-                        </p>
-
-                        <div class="price">
-                            $299
-                            <small>/ project</small>
-                        </div>
-
-                        <a
-                            href="contact.html"
-                            class="price-button"
-                        >
-                            Get started
-                        </a>
-
-                    </article>
-
-
-                    <article class="price-card featured-price">
-
-                        <div class="featured-label">
-                            MOST REQUESTED
-                        </div>
-
-                        <span class="price-label">
-                            GROWTH
-                        </span>
-
-                        <h3>
-                            Intelligence
-                        </h3>
-
-                        <p>
-                            Connected AI workflows designed
-                            around your growing operation.
-                        </p>
-
-                        <div class="price">
-                            $799
-                            <small>/ project</small>
-                        </div>
-
-                        <a
-                            href="contact.html"
-                            class="price-button"
-                        >
-                            Get started
-                        </a>
-
-                    </article>
-
-
-                    <article class="price-card">
-
-                        <span class="price-label">
-                            SCALE
-                        </span>
-
-                        <h3>
-                            Enterprise
-                        </h3>
-
-                        <p>
-                            Custom automation infrastructure
-                            for complex business operations.
-                        </p>
-
-                        <div class="price custom-price">
-                            Let's talk
-                        </div>
-
-                        <a
-                            href="contact.html"
-                            class="price-button"
-                        >
-                            Contact us
-                        </a>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             FINAL CTA
-             ================================================== -->
-
-        <section class="final-cta">
-
-            <div class="container">
-
-                <div class="cta-box">
-
-                    <div class="cta-glow"></div>
-
-                    <p class="section-number">
-                        READY WHEN YOU ARE
-                    </p>
-
-                    <h2>
-                        Give your business
-                        <span>an unfair advantage.</span>
-                    </h2>
-
-                    <p>
-                        Tell us what slows your team down.
-                        We'll show you what can be automated.
-                    </p>
-
-                    <a
-                        href="contact.html"
-                        class="btn btn-primary cta-button"
-                    >
-                        Start a conversation
-                        <span>↗</span>
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ======================================================
-         FOOTER
-         ====================================================== -->
-
-    <footer class="site-footer">
-
-        <div class="container">
-
-            <div class="footer-top">
-
-                <div class="footer-brand">
-
-                    <a
-                        href="index.html"
-                        class="brand"
-                    >
-
-                        <span class="brand-mark">
-                            V
-                        </span>
-
-                        <span class="brand-name">
-                            VANTA<span>AI</span>
-                        </span>
-
-                    </a>
-
-                    <p>
-                        Intelligent automation
-                        for ambitious businesses.
-                    </p>
-
-                </div>
-
-
-                <div class="footer-links">
-
-                    <div>
-
-                        <span>
-                            EXPLORE
-                        </span>
-
-                        <a href="solutions.html">
-                            Solutions
-                        </a>
-
-                        <a href="workflows.html">
-                            Workflows
-                        </a>
-
-                        <a href="pricing.html">
-                            Pricing
-                        </a>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            COMPANY
-                        </span>
-
-                        <a href="about.html">
-                            About
-                        </a>
-
-                        <a href="contact.html">
-                            Contact
-                        </a>
-
-                        <a href="login.html">
-                            Client login
-                        </a>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            CONTACT
-                        </span>
-
-                        <a href="mailto:hello@vantaai.com">
-                            hello@vantaai.com
-                        </a>
-
-                        <a href="contact.html">
-                            Start a project
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="footer-bottom">
-
-                <span>
-                    ©
-                    <span id="year"></span>
-                    VANTA AI.
-                    All rights reserved.
+                <span class="section-overline">
+                  EXAMPLE WORKFLOW
                 </span>
 
-                <span>
-                    AI systems. Human ambition.
-                </span>
+                <h3 id="demoTitle">
+                  New lead handling
+                </h3>
+
+              </div>
+
+
+              <span class="demo-status">
+                EXAMPLE
+              </span>
 
             </div>
 
+
+            <p id="demoDescription">
+
+              A new enquiry enters your system and is
+              automatically organized, analyzed and routed
+              to the appropriate next step.
+
+            </p>
+
+
+            <div class="demo-flow" id="demoFlow">
+
+              <div class="demo-step">
+
+                <span>
+                  01
+                </span>
+
+                <strong>
+                  Lead arrives
+                </strong>
+
+                <small>
+                  Form / website
+                </small>
+
+              </div>
+
+
+              <div class="demo-connector">
+                →
+              </div>
+
+
+              <div class="demo-step">
+
+                <span>
+                  02
+                </span>
+
+                <strong>
+                  AI analyzes
+                </strong>
+
+                <small>
+                  Intent + details
+                </small>
+
+              </div>
+
+
+              <div class="demo-connector">
+                →
+              </div>
+
+
+              <div class="demo-step">
+
+                <span>
+                  03
+                </span>
+
+                <strong>
+                  CRM updates
+                </strong>
+
+                <small>
+                  Record created
+                </small>
+
+              </div>
+
+
+              <div class="demo-connector">
+                →
+              </div>
+
+
+              <div class="demo-step">
+
+                <span>
+                  04
+                </span>
+
+                <strong>
+                  Next action
+                </strong>
+
+                <small>
+                  Team notified
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <a
+              href="contact.html"
+              class="text-link"
+            >
+              Discuss a workflow like this
+              <span>↗</span>
+            </a>
+
+          </div>
+
         </div>
 
-    </footer>
+      </div>
+
+    </section>
 
 
-    <!-- ======================================================
-         SUPABASE
-         ====================================================== -->
+    <!-- =======================================================
+         SOLUTIONS
+         ======================================================= -->
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-    ></script>
+    <section
+      class="section solutions-section"
+      id="solutions"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-number">
+              02 / SOLUTIONS
+            </p>
+
+            <h2>
+              Build systems around
+              <span>the way you work.</span>
+            </h2>
+
+          </div>
 
 
-    <!-- ======================================================
-         VANTA CONFIG
-         ====================================================== -->
+          <p class="section-intro">
 
-    <script src="js/config.js"></script>
+            VANTA AI focuses on practical automation:
+            reducing repetitive manual steps and connecting
+            the tools your business already depends on.
 
+          </p>
 
-    <!-- ======================================================
-         VANTA MAIN JS
-         ====================================================== -->
-
-    <script src="js/main.js"></script>
+        </div>
 
 
-    <!-- ======================================================
-         FAIL-SAFE LOADER
-         ====================================================== -->
+        <div class="solution-grid">
 
-    <script>
-        (function () {
 
-            function removeLoader() {
+          <article class="solution-card large-card">
 
-                var loader = document.getElementById("pageLoader");
+            <div class="card-top">
 
-                if (!loader) return;
+              <span class="solution-index">
+                01
+              </span>
 
-                loader.style.opacity = "0";
-                loader.style.visibility = "hidden";
-                loader.style.pointerEvents = "none";
-                loader.style.display = "none";
+              <span class="solution-icon">
+                ✦
+              </span>
+
+            </div>
+
+
+            <div class="solution-content">
+
+              <h3>
+                AI Assistants
+              </h3>
+
+              <p>
+                Build focused AI assistants for internal
+                knowledge, customer questions, research,
+                summaries and repetitive information tasks.
+              </p>
+
+            </div>
+
+
+            <a
+              href="solutions.html"
+              class="card-link"
+            >
+              Explore solutions
+              <span>↗</span>
+            </a>
+
+          </article>
+
+
+          <article class="solution-card">
+
+            <div class="card-top">
+
+              <span class="solution-index">
+                02
+              </span>
+
+              <span class="solution-icon">
+                ⌁
+              </span>
+
+            </div>
+
+
+            <div class="solution-content">
+
+              <h3>
+                Workflow Automation
+              </h3>
+
+              <p>
+                Connect forms, email, CRM systems,
+                databases and notifications into
+                repeatable automated processes.
+              </p>
+
+            </div>
+
+
+            <a
+              href="solutions.html"
+              class="card-link"
+            >
+              Explore solutions
+              <span>↗</span>
+            </a>
+
+          </article>
+
+
+          <article class="solution-card">
+
+            <div class="card-top">
+
+              <span class="solution-index">
+                03
+              </span>
+
+              <span class="solution-icon">
+                ◇
+              </span>
+
+            </div>
+
+
+            <div class="solution-content">
+
+              <h3>
+                Data Operations
+              </h3>
+
+              <p>
+                Move, organize, transform and summarize
+                information across the systems your team
+                uses every day.
+              </p>
+
+            </div>
+
+
+            <a
+              href="solutions.html"
+              class="card-link"
+            >
+              Explore solutions
+              <span>↗</span>
+            </a>
+
+          </article>
+
+
+          <article class="solution-card">
+
+            <div class="card-top">
+
+              <span class="solution-index">
+                04
+              </span>
+
+              <span class="solution-icon">
+                ↗
+              </span>
+
+            </div>
+
+
+            <div class="solution-content">
+
+              <h3>
+                Lead Systems
+              </h3>
+
+              <p>
+                Capture enquiries, organize lead information,
+                trigger follow-ups and keep your sales process
+                structured.
+              </p>
+
+            </div>
+
+
+            <a
+              href="solutions.html"
+              class="card-link"
+            >
+              Explore solutions
+              <span>↗</span>
+            </a>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         WHAT CAN WE AUTOMATE
+         ======================================================= -->
+
+    <section
+      class="section automation-section"
+      id="automation"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-number">
+              03 / WHAT CAN WE AUTOMATE?
+            </p>
+
+            <h2>
+              If your team repeats it,
+              <span>it may be automatable.</span>
+            </h2>
+
+          </div>
+
+
+          <p class="section-intro">
+
+            Automation opportunities often hide inside
+            small repetitive tasks that happen every day.
+
+          </p>
+
+        </div>
+
+
+        <div class="automation-grid">
+
+          <article class="automation-item">
+
+            <span>
+              01
+            </span>
+
+            <h3>
+              Lead Capture
+            </h3>
+
+            <p>
+              Collect and organize enquiries from forms,
+              websites and other channels.
+            </p>
+
+          </article>
+
+
+          <article class="automation-item">
+
+            <span>
+              02
+            </span>
+
+            <h3>
+              CRM Updates
+            </h3>
+
+            <p>
+              Keep customer and lead records synchronized
+              with less manual entry.
+            </p>
+
+          </article>
+
+
+          <article class="automation-item">
+
+            <span>
+              03
+            </span>
+
+            <h3>
+              Follow-ups
+            </h3>
+
+            <p>
+              Trigger structured follow-up workflows
+              based on defined business rules.
+            </p>
+
+          </article>
+
+
+          <article class="automation-item">
+
+            <span>
+              04
+            </span>
+
+            <h3>
+              Customer Support
+            </h3>
+
+            <p>
+              Route questions, prepare responses and
+              assist support teams with repetitive work.
+            </p>
+
+          </article>
+
+
+          <article class="automation-item">
+
+            <span>
+              05
+            </span>
+
+            <h3>
+              Appointments
+            </h3>
+
+            <p>
+              Connect enquiries, scheduling and
+              notifications into one workflow.
+            </p>
+
+          </article>
+
+
+          <article class="automation-item">
+
+            <span>
+              06
+            </span>
+
+            <h3>
+              Reporting
+            </h3>
+
+            <p>
+              Gather information and turn recurring
+              reporting tasks into repeatable processes.
+            </p>
+
+          </article>
+
+
+          <article class="automation-item">
+
+            <span>
+              07
+            </span>
+
+            <h3>
+              Notifications
+            </h3>
+
+            <p>
+              Send relevant alerts to the right people
+              when specific events happen.
+            </p>
+
+          </article>
+
+
+          <article class="automation-item">
+
+            <span>
+              08
+            </span>
+
+            <h3>
+              Internal Tasks
+            </h3>
+
+            <p>
+              Reduce repetitive admin work across
+              your team's daily operations.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         INDUSTRIES
+         ======================================================= -->
+
+    <section
+      class="section industries-section"
+      id="industries"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-number">
+              04 / USE CASES
+            </p>
+
+            <h2>
+              Different businesses.
+              <span>Same automation principle.</span>
+            </h2>
+
+          </div>
+
+
+          <p class="section-intro">
+
+            The exact system depends on your tools,
+            process and business requirements.
+
+          </p>
+
+        </div>
+
+
+        <div class="industry-grid">
+
+          <article class="industry-card">
+
+            <span>
+              E-COMMERCE
+            </span>
+
+            <h3>
+              Order & customer workflows
+            </h3>
+
+            <p>
+              Example: organize incoming orders,
+              customer questions and internal notifications.
+            </p>
+
+          </article>
+
+
+          <article class="industry-card">
+
+            <span>
+              AGENCIES
+            </span>
+
+            <h3>
+              Lead & client operations
+            </h3>
+
+            <p>
+              Example: capture enquiries, structure
+              client information and trigger follow-ups.
+            </p>
+
+          </article>
+
+
+          <article class="industry-card">
+
+            <span>
+              PROFESSIONAL SERVICES
+            </span>
+
+            <h3>
+              Intake & scheduling
+            </h3>
+
+            <p>
+              Example: connect enquiry forms,
+              qualification and appointment workflows.
+            </p>
+
+          </article>
+
+
+          <article class="industry-card">
+
+            <span>
+              ONLINE BUSINESSES
+            </span>
+
+            <h3>
+              Content & operations
+            </h3>
+
+            <p>
+              Example: automate repetitive information,
+              notification and reporting tasks.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         WORKFLOW
+         ======================================================= -->
+
+    <section
+      class="section workflows-section"
+      id="workflows"
+    >
+
+      <div class="container">
+
+        <div class="workflow-layout">
+
+          <div class="workflow-copy">
+
+            <p class="section-number">
+              05 / WORKFLOWS
+            </p>
+
+            <h2>
+              From trigger
+              <span>to result.</span>
+            </h2>
+
+            <p>
+              A well-designed automation connects the
+              right trigger, logic, tools and outcome
+              into one repeatable process.
+            </p>
+
+
+            <a
+              href="workflows.html"
+              class="text-link"
+            >
+              Explore workflow examples
+              <span>↗</span>
+            </a>
+
+          </div>
+
+
+          <div class="workflow-visual">
+
+            <div class="workflow-line"></div>
+
+
+            <div class="workflow-step">
+
+              <div class="workflow-number">
+                01
+              </div>
+
+              <div class="workflow-box">
+
+                <span class="workflow-small">
+                  TRIGGER
+                </span>
+
+                <strong>
+                  New information arrives
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+              <div class="workflow-number">
+                02
+              </div>
+
+              <div class="workflow-box">
+
+                <span class="workflow-small">
+                  PROCESS
+                </span>
+
+                <strong>
+                  Rules + AI analyze it
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+              <div class="workflow-number">
+                03
+              </div>
+
+              <div class="workflow-box">
+
+                <span class="workflow-small">
+                  ACTION
+                </span>
+
+                <strong>
+                  Connected tools update
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+              <div class="workflow-number">
+                04
+              </div>
+
+              <div class="workflow-box">
+
+                <span class="workflow-small">
+                  RESULT
+                </span>
+
+                <strong>
+                  Team gets the next step
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         BEFORE / AFTER
+         ======================================================= -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-number">
+              06 / BEFORE → AFTER
+            </p>
+
+            <h2>
+              Replace scattered manual work with
+              <span>one clear system.</span>
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="before-after">
+
+          <div class="before-panel">
+
+            <span class="panel-label">
+              BEFORE
+            </span>
+
+            <h3>
+              Manual process
+            </h3>
+
+            <ul>
+
+              <li>
+                <span>01</span>
+                Check incoming enquiry
+              </li>
+
+              <li>
+                <span>02</span>
+                Copy information into CRM
+              </li>
+
+              <li>
+                <span>03</span>
+                Review and categorize
+              </li>
+
+              <li>
+                <span>04</span>
+                Send follow-up
+              </li>
+
+              <li>
+                <span>05</span>
+                Notify the team
+              </li>
+
+            </ul>
+
+          </div>
+
+
+          <div class="after-panel">
+
+            <span class="panel-label">
+              AFTER
+            </span>
+
+            <h3>
+              Connected workflow
+            </h3>
+
+            <ul>
+
+              <li>
+                <span>01</span>
+                Enquiry triggers workflow
+              </li>
+
+              <li>
+                <span>02</span>
+                Information is processed
+              </li>
+
+              <li>
+                <span>03</span>
+                CRM record is updated
+              </li>
+
+              <li>
+                <span>04</span>
+                Follow-up is triggered
+              </li>
+
+              <li>
+                <span>05</span>
+                Team receives notification
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         PROCESS
+         ======================================================= -->
+
+    <section
+      class="section process-section"
+      id="process"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-number">
+              07 / PROCESS
+            </p>
+
+            <h2>
+              From business problem
+              <span>to working system.</span>
+            </h2>
+
+          </div>
+
+
+          <p class="section-intro">
+
+            Every automation starts with understanding
+            the process before choosing the technology.
+
+          </p>
+
+        </div>
+
+
+        <div class="process-grid">
+
+          <article class="process-card">
+
+            <span>
+              01
+            </span>
+
+            <h3>
+              Discover
+            </h3>
+
+            <p>
+              Understand your current workflow,
+              tools, bottlenecks and repetitive tasks.
+            </p>
+
+          </article>
+
+
+          <article class="process-card">
+
+            <span>
+              02
+            </span>
+
+            <h3>
+              Design
+            </h3>
+
+            <p>
+              Map the automation logic, integrations,
+              inputs, outputs and required controls.
+            </p>
+
+          </article>
+
+
+          <article class="process-card">
+
+            <span>
+              03
+            </span>
+
+            <h3>
+              Build
+            </h3>
+
+            <p>
+              Implement the workflow and connect
+              the systems required for the process.
+            </p>
+
+          </article>
+
+
+          <article class="process-card">
+
+            <span>
+              04
+            </span>
+
+            <h3>
+              Deploy & Evolve
+            </h3>
+
+            <p>
+              Test the workflow, deploy it and improve
+              it as your business requirements change.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         PRICING
+         ======================================================= -->
+
+    <section
+      class="section pricing-section"
+      id="pricing"
+    >
+
+      <div class="container">
+
+        <div class="section-heading centered">
+
+          <p class="section-number">
+            08 / PRICING
+          </p>
+
+          <h2>
+            Start with the system
+            <span>your business needs.</span>
+          </h2>
+
+          <p class="section-intro">
+            Pricing is based on the scope, integrations and
+            complexity of the automation being built.
+          </p>
+
+        </div>
+
+
+        <div class="pricing-grid">
+
+
+          <article class="price-card">
+
+            <p class="plan">
+              FOUNDATION
+            </p>
+
+            <h3>
+              $299
+            </h3>
+
+            <span>
+              For focused automation projects.
+            </span>
+
+
+            <ul>
+
+              <li>
+                ✓ Workflow discovery
+              </li>
+
+              <li>
+                ✓ One focused automation
+              </li>
+
+              <li>
+                ✓ Basic integrations
+              </li>
+
+              <li>
+                ✓ Implementation
+              </li>
+
+              <li>
+                ✓ Testing & handoff
+              </li>
+
+            </ul>
+
+
+            <a
+              href="contact.html"
+              class="price-button"
+            >
+              Discuss this plan
+            </a>
+
+          </article>
+
+
+          <article class="price-card featured-price">
+
+            <div class="popular-label">
+              INTELLIGENCE
+            </div>
+
+            <p class="plan">
+              INTELLIGENCE
+            </p>
+
+            <h3>
+              $799
+            </h3>
+
+            <span>
+              For multi-step AI-powered workflows.
+            </span>
+
+
+            <ul>
+
+              <li>
+                ✓ Workflow discovery
+              </li>
+
+              <li>
+                ✓ Multi-step automation
+              </li>
+
+              <li>
+                ✓ AI-assisted processing
+              </li>
+
+              <li>
+                ✓ Multiple integrations
+              </li>
+
+              <li>
+                ✓ Testing & deployment
+              </li>
+
+            </ul>
+
+
+            <a
+              href="contact.html"
+              class="price-button"
+            >
+              Discuss this plan
+            </a>
+
+          </article>
+
+
+          <article class="price-card">
+
+            <p class="plan">
+              ENTERPRISE
+            </p>
+
+            <h3>
+              Custom
+            </h3>
+
+            <span>
+              For larger or more complex systems.
+            </span>
+
+
+            <ul>
+
+              <li>
+                ✓ Custom workflow architecture
+              </li>
+
+              <li>
+                ✓ Multiple business processes
+              </li>
+
+              <li>
+                ✓ Advanced integrations
+              </li>
+
+              <li>
+                ✓ Custom AI workflows
+              </li>
+
+              <li>
+                ✓ Ongoing system evolution
+              </li>
+
+            </ul>
+
+
+            <a
+              href="contact.html"
+              class="price-button"
+            >
+              Talk to VANTA
+            </a>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         TRUST / SECURITY
+         ======================================================= -->
+
+    <section class="section trust-section">
+
+      <div class="container">
+
+        <div class="trust-panel">
+
+          <div>
+
+            <p class="section-number">
+              09 / TRUST & CONTROL
+            </p>
+
+            <h2>
+              Automation should make
+              your process clearer —
+              <span>not less controlled.</span>
+            </h2>
+
+          </div>
+
+
+          <div class="trust-points">
+
+            <div>
+
+              <strong>
+                Defined workflows
+              </strong>
+
+              <p>
+                Automations are designed around explicit
+                business rules and expected outcomes.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                Appropriate access
+              </strong>
+
+              <p>
+                Integrations should use only the access
+                required for the workflow being implemented.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                Human oversight
+              </strong>
+
+              <p>
+                Sensitive or important decisions can remain
+                subject to human review where appropriate.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FINAL CTA
+         ======================================================= -->
+
+    <section class="cta-section">
+
+      <div class="container">
+
+        <div class="cta-inner">
+
+          <p class="section-number">
+            READY TO AUTOMATE?
+          </p>
+
+          <h2>
+            Find the work your team
+            <span>shouldn't be doing manually.</span>
+          </h2>
+
+          <p>
+
+            Tell us about your business, your current process
+            and the repetitive task you want to improve.
+
+          </p>
+
+
+          <div class="cta-buttons">
+
+            <a
+              href="contact.html"
+              class="btn btn-primary"
+            >
+              Request an Automation Audit
+              <span>↗</span>
+            </a>
+
+
+            <a
+              href="solutions.html"
+              class="btn btn-secondary"
+            >
+              Explore Solutions
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <div class="footer-top">
+
+        <div class="footer-brand">
+
+          <a
+            href="index.html"
+            class="brand"
+          >
+
+            <span class="brand-mark">
+              V
+            </span>
+
+            <span class="brand-name">
+              VANTA<span>AI</span>
+            </span>
+
+          </a>
+
+
+          <p>
+            Intelligent automation systems for modern businesses.
+          </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <span>
+            EXPLORE
+          </span>
+
+          <a href="#solutions">
+            Solutions
+          </a>
+
+          <a href="#automation">
+            What We Automate
+          </a>
+
+          <a href="#workflows">
+            Workflows
+          </a>
+
+          <a href="#pricing">
+            Pricing
+          </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <span>
+            COMPANY
+          </span>
+
+          <a href="#process">
+            Process
+          </a>
+
+          <a href="about.html">
+            About
+          </a>
+
+          <a href="contact.html">
+            Contact
+          </a>
+
+          <a href="login.html">
+            Client Workspace
+          </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <span>
+            START
+          </span>
+
+          <a href="contact.html">
+            Request an Audit
+          </a>
+
+          <a href="login.html">
+            Log in
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="footer-bottom">
+
+        <span>
+          © <span id="year"></span> VANTA AI. All rights reserved.
+        </span>
+
+        <span>
+          Intelligent systems. Practical automation.
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================================================
+       SUPABASE
+       ========================================================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/config.js"></script>
+
+  <script src="js/main.js"></script>
+
+
+  <!-- =========================================================
+       HOMEPAGE DEMO
+       ========================================================= -->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const demoOptions =
+        document.querySelectorAll(".demo-option");
+
+      const demoTitle =
+        document.getElementById("demoTitle");
+
+      const demoDescription =
+        document.getElementById("demoDescription");
+
+      const demoFlow =
+        document.getElementById("demoFlow");
+
+
+      const demos = {
+
+        leads: {
+
+          title: "New lead handling",
+
+          description:
+            "A new enquiry enters your system and is automatically organized, analyzed and routed to the appropriate next step.",
+
+          steps: [
+            ["01", "Lead arrives", "Form / website"],
+            ["02", "AI analyzes", "Intent + details"],
+            ["03", "CRM updates", "Record created"],
+            ["04", "Next action", "Team notified"]
+          ]
+
+        },
+
+
+        support: {
+
+          title: "Customer support",
+
+          description:
+            "A support request can be categorized, enriched with relevant information and routed to the appropriate person or workflow.",
+
+          steps: [
+            ["01", "Question arrives", "Email / form"],
+            ["02", "AI classifies", "Topic + intent"],
+            ["03", "System routes", "Queue / owner"],
+            ["04", "Team responds", "Human review"]
+          ]
+
+        },
+
+
+        appointments: {
+
+          title: "Appointment flow",
+
+          description:
+            "A scheduling workflow can connect an enquiry, qualification step, calendar action and notification into one process.",
+
+          steps: [
+            ["01", "Request arrives", "Website / form"],
+            ["02", "Details checked", "Qualification"],
+            ["03", "Calendar action", "Availability"],
+            ["04", "Confirmation", "Customer notified"]
+          ]
+
+        },
+
+
+        reporting: {
+
+          title: "Recurring reporting",
+
+          description:
+            "Recurring information can be collected from connected sources, organized and prepared into a consistent reporting workflow.",
+
+          steps: [
+            ["01", "Data collected", "Connected tools"],
+            ["02", "Information processed", "Rules / AI"],
+            ["03", "Report prepared", "Structured output"],
+            ["04", "Team notified", "Delivery"]
+          ]
+
+        }
+
+      };
+
+
+      function renderDemo(key) {
+
+        const demo = demos[key];
+
+        if (!demo) return;
+
+
+        if (demoTitle) {
+          demoTitle.textContent = demo.title;
+        }
+
+
+        if (demoDescription) {
+          demoDescription.textContent =
+            demo.description;
+        }
+
+
+        if (demoFlow) {
+
+          demoFlow.innerHTML = "";
+
+          demo.steps.forEach((step, index) => {
+
+            const wrapper =
+              document.createElement("div");
+
+            wrapper.className =
+              "demo-step";
+
+            wrapper.innerHTML = `
+              <span>${step[0]}</span>
+              <strong>${step[1]}</strong>
+              <small>${step[2]}</small>
+            `;
+
+            demoFlow.appendChild(wrapper);
+
+
+            if (index < demo.steps.length - 1) {
+
+              const connector =
+                document.createElement("div");
+
+              connector.className =
+                "demo-connector";
+
+              connector.textContent = "→";
+
+              demoFlow.appendChild(connector);
 
             }
 
-            if (document.readyState === "loading") {
+          });
 
-                document.addEventListener(
-                    "DOMContentLoaded",
-                    removeLoader
-                );
+        }
 
-            } else {
+      }
 
-                removeLoader();
 
-            }
+      demoOptions.forEach(option => {
 
-            window.addEventListener(
-                "load",
-                removeLoader
-            );
+        option.addEventListener("click", () => {
 
-            /*
-             * Absolute safety fallback.
-             * Even if another script has an error,
-             * the loader will not remain stuck.
-             */
+          demoOptions.forEach(item => {
+            item.classList.remove("active");
+          });
 
-            setTimeout(
-                removeLoader,
-                2500
-            );
+          option.classList.add("active");
 
-        })();
-    </script>
+          renderDemo(
+            option.dataset.demo
+          );
+
+        });
+
+      });
+
+
+      renderDemo("leads");
+
+    });
+
+  </script>
 
 </body>
 </html>

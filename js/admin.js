@@ -198,24 +198,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function showGlobalError(message) {
     if (usersTableEl) {
-      setError(
-        usersTableEl,
-        message
-      );
+      setError(usersTableEl, message);
     }
 
     if (recentGenerationsEl) {
-      setError(
-        recentGenerationsEl,
-        message
-      );
+      setError(recentGenerationsEl, message);
     }
 
     if (contactMessagesEl) {
-      setError(
-        contactMessagesEl,
-        message
-      );
+      setError(contactMessagesEl, message);
     }
   }
 
@@ -283,9 +274,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* ------------------------------------------------------------
      LOAD USERS
      
-     IMPORTANT:
-     profiles table does NOT have a "plan" column.
-     Therefore we only request columns that actually exist.
+     Emails are loaded securely from the
+     admin-users Edge Function.
      ------------------------------------------------------------ */
 
   async function loadUsers() {
@@ -296,24 +286,43 @@ document.addEventListener("DOMContentLoaded", async () => {
       "Loading users..."
     );
 
-    const {
-      data,
-      error
-    } = await supabase
-      .from("profiles")
-      .select(
-        "id, full_name, created_at"
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
+    try {
+
+      const {
+        data,
+        error
+      } = await supabase.functions.invoke(
+        "admin-users"
       );
 
-    if (error) {
+      if (error) {
+        throw error;
+      }
+
+      if (data?.error) {
+        throw new Error(
+          data.error
+        );
+      }
+
+      const users =
+        Array.isArray(data?.users)
+          ? data.users
+          : [];
+
+      if (usersCountEl) {
+        usersCountEl.textContent =
+          users.length;
+      }
+
+      renderUsers(users);
+
+      return users;
+
+    } catch (error) {
+
       console.error(
-        "VANTA AI profiles error:",
+        "VANTA AI admin-users error:",
         error
       );
 
@@ -328,20 +337,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       return [];
     }
-
-    const users =
-      Array.isArray(data)
-        ? data
-        : [];
-
-    if (usersCountEl) {
-      usersCountEl.textContent =
-        users.length;
-    }
-
-    renderUsers(users);
-
-    return users;
   }
 
 
@@ -351,7 +346,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!users.length) {
       usersTableEl.innerHTML = `
         <tr>
-          <td colspan="4">
+          <td colspan="5">
             <div class="admin-empty">
               No registered users found.
             </div>
@@ -370,18 +365,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             user.full_name ||
             "Unnamed user";
 
+          const email =
+            user.email ||
+            "No email";
+
           const initials =
             getInitials(
               name,
-              user.id
+              email
             );
 
-          /*
-           * Plan column does not currently exist
-           * in profiles, so admin UI displays
-           * the current default plan as Free.
-           */
-          const plan = "Free";
+          const plan =
+            "Free";
+
+          const status =
+            user.last_sign_in_at
+              ? "Active"
+              : "Registered";
 
           return `
             <tr>
@@ -399,18 +399,30 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </strong>
 
                     <span>
-                      ${escapeHTML(user.id)}
+                      ${escapeHTML(email)}
                     </span>
                   </div>
 
                 </div>
               </td>
 
+
+              <td>
+                <span
+                  class="admin-user-email"
+                  title="${escapeHTML(email)}"
+                >
+                  ${escapeHTML(email)}
+                </span>
+              </td>
+
+
               <td>
                 <span class="admin-badge free">
                   ${escapeHTML(plan)}
                 </span>
               </td>
+
 
               <td>
                 ${escapeHTML(
@@ -420,10 +432,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 )}
               </td>
 
+
               <td>
                 <span class="admin-badge active">
                   <span>●</span>
-                  Active
+                  ${escapeHTML(status)}
                 </span>
               </td>
 
@@ -716,7 +729,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       if (contactCountEl) {
-        contactCountEl.textContent = "0 New";
+        contactCountEl.textContent =
+          "0 New";
       }
 
       setError(

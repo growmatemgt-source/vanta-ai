@@ -1,6 +1,5 @@
 /* ============================================================
    VANTA AI — ADMIN JAVASCRIPT
-   Complete Admin + Contact Messages
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -14,9 +13,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!supabase) {
     console.error("VANTA AI: Supabase client not found.");
-    showGlobalError("Supabase connection could not be initialized.");
     return;
   }
+
 
   /* ------------------------------------------------------------
      DOM
@@ -61,21 +60,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const logoutFooterBtn =
     document.getElementById("adminLogoutFooter");
 
-  /*
-     Contact messages container.
+  const contactCountEl =
+    document.getElementById("adminContactCount");
 
-     If admin.html already has:
-     #adminContactMessages
-     it will be used automatically.
-
-     If it doesn't exist yet, the rest of the admin panel
-     will continue working normally.
-  */
   const contactMessagesEl =
     document.getElementById("adminContactMessages");
 
-  const contactCountEl =
-    document.getElementById("adminContactCount");
 
   /* ------------------------------------------------------------
      HELPERS
@@ -89,6 +79,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
   }
+
 
   function getInitials(name, email) {
     const source =
@@ -108,6 +99,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       .slice(0, 2)
       .toUpperCase();
   }
+
 
   function formatDate(dateValue) {
     if (!dateValue) {
@@ -131,29 +123,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
   }
 
-  function formatDateTime(dateValue) {
-    if (!dateValue) {
-      return "—";
-    }
-
-    const date =
-      new Date(dateValue);
-
-    if (Number.isNaN(date.getTime())) {
-      return "—";
-    }
-
-    return date.toLocaleString(
-      undefined,
-      {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      }
-    );
-  }
 
   function formatTimeAgo(dateValue) {
     if (!dateValue) {
@@ -167,13 +136,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       return "Unknown time";
     }
 
-    const now =
-      Date.now();
-
     const diff =
       Math.max(
         0,
-        now - date.getTime()
+        Date.now() - date.getTime()
       );
 
     const minutes =
@@ -204,6 +170,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return formatDate(dateValue);
   }
 
+
   function setLoading(
     element,
     text = "Loading..."
@@ -217,10 +184,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     `;
   }
 
-  function setError(
-    element,
-    text
-  ) {
+
+  function setError(element, text) {
     if (!element) return;
 
     element.innerHTML = `
@@ -229,6 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>
     `;
   }
+
 
   function showGlobalError(message) {
     if (usersTableEl) {
@@ -253,6 +219,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+
   /* ------------------------------------------------------------
      AUTH CHECK
      ------------------------------------------------------------ */
@@ -275,8 +242,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     return data?.user || null;
   }
 
+
   /* ------------------------------------------------------------
-     CURRENT ADMIN PROFILE
+     ADMIN PROFILE
      ------------------------------------------------------------ */
 
   async function loadAdminProfile(user) {
@@ -295,13 +263,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       "Authenticated user";
 
     if (userNameEl) {
-      userNameEl.textContent =
-        name;
+      userNameEl.textContent = name;
     }
 
     if (userEmailEl) {
-      userEmailEl.textContent =
-        email;
+      userEmailEl.textContent = email;
     }
 
     if (avatarEl) {
@@ -313,8 +279,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+
   /* ------------------------------------------------------------
-     LOAD PROFILES
+     LOAD USERS
+     
+     IMPORTANT:
+     profiles table does NOT have a "plan" column.
+     Therefore we only request columns that actually exist.
      ------------------------------------------------------------ */
 
   async function loadUsers() {
@@ -331,7 +302,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } = await supabase
       .from("profiles")
       .select(
-        "id, full_name, plan, created_at"
+        "id, full_name, created_at"
       )
       .order(
         "created_at",
@@ -345,6 +316,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         "VANTA AI profiles error:",
         error
       );
+
+      if (usersCountEl) {
+        usersCountEl.textContent = "—";
+      }
 
       setError(
         usersTableEl,
@@ -369,6 +344,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return users;
   }
 
+
   function renderUsers(users) {
     if (!usersTableEl) return;
 
@@ -389,6 +365,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     usersTableEl.innerHTML =
       users
         .map((user) => {
+
           const name =
             user.full_name ||
             "Unnamed user";
@@ -399,9 +376,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               user.id
             );
 
-          const plan =
-            user.plan ||
-            "Free";
+          /*
+           * Plan column does not currently exist
+           * in profiles, so admin UI displays
+           * the current default plan as Free.
+           */
+          const plan = "Free";
 
           return `
             <tr>
@@ -453,6 +433,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         .join("");
   }
 
+
   /* ------------------------------------------------------------
      LOAD PROJECTS
      ------------------------------------------------------------ */
@@ -479,8 +460,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       if (projectsCountEl) {
-        projectsCountEl.textContent =
-          "—";
+        projectsCountEl.textContent = "—";
       }
 
       return 0;
@@ -501,8 +481,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     return total;
   }
 
+
   /* ------------------------------------------------------------
-     LOAD GENERATIONS
+     LOAD AI GENERATIONS
      ------------------------------------------------------------ */
 
   async function loadGenerations() {
@@ -533,8 +514,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       if (generationsCountEl) {
-        generationsCountEl.textContent =
-          "—";
+        generationsCountEl.textContent = "—";
       }
 
       if (recentGenerationsEl) {
@@ -565,6 +545,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     return generations;
   }
+
 
   function renderRecentGenerations(
     generations
@@ -637,6 +618,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         .join("");
   }
 
+
   /* ------------------------------------------------------------
      ACTIVE TODAY
      ------------------------------------------------------------ */
@@ -670,8 +652,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       if (activeTodayEl) {
-        activeTodayEl.textContent =
-          "—";
+        activeTodayEl.textContent = "—";
       }
 
       return 0;
@@ -698,16 +679,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     return count;
   }
 
+
   /* ------------------------------------------------------------
-     CONTACT MESSAGES
+     LOAD CONTACT MESSAGES
      ------------------------------------------------------------ */
 
   async function loadContactMessages() {
-    /*
-      If the current admin.html does not yet contain
-      the contact messages container, don't break
-      the rest of the admin panel.
-    */
     if (!contactMessagesEl) {
       return [];
     }
@@ -738,15 +715,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         error
       );
 
+      if (contactCountEl) {
+        contactCountEl.textContent = "0 New";
+      }
+
       setError(
         contactMessagesEl,
         "Could not load contact messages."
       );
-
-      if (contactCountEl) {
-        contactCountEl.textContent =
-          "—";
-      }
 
       return [];
     }
@@ -756,7 +732,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         ? data
         : [];
 
-    const newMessages =
+    const newCount =
       messages.filter(
         (message) =>
           message.status === "new"
@@ -764,7 +740,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (contactCountEl) {
       contactCountEl.textContent =
-        newMessages;
+        `${newCount} New`;
     }
 
     renderContactMessages(
@@ -774,31 +750,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return messages;
   }
 
-  function getStatusClass(status) {
-    const normalized =
-      String(status || "new")
-        .toLowerCase();
-
-    if (
-      normalized === "read"
-    ) {
-      return "read";
-    }
-
-    if (
-      normalized === "replied"
-    ) {
-      return "replied";
-    }
-
-    if (
-      normalized === "closed"
-    ) {
-      return "closed";
-    }
-
-    return "new";
-  }
 
   function renderContactMessages(
     messages
@@ -825,9 +776,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             message.status ||
             "new";
 
-          const statusClass =
-            getStatusClass(status);
-
           const name =
             message.name ||
             "Unknown";
@@ -836,227 +784,190 @@ document.addEventListener("DOMContentLoaded", async () => {
             message.email ||
             "";
 
-          const inquiryType =
-            message.inquiry_type ||
-            "General inquiry";
-
           const subject =
             message.subject ||
             "No subject";
 
-          const messageText =
+          const inquiry =
+            message.inquiry_type ||
+            "general";
+
+          const body =
             message.message ||
             "";
 
-          const preview =
-            messageText.length > 180
-              ? `${messageText.slice(0, 180)}…`
-              : messageText;
+          const safeEmail =
+            encodeURIComponent(email);
 
           return `
-            <article
-              class="admin-contact-message"
-              data-message-id="${escapeHTML(message.id)}"
+            <div
+              class="admin-contact-item"
+              data-contact-id="${escapeHTML(message.id)}"
             >
 
-              <div class="admin-contact-top">
+              <div class="admin-contact-main">
 
-                <div class="admin-contact-person">
-
-                  <div class="admin-user-cell-avatar">
-                    ${escapeHTML(
-                      getInitials(
-                        name,
-                        email
-                      )
-                    )}
-                  </div>
+                <div class="admin-contact-top">
 
                   <div>
                     <strong>
                       ${escapeHTML(name)}
                     </strong>
 
-                    <a
-                      href="mailto:${encodeURIComponent(email)}"
-                      class="admin-contact-email"
-                    >
+                    <span>
                       ${escapeHTML(email)}
-                    </a>
+                    </span>
                   </div>
 
+                  <span class="admin-contact-time">
+                    ${escapeHTML(
+                      formatTimeAgo(
+                        message.created_at
+                      )
+                    )}
+                  </span>
+
                 </div>
 
-                <div class="admin-contact-date">
-                  ${escapeHTML(
-                    formatDateTime(
-                      message.created_at
-                    )
-                  )}
+
+                <div class="admin-contact-subject">
+                  ${escapeHTML(subject)}
+                </div>
+
+
+                <div class="admin-contact-type">
+                  ${escapeHTML(inquiry)}
+                </div>
+
+
+                <p class="admin-contact-message">
+                  ${escapeHTML(body)}
+                </p>
+
+
+                <div class="admin-contact-actions">
+
+                  <a
+                    href="mailto:${safeEmail}"
+                    class="admin-contact-reply"
+                  >
+                    Reply
+                  </a>
+
+                  <select
+                    class="admin-contact-status"
+                    data-id="${escapeHTML(message.id)}"
+                    aria-label="Contact message status"
+                  >
+
+                    <option
+                      value="new"
+                      ${status === "new" ? "selected" : ""}
+                    >
+                      New
+                    </option>
+
+                    <option
+                      value="read"
+                      ${status === "read" ? "selected" : ""}
+                    >
+                      Read
+                    </option>
+
+                    <option
+                      value="replied"
+                      ${status === "replied" ? "selected" : ""}
+                    >
+                      Replied
+                    </option>
+
+                    <option
+                      value="closed"
+                      ${status === "closed" ? "selected" : ""}
+                    >
+                      Closed
+                    </option>
+
+                  </select>
+
                 </div>
 
               </div>
 
-              <div class="admin-contact-meta">
-
-                <span class="admin-badge free">
-                  ${escapeHTML(inquiryType)}
-                </span>
-
-                <span class="admin-contact-status ${escapeHTML(statusClass)}">
-                  ${escapeHTML(status)}
-                </span>
-
-              </div>
-
-              <h3 class="admin-contact-subject">
-                ${escapeHTML(subject)}
-              </h3>
-
-              <p class="admin-contact-preview">
-                ${escapeHTML(preview)}
-              </p>
-
-              <div class="admin-contact-actions">
-
-                <a
-                  href="mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(
-                    `Re: ${subject}`
-                  )}"
-                  class="admin-contact-reply"
-                >
-                  Reply
-                </a>
-
-                <select
-                  class="admin-contact-status-select"
-                  data-contact-status
-                  data-id="${escapeHTML(message.id)}"
-                  aria-label="Change message status"
-                >
-                  <option
-                    value="new"
-                    ${status === "new" ? "selected" : ""}
-                  >
-                    New
-                  </option>
-
-                  <option
-                    value="read"
-                    ${status === "read" ? "selected" : ""}
-                  >
-                    Read
-                  </option>
-
-                  <option
-                    value="replied"
-                    ${status === "replied" ? "selected" : ""}
-                  >
-                    Replied
-                  </option>
-
-                  <option
-                    value="closed"
-                    ${status === "closed" ? "selected" : ""}
-                  >
-                    Closed
-                  </option>
-
-                </select>
-
-              </div>
-
-            </article>
+            </div>
           `;
         })
         .join("");
 
-    bindContactStatusEvents();
+
+    contactMessagesEl
+      .querySelectorAll(
+        ".admin-contact-status"
+      )
+      .forEach((select) => {
+
+        select.addEventListener(
+          "change",
+          async (event) => {
+
+            const id =
+              event.target.dataset.id;
+
+            const newStatus =
+              event.target.value;
+
+            await updateContactStatus(
+              id,
+              newStatus
+            );
+
+          }
+        );
+
+      });
   }
 
+
   /* ------------------------------------------------------------
-     CONTACT STATUS UPDATE
+     UPDATE CONTACT STATUS
      ------------------------------------------------------------ */
 
-  function bindContactStatusEvents() {
-    if (!contactMessagesEl) {
+  async function updateContactStatus(
+    id,
+    status
+  ) {
+    if (!id || !status) {
       return;
     }
 
-    const selects =
-      contactMessagesEl.querySelectorAll(
-        "[data-contact-status]"
+    const {
+      error
+    } = await supabase
+      .from("contact_messages")
+      .update({
+        status
+      })
+      .eq(
+        "id",
+        id
       );
 
-    selects.forEach((select) => {
-
-      select.addEventListener(
-        "change",
-        async () => {
-
-          const messageId =
-            select.dataset.id;
-
-          const newStatus =
-            select.value;
-
-          if (!messageId) {
-            return;
-          }
-
-          const originalValue =
-            select.dataset.previousValue ||
-            newStatus;
-
-          select.dataset.previousValue =
-            newStatus;
-
-          select.disabled =
-            true;
-
-          try {
-
-            const {
-              error
-            } = await supabase
-              .from("contact_messages")
-              .update({
-                status: newStatus
-              })
-              .eq(
-                "id",
-                messageId
-              );
-
-            if (error) {
-              throw error;
-            }
-
-            await loadContactMessages();
-
-          } catch (error) {
-
-            console.error(
-              "VANTA AI contact status update error:",
-              error
-            );
-
-            alert(
-              "Could not update message status. Please try again."
-            );
-
-            select.value =
-              originalValue;
-
-          } finally {
-
-            select.disabled =
-              false;
-          }
-        }
+    if (error) {
+      console.error(
+        "VANTA AI contact status error:",
+        error
       );
-    });
+
+      alert(
+        "Could not update message status."
+      );
+
+      return;
+    }
+
+    await loadContactMessages();
   }
+
 
   /* ------------------------------------------------------------
      LOAD EVERYTHING
@@ -1066,11 +977,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
 
       if (refreshBtn) {
-        refreshBtn.disabled =
-          true;
-
-        refreshBtn.style.opacity =
-          "0.65";
+        refreshBtn.disabled = true;
+        refreshBtn.style.opacity = "0.65";
       }
 
       await Promise.all([
@@ -1095,14 +1003,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     } finally {
 
       if (refreshBtn) {
-        refreshBtn.disabled =
-          false;
-
-        refreshBtn.style.opacity =
-          "1";
+        refreshBtn.disabled = false;
+        refreshBtn.style.opacity = "1";
       }
+
     }
   }
+
 
   /* ------------------------------------------------------------
      LOGOUT
@@ -1112,13 +1019,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
 
       if (logoutBtn) {
-        logoutBtn.disabled =
-          true;
+        logoutBtn.disabled = true;
       }
 
       if (logoutFooterBtn) {
-        logoutFooterBtn.disabled =
-          true;
+        logoutFooterBtn.disabled = true;
       }
 
       const {
@@ -1144,16 +1049,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       if (logoutBtn) {
-        logoutBtn.disabled =
-          false;
+        logoutBtn.disabled = false;
       }
 
       if (logoutFooterBtn) {
-        logoutFooterBtn.disabled =
-          false;
+        logoutFooterBtn.disabled = false;
       }
     }
   }
+
 
   /* ------------------------------------------------------------
      EVENTS
@@ -1169,12 +1073,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
   }
 
+
   if (refreshBtn) {
     refreshBtn.addEventListener(
       "click",
       loadAdminData
     );
   }
+
 
   if (logoutBtn) {
     logoutBtn.addEventListener(
@@ -1183,12 +1089,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
   }
 
+
   if (logoutFooterBtn) {
     logoutFooterBtn.addEventListener(
       "click",
       logout
     );
   }
+
 
   /* ------------------------------------------------------------
      AUTH STATE
@@ -1207,6 +1115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
   );
+
 
   /* ------------------------------------------------------------
      INITIALIZE
@@ -1227,6 +1136,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   await loadAdminData();
+
 
   /* ------------------------------------------------------------
      BRAND CONSOLE

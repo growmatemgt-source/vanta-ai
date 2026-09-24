@@ -40,6 +40,8 @@
       padding: 32px 0 60px;
     }
 
+    /* TOP BAR */
+
     .admin-topbar {
       display: flex;
       align-items: center;
@@ -122,6 +124,8 @@
       font-weight: 700;
     }
 
+    /* HEADING */
+
     .admin-heading {
       margin-bottom: 26px;
     }
@@ -185,6 +189,8 @@
       box-shadow: 0 0 12px rgba(34, 211, 238, 0.9);
     }
 
+    /* STATS */
+
     .admin-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -240,6 +246,8 @@
       font-size: 11px;
     }
 
+    /* MAIN CONTENT */
+
     .admin-content {
       display: grid;
       grid-template-columns: minmax(0, 1.45fr) minmax(320px, .75fr);
@@ -280,6 +288,8 @@
       color: #687289;
       font-size: 12px;
     }
+
+    /* USERS TABLE */
 
     .admin-table-wrap {
       width: 100%;
@@ -352,6 +362,8 @@
       font-size: 11px;
     }
 
+    /* BADGES */
+
     .admin-badge {
       display: inline-flex;
       align-items: center;
@@ -380,6 +392,8 @@
       color: #687289;
       font-size: 13px;
     }
+
+    /* RIGHT SIDE */
 
     .admin-side {
       display: grid;
@@ -434,6 +448,8 @@
       font-size: 10px;
     }
 
+    /* QUICK ACTIONS */
+
     .admin-action-list {
       display: grid;
       gap: 10px;
@@ -476,6 +492,191 @@
       font-size: 12px;
     }
 
+    /* CONTACT MESSAGES */
+
+    .admin-contact-section {
+      margin-top: 20px;
+    }
+
+    .admin-contact-card {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.035),
+          rgba(255,255,255,.012)
+        );
+      box-shadow: 0 18px 60px rgba(0,0,0,.18);
+    }
+
+    .admin-contact-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .admin-contact-message {
+      padding: 22px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      transition: background .2s ease;
+    }
+
+    .admin-contact-message:hover {
+      background: rgba(124,92,255,.025);
+    }
+
+    .admin-contact-message:first-child {
+      border-top: 0;
+    }
+
+    .admin-contact-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .admin-contact-person {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .admin-contact-person strong {
+      display: block;
+      color: #F5F7FF;
+      font-size: 13px;
+    }
+
+    .admin-contact-email {
+      display: block;
+      margin-top: 3px;
+      color: #8992A8;
+      font-size: 11px;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .admin-contact-email:hover {
+      color: #22D3EE;
+    }
+
+    .admin-contact-date {
+      flex-shrink: 0;
+      color: #687289;
+      font-size: 10px;
+    }
+
+    .admin-contact-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    .admin-contact-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    .admin-contact-status.new {
+      color: #9BEAF5;
+      background: rgba(34,211,238,.08);
+      border: 1px solid rgba(34,211,238,.15);
+    }
+
+    .admin-contact-status.read {
+      color: #BFB5FF;
+      background: rgba(124,92,255,.08);
+      border: 1px solid rgba(124,92,255,.15);
+    }
+
+    .admin-contact-status.replied {
+      color: #A8E6B0;
+      background: rgba(90,200,110,.08);
+      border: 1px solid rgba(90,200,110,.15);
+    }
+
+    .admin-contact-status.closed {
+      color: #8992A8;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .admin-contact-subject {
+      margin: 15px 0 0;
+      color: #F5F7FF;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .admin-contact-preview {
+      max-width: 900px;
+      margin: 8px 0 0;
+      color: #8992A8;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .admin-contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .admin-contact-reply {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 13px;
+      border-radius: 10px;
+      background: rgba(124,92,255,.1);
+      border: 1px solid rgba(124,92,255,.18);
+      color: #C7C0FF;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: .2s ease;
+    }
+
+    .admin-contact-reply:hover {
+      background: rgba(124,92,255,.18);
+      border-color: rgba(124,92,255,.32);
+    }
+
+    .admin-contact-status-select {
+      min-width: 120px;
+      padding: 9px 11px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      outline: none;
+      background: #0D1220;
+      color: #B7BED0;
+      font: inherit;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .admin-contact-status-select:focus {
+      border-color: rgba(124,92,255,.45);
+    }
+
+    .admin-contact-status-select:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    /* NOTICE */
+
     .admin-notice {
       padding: 18px 22px;
       color: #8992A8;
@@ -486,6 +687,8 @@
     .admin-notice strong {
       color: #BFB5FF;
     }
+
+    /* FOOTER */
 
     .admin-footer {
       display: flex;
@@ -509,6 +712,8 @@
       color: #F5F7FF;
     }
 
+    /* STATES */
+
     .admin-loading {
       padding: 35px 22px;
       color: #8992A8;
@@ -522,6 +727,8 @@
       font-size: 13px;
       text-align: center;
     }
+
+    /* RESPONSIVE */
 
     @media (max-width: 1050px) {
       .admin-grid {
@@ -567,6 +774,19 @@
         padding: 18px;
       }
 
+      .admin-contact-message {
+        padding: 18px;
+      }
+
+      .admin-contact-top {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .admin-contact-actions {
+        flex-wrap: wrap;
+      }
+
       .admin-footer {
         flex-direction: column;
       }
@@ -579,6 +799,10 @@
 
       .admin-brand span {
         display: none;
+      }
+
+      .admin-contact-status-select {
+        flex: 1;
       }
     }
   </style>
@@ -612,8 +836,13 @@
         <div class="admin-user">
 
           <div class="admin-user-info">
-            <strong id="adminUserName">Administrator</strong>
-            <span id="adminUserEmail">Loading...</span>
+            <strong id="adminUserName">
+              Administrator
+            </strong>
+
+            <span id="adminUserEmail">
+              Loading...
+            </span>
           </div>
 
           <div
@@ -644,7 +873,8 @@
 
         <p>
           Monitor VANTA AI accounts, projects, generations,
-          and platform activity from one centralized workspace.
+          contact requests, and platform activity from one
+          centralized workspace.
         </p>
 
         <div class="admin-status">
@@ -662,6 +892,7 @@
       <section class="admin-grid">
 
         <article class="admin-stat">
+
           <div class="admin-stat-label">
             Total Users
           </div>
@@ -676,10 +907,12 @@
           <div class="admin-stat-meta">
             Registered accounts
           </div>
+
         </article>
 
 
         <article class="admin-stat">
+
           <div class="admin-stat-label">
             Total Projects
           </div>
@@ -694,10 +927,12 @@
           <div class="admin-stat-meta">
             User-created projects
           </div>
+
         </article>
 
 
         <article class="admin-stat">
+
           <div class="admin-stat-label">
             AI Generations
           </div>
@@ -712,10 +947,12 @@
           <div class="admin-stat-meta">
             Requests recorded
           </div>
+
         </article>
 
 
         <article class="admin-stat">
+
           <div class="admin-stat-label">
             Active Today
           </div>
@@ -730,13 +967,14 @@
           <div class="admin-stat-meta">
             Accounts with activity
           </div>
+
         </article>
 
       </section>
 
 
       <!-- ========================================================
-           CONTENT
+           MAIN CONTENT
            ======================================================== -->
 
       <section class="admin-content">
@@ -748,6 +986,7 @@
           <div class="admin-card-header">
 
             <div>
+
               <div class="admin-card-title">
                 Registered users
               </div>
@@ -755,31 +994,39 @@
               <div class="admin-card-subtitle">
                 Accounts currently stored in VANTA AI.
               </div>
+
             </div>
 
           </div>
+
 
           <div class="admin-table-wrap">
 
             <table class="admin-table">
 
               <thead>
+
                 <tr>
                   <th>User</th>
                   <th>Plan</th>
                   <th>Joined</th>
                   <th>Status</th>
                 </tr>
+
               </thead>
 
               <tbody id="adminUsersTable">
 
                 <tr>
+
                   <td colspan="4">
+
                     <div class="admin-loading">
                       Loading users...
                     </div>
+
                   </td>
+
                 </tr>
 
               </tbody>
@@ -803,6 +1050,7 @@
             <div class="admin-card-header">
 
               <div>
+
                 <div class="admin-card-title">
                   Recent generations
                 </div>
@@ -810,9 +1058,11 @@
                 <div class="admin-card-subtitle">
                   Latest AI activity.
                 </div>
+
               </div>
 
             </div>
+
 
             <div
               class="admin-list"
@@ -835,6 +1085,7 @@
             <div class="admin-card-header">
 
               <div>
+
                 <div class="admin-card-title">
                   Quick actions
                 </div>
@@ -842,9 +1093,11 @@
                 <div class="admin-card-subtitle">
                   Navigate through the platform.
                 </div>
+
               </div>
 
             </div>
+
 
             <div class="admin-action-list">
 
@@ -853,26 +1106,43 @@
                 id="openDashboard"
                 type="button"
               >
-                <strong>Open dashboard</strong>
-                <span>→</span>
+                <strong>
+                  Open dashboard
+                </strong>
+
+                <span>
+                  →
+                </span>
               </button>
+
 
               <button
                 class="admin-action"
                 id="refreshAdmin"
                 type="button"
               >
-                <strong>Refresh data</strong>
-                <span>↻</span>
+                <strong>
+                  Refresh data
+                </strong>
+
+                <span>
+                  ↻
+                </span>
               </button>
+
 
               <button
                 class="admin-action"
                 id="adminLogout"
                 type="button"
               >
-                <strong>Sign out</strong>
-                <span>↗</span>
+                <strong>
+                  Sign out
+                </strong>
+
+                <span>
+                  ↗
+                </span>
               </button>
 
             </div>
@@ -885,16 +1155,74 @@
           <article class="admin-card">
 
             <div class="admin-notice">
-              <strong>Security:</strong>
+
+              <strong>
+                Security:
+              </strong>
+
               This administration interface is intended
               for authorized users only. Database access is
               controlled through Supabase authentication
               and Row Level Security.
+
             </div>
 
           </article>
 
         </div>
+
+      </section>
+
+
+      <!-- ========================================================
+           CONTACT MESSAGES
+           ======================================================== -->
+
+      <section class="admin-contact-section">
+
+        <article class="admin-contact-card">
+
+          <div class="admin-card-header">
+
+            <div>
+
+              <div class="admin-card-title">
+                Contact messages
+              </div>
+
+              <div class="admin-card-subtitle">
+                Business inquiries and automation requests
+                submitted through the VANTA AI website.
+              </div>
+
+            </div>
+
+
+            <span
+              class="admin-badge active"
+            >
+              <span>●</span>
+              <span id="adminContactCount">
+                —
+              </span>
+              New
+            </span>
+
+          </div>
+
+
+          <div
+            class="admin-contact-list"
+            id="adminContactMessages"
+          >
+
+            <div class="admin-loading">
+              Loading contact messages...
+            </div>
+
+          </div>
+
+        </article>
 
       </section>
 

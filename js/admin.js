@@ -18,6 +18,91 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* ------------------------------------------------------------
+     ADMIN SECURITY
+     ------------------------------------------------------------ */
+
+  const VANTA_ADMIN_EMAIL =
+    "growmatemgt@gmail.com";
+
+
+  function isAdmin(user) {
+    if (!user?.email) {
+      return false;
+    }
+
+    return (
+      user.email.toLowerCase() ===
+      VANTA_ADMIN_EMAIL.toLowerCase()
+    );
+  }
+
+
+  function denyAdminAccess() {
+    document.body.innerHTML = `
+      <div style="
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#070A12;
+        color:#F5F7FF;
+        font-family:Arial,sans-serif;
+        text-align:center;
+        padding:24px;
+      ">
+
+        <div>
+
+          <div style="
+            font-size:48px;
+            margin-bottom:18px;
+          ">
+            🔒
+          </div>
+
+          <h1 style="
+            margin:0 0 10px;
+            font-size:28px;
+          ">
+            Access Denied
+          </h1>
+
+          <p style="
+            margin:0 0 24px;
+            color:#8992A8;
+            line-height:1.6;
+          ">
+            You do not have permission to access
+            the VANTA AI Admin Panel.
+          </p>
+
+          <a
+            href="dashboard.html"
+            style="
+              display:inline-block;
+              padding:12px 20px;
+              border-radius:10px;
+              background:#7C5CFF;
+              color:#fff;
+              text-decoration:none;
+              font-weight:700;
+            "
+          >
+            Back to Dashboard
+          </a>
+
+        </div>
+
+      </div>
+    `;
+
+    throw new Error(
+      "VANTA AI: Admin access denied."
+    );
+  }
+
+
+  /* ------------------------------------------------------------
      DOM
      ------------------------------------------------------------ */
 
@@ -46,7 +131,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("adminUsersTable");
 
   const recentGenerationsEl =
-    document.getElementById("adminRecentGenerations");
+    document.getElementById(
+      "adminRecentGenerations"
+    );
 
   const openDashboardBtn =
     document.getElementById("openDashboard");
@@ -58,13 +145,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("adminLogout");
 
   const logoutFooterBtn =
-    document.getElementById("adminLogoutFooter");
+    document.getElementById(
+      "adminLogoutFooter"
+    );
 
   const contactCountEl =
-    document.getElementById("adminContactCount");
+    document.getElementById(
+      "adminContactCount"
+    );
 
   const contactMessagesEl =
-    document.getElementById("adminContactMessages");
+    document.getElementById(
+      "adminContactMessages"
+    );
 
 
   /* ------------------------------------------------------------
@@ -83,10 +176,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function getInitials(name, email) {
     const source =
-      String(name || email || "A").trim();
+      String(
+        name ||
+        email ||
+        "A"
+      ).trim();
 
     const parts =
-      source.split(/\s+/).filter(Boolean);
+      source
+        .split(/\s+/)
+        .filter(Boolean);
 
     if (parts.length >= 2) {
       return (
@@ -109,7 +208,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const date =
       new Date(dateValue);
 
-    if (Number.isNaN(date.getTime())) {
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
       return "—";
     }
 
@@ -132,18 +235,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     const date =
       new Date(dateValue);
 
-    if (Number.isNaN(date.getTime())) {
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
       return "Unknown time";
     }
 
     const diff =
       Math.max(
         0,
-        Date.now() - date.getTime()
+        Date.now() -
+        date.getTime()
       );
 
     const minutes =
-      Math.floor(diff / 60000);
+      Math.floor(
+        diff / 60000
+      );
 
     if (minutes < 1) {
       return "Just now";
@@ -154,20 +264,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const hours =
-      Math.floor(minutes / 60);
+      Math.floor(
+        minutes / 60
+      );
 
     if (hours < 24) {
       return `${hours}h ago`;
     }
 
     const days =
-      Math.floor(hours / 24);
+      Math.floor(
+        hours / 24
+      );
 
     if (days < 7) {
       return `${days}d ago`;
     }
 
-    return formatDate(dateValue);
+    return formatDate(
+      dateValue
+    );
   }
 
 
@@ -175,7 +291,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     element,
     text = "Loading..."
   ) {
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     element.innerHTML = `
       <div class="admin-loading">
@@ -185,8 +303,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
 
-  function setError(element, text) {
-    if (!element) return;
+  function setError(
+    element,
+    text
+  ) {
+    if (!element) {
+      return;
+    }
 
     element.innerHTML = `
       <div class="admin-error">
@@ -196,17 +319,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
 
-  function showGlobalError(message) {
+  function showGlobalError(
+    message
+  ) {
     if (usersTableEl) {
-      setError(usersTableEl, message);
+      setError(
+        usersTableEl,
+        message
+      );
     }
 
     if (recentGenerationsEl) {
-      setError(recentGenerationsEl, message);
+      setError(
+        recentGenerationsEl,
+        message
+      );
     }
 
     if (contactMessagesEl) {
-      setError(contactMessagesEl, message);
+      setError(
+        contactMessagesEl,
+        message
+      );
     }
   }
 
@@ -219,7 +353,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const {
       data,
       error
-    } = await supabase.auth.getUser();
+    } =
+      await supabase.auth.getUser();
 
     if (error) {
       console.error(
@@ -238,8 +373,12 @@ document.addEventListener("DOMContentLoaded", async () => {
      ADMIN PROFILE
      ------------------------------------------------------------ */
 
-  async function loadAdminProfile(user) {
-    if (!user) return;
+  async function loadAdminProfile(
+    user
+  ) {
+    if (!user) {
+      return;
+    }
 
     const metadata =
       user.user_metadata || {};
@@ -254,11 +393,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       "Authenticated user";
 
     if (userNameEl) {
-      userNameEl.textContent = name;
+      userNameEl.textContent =
+        name;
     }
 
     if (userEmailEl) {
-      userEmailEl.textContent = email;
+      userEmailEl.textContent =
+        email;
     }
 
     if (avatarEl) {
@@ -274,12 +415,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* ------------------------------------------------------------
      LOAD USERS
      
-     Emails are loaded securely from the
-     admin-users Edge Function.
+     Emails come securely from
+     the admin-users Edge Function.
      ------------------------------------------------------------ */
 
   async function loadUsers() {
-    if (!usersTableEl) return [];
+    if (!usersTableEl) {
+      return [];
+    }
 
     setLoading(
       usersTableEl,
@@ -291,9 +434,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       const {
         data,
         error
-      } = await supabase.functions.invoke(
-        "admin-users"
-      );
+      } =
+        await supabase.functions.invoke(
+          "admin-users"
+        );
 
       if (error) {
         throw error;
@@ -306,7 +450,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       const users =
-        Array.isArray(data?.users)
+        Array.isArray(
+          data?.users
+        )
           ? data.users
           : [];
 
@@ -315,7 +461,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           users.length;
       }
 
-      renderUsers(users);
+      renderUsers(
+        users
+      );
 
       return users;
 
@@ -327,7 +475,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       if (usersCountEl) {
-        usersCountEl.textContent = "—";
+        usersCountEl.textContent =
+          "—";
       }
 
       setError(
@@ -340,17 +489,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
 
-  function renderUsers(users) {
-    if (!usersTableEl) return;
+  function renderUsers(
+    users
+  ) {
+    if (!usersTableEl) {
+      return;
+    }
 
     if (!users.length) {
+
       usersTableEl.innerHTML = `
         <tr>
+
           <td colspan="5">
+
             <div class="admin-empty">
               No registered users found.
             </div>
+
           </td>
+
         </tr>
       `;
 
@@ -387,40 +545,64 @@ document.addEventListener("DOMContentLoaded", async () => {
             <tr>
 
               <td>
+
                 <div class="admin-user-cell">
 
-                  <div class="admin-user-cell-avatar">
-                    ${escapeHTML(initials)}
+                  <div
+                    class="admin-user-cell-avatar"
+                  >
+                    ${escapeHTML(
+                      initials
+                    )}
                   </div>
 
                   <div>
+
                     <strong>
-                      ${escapeHTML(name)}
+                      ${escapeHTML(
+                        name
+                      )}
                     </strong>
 
                     <span>
-                      ${escapeHTML(email)}
+                      ${escapeHTML(
+                        email
+                      )}
                     </span>
+
                   </div>
 
                 </div>
+
               </td>
 
 
               <td>
+
                 <span
                   class="admin-user-email"
-                  title="${escapeHTML(email)}"
+                  title="${escapeHTML(
+                    email
+                  )}"
                 >
-                  ${escapeHTML(email)}
+                  ${escapeHTML(
+                    email
+                  )}
                 </span>
+
               </td>
 
 
               <td>
-                <span class="admin-badge free">
-                  ${escapeHTML(plan)}
+
+                <span
+                  class="admin-badge free"
+                >
+                  ${escapeHTML(
+                    plan
+                  )}
                 </span>
+
               </td>
 
 
@@ -434,10 +616,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
               <td>
-                <span class="admin-badge active">
-                  <span>●</span>
-                  ${escapeHTML(status)}
+
+                <span
+                  class="admin-badge active"
+                >
+
+                  <span>
+                    ●
+                  </span>
+
+                  ${escapeHTML(
+                    status
+                  )}
+
                 </span>
+
               </td>
 
             </tr>
@@ -452,28 +645,32 @@ document.addEventListener("DOMContentLoaded", async () => {
      ------------------------------------------------------------ */
 
   async function loadProjects() {
+
     const {
       data,
       error,
       count
-    } = await supabase
-      .from("projects")
-      .select(
-        "id",
-        {
-          count: "exact",
-          head: true
-        }
-      );
+    } =
+      await supabase
+        .from("projects")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        );
 
     if (error) {
+
       console.error(
         "VANTA AI projects error:",
         error
       );
 
       if (projectsCountEl) {
-        projectsCountEl.textContent = "—";
+        projectsCountEl.textContent =
+          "—";
       }
 
       return 0;
@@ -500,34 +697,38 @@ document.addEventListener("DOMContentLoaded", async () => {
      ------------------------------------------------------------ */
 
   async function loadGenerations() {
+
     const {
       data,
       error,
       count
-    } = await supabase
-      .from("ai_generations")
-      .select(
-        "id, user_id, prompt, response, model, status, created_at",
-        {
-          count: "exact"
-        }
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      )
-      .limit(20);
+    } =
+      await supabase
+        .from("ai_generations")
+        .select(
+          "id, user_id, prompt, response, model, status, created_at",
+          {
+            count: "exact"
+          }
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        )
+        .limit(20);
 
     if (error) {
+
       console.error(
         "VANTA AI generations error:",
         error
       );
 
       if (generationsCountEl) {
-        generationsCountEl.textContent = "—";
+        generationsCountEl.textContent =
+          "—";
       }
 
       if (recentGenerationsEl) {
@@ -546,6 +747,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         : [];
 
     if (generationsCountEl) {
+
       generationsCountEl.textContent =
         typeof count === "number"
           ? count
@@ -563,11 +765,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderRecentGenerations(
     generations
   ) {
+
     if (!recentGenerationsEl) {
       return;
     }
 
     if (!generations.length) {
+
       recentGenerationsEl.innerHTML = `
         <div class="admin-empty">
           No AI generations yet.
@@ -588,7 +792,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           const preview =
             prompt.length > 65
-              ? `${prompt.slice(0, 65)}…`
+              ? `${prompt.slice(
+                  0,
+                  65
+                )}…`
               : prompt;
 
           const status =
@@ -596,31 +803,47 @@ document.addEventListener("DOMContentLoaded", async () => {
             "completed";
 
           return `
-            <div class="admin-list-item">
+            <div
+              class="admin-list-item"
+            >
 
-              <div class="admin-list-icon">
+              <div
+                class="admin-list-icon"
+              >
                 ✦
               </div>
 
-              <div class="admin-list-text">
+              <div
+                class="admin-list-text"
+              >
 
                 <strong>
-                  ${escapeHTML(preview)}
+                  ${escapeHTML(
+                    preview
+                  )}
                 </strong>
 
                 <span>
+
                   ${escapeHTML(
                     generation.model ||
                     "VANTA AI"
                   )}
+
                   ·
+
                   ${escapeHTML(
                     formatTimeAgo(
                       generation.created_at
                     )
                   )}
+
                   ·
-                  ${escapeHTML(status)}
+
+                  ${escapeHTML(
+                    status
+                  )}
+
                 </span>
 
               </div>
@@ -637,6 +860,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      ------------------------------------------------------------ */
 
   async function loadActiveToday() {
+
     const start =
       new Date();
 
@@ -650,22 +874,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     const {
       data,
       error
-    } = await supabase
-      .from("ai_generations")
-      .select("user_id")
-      .gte(
-        "created_at",
-        start.toISOString()
-      );
+    } =
+      await supabase
+        .from("ai_generations")
+        .select(
+          "user_id"
+        )
+        .gte(
+          "created_at",
+          start.toISOString()
+        );
 
     if (error) {
+
       console.error(
         "VANTA AI active users error:",
         error
       );
 
       if (activeTodayEl) {
-        activeTodayEl.textContent = "—";
+        activeTodayEl.textContent =
+          "—";
       }
 
       return 0;
@@ -698,6 +927,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      ------------------------------------------------------------ */
 
   async function loadContactMessages() {
+
     if (!contactMessagesEl) {
       return [];
     }
@@ -710,19 +940,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const {
       data,
       error
-    } = await supabase
-      .from("contact_messages")
-      .select(
-        "id, name, email, inquiry_type, subject, message, status, created_at, updated_at"
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      );
+    } =
+      await supabase
+        .from("contact_messages")
+        .select(
+          "id, name, email, inquiry_type, subject, message, status, created_at, updated_at"
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
 
     if (error) {
+
       console.error(
         "VANTA AI contact messages error:",
         error
@@ -749,7 +981,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const newCount =
       messages.filter(
         (message) =>
-          message.status === "new"
+          message.status ===
+          "new"
       ).length;
 
     if (contactCountEl) {
@@ -768,11 +1001,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderContactMessages(
     messages
   ) {
+
     if (!contactMessagesEl) {
       return;
     }
 
     if (!messages.length) {
+
       contactMessagesEl.innerHTML = `
         <div class="admin-empty">
           No contact messages yet.
@@ -811,29 +1046,45 @@ document.addEventListener("DOMContentLoaded", async () => {
             "";
 
           const safeEmail =
-            encodeURIComponent(email);
+            encodeURIComponent(
+              email
+            );
 
           return `
             <div
               class="admin-contact-item"
-              data-contact-id="${escapeHTML(message.id)}"
+              data-contact-id="${escapeHTML(
+                message.id
+              )}"
             >
 
-              <div class="admin-contact-main">
+              <div
+                class="admin-contact-main"
+              >
 
-                <div class="admin-contact-top">
+                <div
+                  class="admin-contact-top"
+                >
 
                   <div>
+
                     <strong>
-                      ${escapeHTML(name)}
+                      ${escapeHTML(
+                        name
+                      )}
                     </strong>
 
                     <span>
-                      ${escapeHTML(email)}
+                      ${escapeHTML(
+                        email
+                      )}
                     </span>
+
                   </div>
 
-                  <span class="admin-contact-time">
+                  <span
+                    class="admin-contact-time"
+                  >
                     ${escapeHTML(
                       formatTimeAgo(
                         message.created_at
@@ -844,22 +1095,36 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
 
 
-                <div class="admin-contact-subject">
-                  ${escapeHTML(subject)}
+                <div
+                  class="admin-contact-subject"
+                >
+                  ${escapeHTML(
+                    subject
+                  )}
                 </div>
 
 
-                <div class="admin-contact-type">
-                  ${escapeHTML(inquiry)}
+                <div
+                  class="admin-contact-type"
+                >
+                  ${escapeHTML(
+                    inquiry
+                  )}
                 </div>
 
 
-                <p class="admin-contact-message">
-                  ${escapeHTML(body)}
+                <p
+                  class="admin-contact-message"
+                >
+                  ${escapeHTML(
+                    body
+                  )}
                 </p>
 
 
-                <div class="admin-contact-actions">
+                <div
+                  class="admin-contact-actions"
+                >
 
                   <a
                     href="mailto:${safeEmail}"
@@ -868,36 +1133,59 @@ document.addEventListener("DOMContentLoaded", async () => {
                     Reply
                   </a>
 
+
                   <select
                     class="admin-contact-status"
-                    data-id="${escapeHTML(message.id)}"
+                    data-id="${escapeHTML(
+                      message.id
+                    )}"
                     aria-label="Contact message status"
                   >
 
                     <option
                       value="new"
-                      ${status === "new" ? "selected" : ""}
+                      ${
+                        status ===
+                        "new"
+                          ? "selected"
+                          : ""
+                      }
                     >
                       New
                     </option>
 
                     <option
                       value="read"
-                      ${status === "read" ? "selected" : ""}
+                      ${
+                        status ===
+                        "read"
+                          ? "selected"
+                          : ""
+                      }
                     >
                       Read
                     </option>
 
                     <option
                       value="replied"
-                      ${status === "replied" ? "selected" : ""}
+                      ${
+                        status ===
+                        "replied"
+                          ? "selected"
+                          : ""
+                      }
                     >
                       Replied
                     </option>
 
                     <option
                       value="closed"
-                      ${status === "closed" ? "selected" : ""}
+                      ${
+                        status ===
+                        "closed"
+                          ? "selected"
+                          : ""
+                      }
                     >
                       Closed
                     </option>
@@ -918,27 +1206,30 @@ document.addEventListener("DOMContentLoaded", async () => {
       .querySelectorAll(
         ".admin-contact-status"
       )
-      .forEach((select) => {
+      .forEach(
+        (select) => {
 
-        select.addEventListener(
-          "change",
-          async (event) => {
+          select.addEventListener(
+            "change",
+            async (event) => {
 
-            const id =
-              event.target.dataset.id;
+              const id =
+                event.target
+                  .dataset.id;
 
-            const newStatus =
-              event.target.value;
+              const newStatus =
+                event.target.value;
 
-            await updateContactStatus(
-              id,
-              newStatus
-            );
+              await updateContactStatus(
+                id,
+                newStatus
+              );
 
-          }
-        );
+            }
+          );
 
-      });
+        }
+      );
   }
 
 
@@ -950,23 +1241,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     id,
     status
   ) {
-    if (!id || !status) {
+
+    if (
+      !id ||
+      !status
+    ) {
       return;
     }
 
     const {
       error
-    } = await supabase
-      .from("contact_messages")
-      .update({
-        status
-      })
-      .eq(
-        "id",
-        id
-      );
+    } =
+      await supabase
+        .from(
+          "contact_messages"
+        )
+        .update({
+          status
+        })
+        .eq(
+          "id",
+          id
+        );
 
     if (error) {
+
       console.error(
         "VANTA AI contact status error:",
         error
@@ -988,11 +1287,15 @@ document.addEventListener("DOMContentLoaded", async () => {
      ------------------------------------------------------------ */
 
   async function loadAdminData() {
+
     try {
 
       if (refreshBtn) {
-        refreshBtn.disabled = true;
-        refreshBtn.style.opacity = "0.65";
+        refreshBtn.disabled =
+          true;
+
+        refreshBtn.style.opacity =
+          "0.65";
       }
 
       await Promise.all([
@@ -1017,8 +1320,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     } finally {
 
       if (refreshBtn) {
-        refreshBtn.disabled = false;
-        refreshBtn.style.opacity = "1";
+        refreshBtn.disabled =
+          false;
+
+        refreshBtn.style.opacity =
+          "1";
       }
 
     }
@@ -1030,19 +1336,23 @@ document.addEventListener("DOMContentLoaded", async () => {
      ------------------------------------------------------------ */
 
   async function logout() {
+
     try {
 
       if (logoutBtn) {
-        logoutBtn.disabled = true;
+        logoutBtn.disabled =
+          true;
       }
 
       if (logoutFooterBtn) {
-        logoutFooterBtn.disabled = true;
+        logoutFooterBtn.disabled =
+          true;
       }
 
       const {
         error
-      } = await supabase.auth.signOut();
+      } =
+        await supabase.auth.signOut();
 
       if (error) {
         throw error;
@@ -1063,11 +1373,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       if (logoutBtn) {
-        logoutBtn.disabled = false;
+        logoutBtn.disabled =
+          false;
       }
 
       if (logoutFooterBtn) {
-        logoutFooterBtn.disabled = false;
+        logoutFooterBtn.disabled =
+          false;
       }
     }
   }
@@ -1078,37 +1390,47 @@ document.addEventListener("DOMContentLoaded", async () => {
      ------------------------------------------------------------ */
 
   if (openDashboardBtn) {
+
     openDashboardBtn.addEventListener(
       "click",
       () => {
+
         window.location.href =
           "dashboard.html";
+
       }
     );
+
   }
 
 
   if (refreshBtn) {
+
     refreshBtn.addEventListener(
       "click",
       loadAdminData
     );
+
   }
 
 
   if (logoutBtn) {
+
     logoutBtn.addEventListener(
       "click",
       logout
     );
+
   }
 
 
   if (logoutFooterBtn) {
+
     logoutFooterBtn.addEventListener(
       "click",
       logout
     );
+
   }
 
 
@@ -1120,11 +1442,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     (event, session) => {
 
       if (
-        event === "SIGNED_OUT" ||
+        event ===
+          "SIGNED_OUT" ||
         !session?.user
       ) {
+
         window.location.href =
           "login.html";
+
       }
 
     }
@@ -1138,16 +1463,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   const currentUser =
     await getCurrentUser();
 
+
   if (!currentUser) {
+
     window.location.href =
       "login.html";
 
     return;
   }
 
+
+  /* ------------------------------------------------------------
+     VERIFY ADMIN
+     ------------------------------------------------------------ */
+
+  if (
+    !isAdmin(
+      currentUser
+    )
+  ) {
+
+    denyAdminAccess();
+
+    return;
+  }
+
+
   await loadAdminProfile(
     currentUser
   );
+
 
   await loadAdminData();
 

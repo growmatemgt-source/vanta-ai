@@ -41,11 +41,22 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       background: var(--v-bg);
       color: var(--v-text);
       font-family: "DM Sans", sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
     }
 
     .contact-page {
@@ -265,6 +276,7 @@
     .contact-detail a {
       color: #aeb7cb;
       text-decoration: none;
+      transition: color 0.2s ease;
     }
 
     .contact-detail a:hover {
@@ -362,6 +374,11 @@
       cursor: pointer;
     }
 
+    .form-group select option {
+      background: #0d1220;
+      color: #f5f7ff;
+    }
+
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
@@ -393,11 +410,13 @@
       box-shadow: 0 12px 30px rgba(124, 92, 255, 0.17);
       transition:
         transform 0.2s ease,
-        opacity 0.2s ease;
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .form-submit:hover {
       transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(124, 92, 255, 0.24);
     }
 
     .form-submit:disabled {
@@ -476,6 +495,16 @@
       border: 1px solid var(--v-border);
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.02);
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .support-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124, 92, 255, 0.25);
+      background: rgba(124, 92, 255, 0.035);
     }
 
     .support-card-icon {
@@ -562,11 +591,22 @@
       text-decoration: none;
       font-weight: 700;
       box-shadow: 0 12px 30px rgba(124, 92, 255, 0.18);
-      transition: transform 0.2s ease;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .cta-button:hover {
       transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(124, 92, 255, 0.24);
+    }
+
+    /* =========================================================
+       MOBILE NAV FALLBACK
+       ========================================================= */
+
+    .mobile-nav {
+      display: none;
     }
 
     /* =========================================================
@@ -580,6 +620,25 @@
 
       .support-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .site-nav,
+      .header-actions {
+        display: none !important;
+      }
+
+      .mobile-menu-btn {
+        display: flex !important;
+      }
+
+      .mobile-nav {
+        display: none;
+      }
+
+      body.menu-open .mobile-nav {
+        display: block;
       }
     }
 
@@ -639,7 +698,7 @@
           <a href="index.html">Home</a>
           <a href="about.html">About</a>
           <a href="solutions.html">Solutions</a>
-          <a href="workflow.html">Workflow</a>
+          <a href="workflows.html">Workflow</a>
           <a href="pricing.html">Pricing</a>
           <a href="contact.html" class="active">Contact</a>
 
@@ -672,7 +731,6 @@
       </div>
 
     </header>
-
 
     <!-- =======================================================
          MAIN
@@ -707,7 +765,6 @@
         </div>
 
       </section>
-
 
       <!-- CONTACT -->
 
@@ -758,7 +815,6 @@
 
                 </div>
 
-
                 <div class="contact-detail">
 
                   <div class="detail-icon">
@@ -779,7 +835,6 @@
                   </div>
 
                 </div>
-
 
                 <div class="contact-detail">
 
@@ -806,7 +861,6 @@
 
             </aside>
 
-
             <!-- FORM -->
 
             <div class="contact-form-card">
@@ -828,7 +882,6 @@
 
               </div>
 
-
               <form
                 class="contact-form"
                 id="contactForm"
@@ -849,11 +902,11 @@
                       name="name"
                       placeholder="Your name"
                       autocomplete="name"
+                      maxlength="100"
                       required
                     />
 
                   </div>
-
 
                   <div class="form-group">
 
@@ -867,13 +920,13 @@
                       name="email"
                       placeholder="you@example.com"
                       autocomplete="email"
+                      maxlength="160"
                       required
                     />
 
                   </div>
 
                 </div>
-
 
                 <div class="form-group">
 
@@ -915,7 +968,6 @@
 
                 </div>
 
-
                 <div class="form-group">
 
                   <label for="contactSubject">
@@ -927,11 +979,11 @@
                     id="contactSubject"
                     name="subject"
                     placeholder="What is this about?"
+                    maxlength="180"
                     required
                   />
 
                 </div>
-
 
                 <div class="form-group">
 
@@ -943,18 +995,18 @@
                     id="contactMessage"
                     name="message"
                     placeholder="Tell us more about your request..."
+                    maxlength="5000"
                     required
                   ></textarea>
 
                 </div>
 
-
                 <div
                   class="form-status"
                   id="formStatus"
                   role="status"
+                  aria-live="polite"
                 ></div>
-
 
                 <button
                   type="submit"
@@ -965,8 +1017,8 @@
                 </button>
 
                 <p class="form-note">
-                  By sending this message, you agree to
-                  communicate with VANTA AI regarding your request.
+                  Your message will be securely submitted to
+                  VANTA AI for review.
                 </p>
 
               </form>
@@ -978,7 +1030,6 @@
         </div>
 
       </section>
-
 
       <!-- SUPPORT -->
 
@@ -1003,7 +1054,6 @@
 
           </div>
 
-
           <div class="support-grid">
 
             <article class="support-card">
@@ -1023,7 +1073,6 @@
 
             </article>
 
-
             <article class="support-card">
 
               <div class="support-card-icon">
@@ -1040,7 +1089,6 @@
               </p>
 
             </article>
-
 
             <article class="support-card">
 
@@ -1064,7 +1112,6 @@
         </div>
 
       </section>
-
 
       <!-- CTA -->
 
@@ -1098,7 +1145,6 @@
 
     </main>
 
-
     <!-- =======================================================
          FOOTER
          ======================================================= -->
@@ -1125,14 +1171,13 @@
 
             <a href="about.html">About</a>
             <a href="solutions.html">Solutions</a>
-            <a href="workflow.html">Workflow</a>
+            <a href="workflows.html">Workflow</a>
             <a href="pricing.html">Pricing</a>
             <a href="contact.html">Contact</a>
 
           </div>
 
         </div>
-
 
         <div class="footer-bottom">
 
@@ -1153,32 +1198,46 @@
 
   </div>
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <!-- VANTA configuration -->
+  <script src="js/config.js"></script>
+
+  <!-- Main site JavaScript -->
   <script src="js/main.js"></script>
 
+  <!-- Contact page JavaScript -->
   <script>
-    /* =========================================================
-       CONTACT PAGE
-       ========================================================= */
-
     document.addEventListener("DOMContentLoaded", () => {
 
-      const form =
-        document.getElementById("contactForm");
+      const form = document.getElementById("contactForm");
+      const status = document.getElementById("formStatus");
+      const submitButton = document.getElementById("formSubmit");
 
-      const status =
-        document.getElementById("formStatus");
+      if (!form || !status || !submitButton) {
+        return;
+      }
 
-      const submitButton =
-        document.getElementById("formSubmit");
+      const supabaseClient = window.vantaSupabase;
 
+      function showStatus(message, isError = false) {
+        status.textContent = message;
+        status.classList.remove("show", "error");
 
-      if (!form) return;
+        if (isError) {
+          status.classList.add("show", "error");
+        } else {
+          status.classList.add("show");
+        }
+      }
 
-
-      form.addEventListener("submit", (event) => {
+      form.addEventListener("submit", async (event) => {
 
         event.preventDefault();
+
+        status.classList.remove("show", "error");
+        status.textContent = "";
 
         const name =
           document.getElementById("contactName").value.trim();
@@ -1195,74 +1254,123 @@
         const message =
           document.getElementById("contactMessage").value.trim();
 
-
-        status.classList.remove("show", "error");
-        status.textContent = "";
-
+        /* ---------------------------------------------
+           VALIDATION
+           --------------------------------------------- */
 
         if (!name || !email || !type || !subject || !message) {
 
-          status.textContent =
-            "Please complete all required fields.";
-
-          status.classList.add("show", "error");
+          showStatus(
+            "Please complete all required fields.",
+            true
+          );
 
           return;
         }
-
 
         const emailPattern =
           /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
         if (!emailPattern.test(email)) {
 
-          status.textContent =
-            "Please enter a valid email address.";
-
-          status.classList.add("show", "error");
+          showStatus(
+            "Please enter a valid email address.",
+            true
+          );
 
           return;
         }
 
+        if (name.length < 2) {
+
+          showStatus(
+            "Please enter your full name.",
+            true
+          );
+
+          return;
+        }
+
+        if (message.length < 10) {
+
+          showStatus(
+            "Please provide a little more detail in your message.",
+            true
+          );
+
+          return;
+        }
+
+        /* ---------------------------------------------
+           SUPABASE CHECK
+           --------------------------------------------- */
+
+        if (!supabaseClient) {
+
+          showStatus(
+            "VANTA connection is unavailable. Please refresh the page and try again.",
+            true
+          );
+
+          return;
+        }
+
+        /* ---------------------------------------------
+           SUBMIT
+           --------------------------------------------- */
 
         submitButton.disabled = true;
-        submitButton.textContent = "Opening Email...";
+        submitButton.textContent = "Sending...";
 
+        try {
 
-        const body =
-`Name: ${name}
+          const { error } = await supabaseClient
+            .from("contact_messages")
+            .insert({
+              name,
+              email,
+              inquiry_type: type,
+              subject,
+              message
+            });
 
-Email: ${email}
+          if (error) {
+            console.error(
+              "VANTA contact submission error:",
+              error
+            );
 
-Inquiry Type: ${type}
+            throw error;
+          }
 
-Message:
-${message}`;
+          showStatus(
+            "Message sent successfully. Your request has been received."
+          );
 
+          form.reset();
 
-        const mailto =
-          "mailto:hello@vantaai.com" +
-          "?subject=" +
-          encodeURIComponent(subject) +
-          "&body=" +
-          encodeURIComponent(body);
+          submitButton.textContent = "Message Sent";
 
+          setTimeout(() => {
+            submitButton.disabled = false;
+            submitButton.textContent = "Send Message";
+          }, 2500);
 
-        window.location.href = mailto;
+        } catch (error) {
 
+          console.error(
+            "VANTA contact form error:",
+            error
+          );
 
-        setTimeout(() => {
-
-          status.textContent =
-            "Your email app should open with the message ready to send.";
-
-          status.classList.add("show");
+          showStatus(
+            "We couldn't send your message right now. Please try again in a moment.",
+            true
+          );
 
           submitButton.disabled = false;
           submitButton.textContent = "Send Message";
-
-        }, 700);
+        }
 
       });
 

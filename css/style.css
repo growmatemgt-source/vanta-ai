@@ -3075,3 +3075,133 @@ section {
   }
 
 }
+/* ============================================================
+   VANTA AI — ABOUT PAGE HEADER FIX
+   ============================================================ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5, 7, 13, 0.72);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.site-header .about-container {
+  width: min(1180px, calc(100% - 40px));
+  height: 78px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header .logo {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -1px;
+  color: #f5f7ff;
+}
+
+.site-header .logo span {
+  color: #7c5cff;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.site-nav a {
+  color: #aeb6ca;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  transition: .25s ease;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  color: #ffffff;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-login {
+  color: #b7bfd2;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.header-cta {
+  padding: 10px 17px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7c5cff, #5f8cff);
+  color: #ffffff;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(124,92,255,.22);
+  transition: .25s ease;
+}
+
+.header-cta:hover {
+  transform: translateY(-2px);
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+
+  .site-nav,
+  .header-actions {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 10px;
+    background: rgba(255,255,255,.03);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .mobile-menu-btn span {
+    width: 18px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .site-header .about-container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .site-header .logo {
+    font-size: 18px;
+  }
+}

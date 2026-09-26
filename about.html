@@ -6,19 +6,37 @@
 
   <title>About — VANTA AI</title>
 
+  <!-- VANTA FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
+
     :root {
       --bg: #05070d;
       --bg-soft: #0b1020;
       --card: #0d1424;
       --card-2: #11182b;
+
       --text: #f5f7ff;
       --muted: #8995b3;
+
       --line: rgba(255,255,255,.09);
+
       --violet: #7c5cff;
       --cyan: #21d4fd;
       --blue: #5f8cff;
     }
+
+
+    /* ============================================================
+       RESET
+       ============================================================ */
 
     * {
       margin: 0;
@@ -26,539 +44,1184 @@
       box-sizing: border-box;
     }
 
+
     html {
       scroll-behavior: smooth;
     }
 
+
     body {
       background:
-        radial-gradient(circle at 50% 0%, rgba(124,92,255,.16), transparent 34%),
-        radial-gradient(circle at 0% 60%, rgba(33,212,253,.07), transparent 30%),
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(124,92,255,.14),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 0% 60%,
+          rgba(33,212,253,.06),
+          transparent 30%
+        ),
         var(--bg);
+
       color: var(--text);
-      font-family: Inter, Arial, sans-serif;
+
+      font-family: "DM Sans", sans-serif;
+
       line-height: 1.6;
+
       overflow-x: hidden;
     }
+
 
     a {
       color: inherit;
       text-decoration: none;
     }
 
-    /* ================= HEADER ================= */
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
 
     .header {
       position: sticky;
+
       top: 0;
+
       z-index: 100;
+
       height: 76px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(5,7,13,.78);
-      backdrop-filter: blur(18px);
+
+      border-bottom:
+        1px solid var(--line);
+
+      background:
+        rgba(5,7,13,.78);
+
+      backdrop-filter:
+        blur(18px);
     }
 
+
     .nav {
-      max-width: 1240px;
+      width:
+        min(1180px, calc(100% - 40px));
+
       height: 100%;
+
       margin: auto;
-      padding: 0 28px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
     }
 
+
+    /* ============================================================
+       LOGO
+       ============================================================ */
+
     .logo {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -.7px;
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size: 20px;
+
+      font-weight: 700;
+
+      letter-spacing: -1px;
+
+      color: #ffffff;
     }
 
+
     .logo span {
-      color: var(--cyan);
+      color:
+        var(--violet);
     }
+
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
 
     .nav-links {
       display: flex;
+
       align-items: center;
+
       gap: 28px;
     }
 
+
     .nav-links a {
       color: #aeb8d0;
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
       font-size: 14px;
-      font-weight: 600;
-      transition: .25s;
+
+      font-weight: 400;
+
+      transition:
+        color .25s ease;
     }
+
 
     .nav-links a:hover,
     .nav-links a.active {
-      color: white;
+      color: #ffffff;
     }
+
+
+    /* ============================================================
+       HEADER BUTTONS
+       ============================================================ */
 
     .nav-actions {
       display: flex;
-      gap: 10px;
+
       align-items: center;
+
+      gap: 10px;
     }
+
 
     .btn-small {
-      padding: 10px 17px;
+      padding:
+        10px 17px;
+
+      border:
+        1px solid var(--line);
+
       border-radius: 10px;
-      border: 1px solid var(--line);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
       font-size: 13px;
-      font-weight: 700;
-      transition: .25s;
+
+      font-weight: 600;
+
+      transition:
+        .25s ease;
     }
+
 
     .btn-small:hover {
-      border-color: rgba(124,92,255,.6);
-      transform: translateY(-1px);
+      border-color:
+        rgba(124,92,255,.6);
+
+      transform:
+        translateY(-1px);
     }
+
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--violet), var(--blue));
       border: none;
-      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--violet),
+          var(--blue)
+        );
+
+      box-shadow:
+        0 10px 30px
+        rgba(124,92,255,.22);
     }
 
-    /* ================= HERO ================= */
+
+    /* ============================================================
+       HERO
+       ============================================================ */
 
     .hero {
       min-height: 650px;
-      max-width: 1200px;
+
+      width:
+        min(1200px, calc(100% - 40px));
+
       margin: auto;
-      padding: 130px 28px 100px;
+
+      padding:
+        130px 20px 100px;
+
       text-align: center;
+
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
     }
+
+
+    /* ============================================================
+       EYEBROW
+       ============================================================ */
 
     .eyebrow {
       display: inline-flex;
+
       align-items: center;
+
       gap: 9px;
-      padding: 10px 17px;
+
+      padding:
+        9px 16px;
+
+      border:
+        1px solid
+        rgba(124,92,255,.38);
+
       border-radius: 999px;
-      border: 1px solid rgba(124,92,255,.45);
-      background: rgba(124,92,255,.08);
-      color: #c7bbff;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+
+      background:
+        rgba(124,92,255,.07);
+
+      color:
+        #bdb2ff;
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size: 11px;
+
+      font-weight: 600;
+
+      letter-spacing: 1.4px;
+
+      text-transform:
+        uppercase;
     }
+
 
     .dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+
+      height: 6px;
+
       border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 14px var(--cyan);
+
+      background:
+        var(--cyan);
+
+      box-shadow:
+        0 0 12px
+        var(--cyan);
     }
+
+
+    /* ============================================================
+       HERO HEADING
+       ============================================================ */
 
     .hero h1 {
-      max-width: 1000px;
-      margin-top: 35px;
-      font-size: clamp(54px, 8vw, 104px);
-      line-height: .98;
-      letter-spacing: -5px;
-      font-weight: 900;
+      max-width: 950px;
+
+      margin-top: 34px;
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        clamp(52px, 7.5vw, 96px);
+
+      line-height:
+        1.02;
+
+      letter-spacing:
+        -4px;
+
+      font-weight:
+        600;
     }
+
 
     .gradient-text {
-      background: linear-gradient(
-        100deg,
-        #fff 5%,
-        #bbaaff 48%,
-        #58dfff 100%
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      background:
+        linear-gradient(
+          100deg,
+          #ffffff 5%,
+          #b9aaff 48%,
+          #55dcff 100%
+        );
+
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
+
+      color:
+        transparent;
     }
 
+
+    /* ============================================================
+       HERO TEXT
+       ============================================================ */
+
     .hero p {
-      max-width: 760px;
-      margin-top: 32px;
-      color: var(--muted);
-      font-size: 18px;
+      max-width: 700px;
+
+      margin-top: 28px;
+
+      color:
+        var(--muted);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size: 17px;
+
+      font-weight: 400;
+
       line-height: 1.8;
     }
 
-    /* ================= MAIN ================= */
+
+    /* ============================================================
+       GENERAL SECTION
+       ============================================================ */
 
     .section {
-      border-top: 1px solid var(--line);
-      padding: 110px 28px;
+      border-top:
+        1px solid var(--line);
+
+      padding:
+        110px 20px;
     }
 
+
     .container {
-      max-width: 1160px;
+      width:
+        min(1160px, 100%);
+
       margin: auto;
     }
 
+
     .section-grid {
       display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 90px;
-      align-items: center;
+
+      grid-template-columns:
+        .9fr 1.1fr;
+
+      gap: 80px;
+
+      align-items:
+        center;
     }
 
-    /* ================= VISUAL ================= */
+
+    /* ============================================================
+       VISUAL CARD
+       ============================================================ */
 
     .visual-card {
-      min-height: 470px;
-      border: 1px solid var(--line);
-      border-radius: 28px;
+      min-height: 450px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 26px;
+
       background:
-        radial-gradient(circle at 50% 45%, rgba(124,92,255,.22), transparent 35%),
-        linear-gradient(145deg, #10162a, #080c16);
+        radial-gradient(
+          circle at 50% 45%,
+          rgba(124,92,255,.20),
+          transparent 35%
+        ),
+        linear-gradient(
+          145deg,
+          #10162a,
+          #080c16
+        );
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       position: relative;
+
       overflow: hidden;
     }
 
+
     .orb {
-      width: 190px;
-      height: 190px;
+      width: 180px;
+
+      height: 180px;
+
       border-radius: 50%;
+
       background:
-        radial-gradient(circle at 30% 25%, #e6ddff, #8c6cff 28%, #39208f 62%, #0d0926);
+        radial-gradient(
+          circle at 30% 25%,
+          #e6ddff,
+          #8c6cff 28%,
+          #39208f 62%,
+          #0d0926
+        );
+
       box-shadow:
-        0 0 45px rgba(124,92,255,.5),
-        0 0 100px rgba(33,212,253,.13);
-      position: relative;
+        0 0 45px
+        rgba(124,92,255,.45),
+
+        0 0 100px
+        rgba(33,212,253,.12);
+
+      position:
+        relative;
     }
+
 
     .orb::before,
     .orb::after {
       content: "";
+
       position: absolute;
-      inset: -35px;
-      border: 1px solid rgba(124,92,255,.4);
+
+      inset: -34px;
+
+      border:
+        1px solid
+        rgba(124,92,255,.35);
+
       border-radius: 50%;
     }
 
+
     .orb::after {
-      inset: -65px;
-      border-color: rgba(33,212,253,.18);
+      inset: -62px;
+
+      border-color:
+        rgba(33,212,253,.16);
     }
+
 
     .visual-label {
       position: absolute;
-      bottom: 22px;
-      left: 22px;
-      padding: 7px 10px;
+
+      bottom: 20px;
+
+      left: 20px;
+
+      padding:
+        6px 10px;
+
+      border:
+        1px solid var(--line);
+
       border-radius: 7px;
-      background: rgba(0,0,0,.35);
-      border: 1px solid var(--line);
-      color: #aeb8d0;
+
+      background:
+        rgba(0,0,0,.30);
+
+      color:
+        #8995b3;
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
       font-size: 9px;
+
+      font-weight: 500;
+
       letter-spacing: .8px;
-      text-transform: uppercase;
+
+      text-transform:
+        uppercase;
     }
 
-    /* ================= TEXT ================= */
+
+    /* ============================================================
+       CONTENT
+       ============================================================ */
 
     .section-label {
-      color: var(--cyan);
+      color:
+        var(--cyan);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
       font-size: 10px;
-      font-weight: 900;
+
+      font-weight: 600;
+
       letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 15px;
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        15px;
     }
+
 
     .content h2 {
-      font-size: clamp(36px, 5vw, 58px);
-      line-height: 1.05;
-      letter-spacing: -2.5px;
-      margin-bottom: 25px;
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        clamp(36px, 5vw, 56px);
+
+      line-height:
+        1.08;
+
+      letter-spacing:
+        -2.5px;
+
+      font-weight:
+        600;
+
+      margin-bottom:
+        25px;
     }
+
 
     .content p {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.85;
-      margin-bottom: 18px;
+      color:
+        var(--muted);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size:
+        15px;
+
+      font-weight:
+        400;
+
+      line-height:
+        1.85;
+
+      margin-bottom:
+        18px;
     }
 
-    /* ================= PRINCIPLES ================= */
+
+    /* ============================================================
+       PRINCIPLES
+       ============================================================ */
 
     .principles {
-      background: linear-gradient(
-        180deg,
-        #090e1a,
-        #070a12
-      );
+      background:
+        linear-gradient(
+          180deg,
+          #090e1a,
+          #070a12
+        );
     }
+
 
     .section-heading {
-      max-width: 700px;
-      margin-bottom: 55px;
+      max-width:
+        700px;
+
+      margin-bottom:
+        50px;
     }
+
 
     .section-heading h2 {
-      font-size: clamp(38px, 5vw, 62px);
-      line-height: 1.05;
-      letter-spacing: -2.5px;
-      margin-bottom: 18px;
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        clamp(38px, 5vw, 60px);
+
+      line-height:
+        1.06;
+
+      letter-spacing:
+        -2.5px;
+
+      font-weight:
+        600;
+
+      margin-bottom:
+        18px;
     }
 
+
     .section-heading p {
-      color: var(--muted);
-      max-width: 620px;
+      max-width:
+        620px;
+
+      color:
+        var(--muted);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size:
+        15px;
+
+      font-weight:
+        400;
+
+      line-height:
+        1.8;
     }
+
 
     .principle-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap:
+        18px;
     }
+
 
     .principle {
-      padding: 30px;
-      min-height: 220px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(14,20,36,.75);
-      transition: .3s;
+      min-height:
+        220px;
+
+      padding:
+        30px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius:
+        18px;
+
+      background:
+        rgba(14,20,36,.72);
+
+      transition:
+        .3s ease;
     }
+
 
     .principle:hover {
-      transform: translateY(-5px);
-      border-color: rgba(124,92,255,.45);
-      background: #11182a;
+      transform:
+        translateY(-5px);
+
+      border-color:
+        rgba(124,92,255,.40);
+
+      background:
+        #11182a;
     }
+
 
     .number {
-      color: var(--cyan);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      margin-bottom: 25px;
+      color:
+        var(--cyan);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size:
+        10px;
+
+      font-weight:
+        600;
+
+      letter-spacing:
+        2px;
+
+      margin-bottom:
+        25px;
     }
+
 
     .principle h3 {
-      font-size: 19px;
-      margin-bottom: 12px;
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        19px;
+
+      font-weight:
+        600;
+
+      margin-bottom:
+        12px;
     }
+
 
     .principle p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
+      color:
+        var(--muted);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size:
+        13px;
+
+      font-weight:
+        400;
+
+      line-height:
+        1.7;
     }
 
-    /* ================= CTA ================= */
+
+    /* ============================================================
+       CTA
+       ============================================================ */
 
     .cta {
-      padding: 100px 28px;
+      padding:
+        100px 20px;
     }
+
 
     .cta-box {
-      max-width: 1160px;
-      margin: auto;
-      padding: 75px 60px;
-      border: 1px solid rgba(124,92,255,.25);
-      border-radius: 28px;
+      width:
+        min(1160px, 100%);
+
+      margin:
+        auto;
+
+      padding:
+        75px 50px;
+
+      border:
+        1px solid
+        rgba(124,92,255,.23);
+
+      border-radius:
+        28px;
+
       background:
-        radial-gradient(circle at 85% 20%, rgba(124,92,255,.2), transparent 30%),
-        radial-gradient(circle at 10% 90%, rgba(33,212,253,.08), transparent 30%),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(124,92,255,.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 10% 90%,
+          rgba(33,212,253,.07),
+          transparent 30%
+        ),
         #0c1120;
-      text-align: center;
+
+      text-align:
+        center;
     }
+
 
     .cta-box h2 {
-      font-size: clamp(38px, 5vw, 65px);
-      line-height: 1.05;
-      letter-spacing: -3px;
-      margin-bottom: 20px;
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        clamp(38px, 5vw, 62px);
+
+      line-height:
+        1.06;
+
+      letter-spacing:
+        -3px;
+
+      font-weight:
+        600;
+
+      margin-bottom:
+        20px;
     }
+
 
     .cta-box p {
-      max-width: 650px;
-      margin: auto;
-      color: var(--muted);
+      max-width:
+        650px;
+
+      margin:
+        auto;
+
+      color:
+        var(--muted);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size:
+        15px;
+
+      font-weight:
+        400;
+
+      line-height:
+        1.8;
     }
+
 
     .cta-btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 14px 24px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--violet), var(--blue));
-      font-weight: 800;
-      box-shadow: 0 15px 35px rgba(124,92,255,.25);
-      transition: .25s;
+      display:
+        inline-block;
+
+      margin-top:
+        30px;
+
+      padding:
+        13px 23px;
+
+      border-radius:
+        11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--violet),
+          var(--blue)
+        );
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size:
+        13px;
+
+      font-weight:
+        600;
+
+      box-shadow:
+        0 15px 35px
+        rgba(124,92,255,.22);
+
+      transition:
+        .25s ease;
     }
+
 
     .cta-btn:hover {
-      transform: translateY(-3px);
+      transform:
+        translateY(-3px);
     }
 
-    /* ================= FOOTER ================= */
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
 
     footer {
-      border-top: 1px solid var(--line);
-      padding: 30px 28px;
+      border-top:
+        1px solid var(--line);
+
+      padding:
+        30px 20px;
     }
+
 
     .footer-inner {
-      max-width: 1160px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      color: #68738e;
-      font-size: 12px;
+      width:
+        min(1160px, 100%);
+
+      margin:
+        auto;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      color:
+        #68738e;
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size:
+        12px;
+
+      font-weight:
+        400;
     }
 
-    /* ================= RESPONSIVE ================= */
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
 
     @media (max-width: 850px) {
 
       .nav-links {
-        display: none;
+        display:
+          none;
       }
+
 
       .section-grid {
-        grid-template-columns: 1fr;
-        gap: 45px;
+        grid-template-columns:
+          1fr;
+
+        gap:
+          45px;
       }
+
 
       .principle-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+          1fr;
       }
+
 
       .visual-card {
-        min-height: 360px;
+        min-height:
+          360px;
       }
+
 
       .hero h1 {
-        letter-spacing: -3px;
+        letter-spacing:
+          -3px;
       }
 
+
       .cta-box {
-        padding: 55px 25px;
+        padding:
+          55px 25px;
       }
     }
+
 
     @media (max-width: 560px) {
 
       .nav {
-        padding: 0 18px;
+        width:
+          calc(100% - 28px);
       }
+
 
       .nav-actions .login-btn {
-        display: none;
+        display:
+          none;
       }
+
 
       .hero {
-        padding: 100px 20px 80px;
-        min-height: 570px;
+        padding:
+          100px 15px 80px;
+
+        min-height:
+          570px;
       }
+
 
       .hero h1 {
-        font-size: 48px;
+        font-size:
+          48px;
+
+        letter-spacing:
+          -2px;
       }
+
 
       .hero p {
-        font-size: 15px;
+        font-size:
+          15px;
       }
 
+
       .section {
-        padding: 75px 20px;
+        padding:
+          75px 15px;
       }
+
 
       .content h2,
       .section-heading h2 {
-        font-size: 40px;
+        font-size:
+          40px;
+
+        letter-spacing:
+          -1.8px;
       }
 
+
       .footer-inner {
-        flex-direction: column;
+        flex-direction:
+          column;
       }
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- HEADER -->
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+
   <header class="header">
+
     <nav class="nav">
 
-      <a href="index.html" class="logo">
+      <a
+        href="index.html"
+        class="logo"
+      >
         VANTA<span>AI</span>
       </a>
 
+
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html" class="active">About</a>
-        <a href="solutions.html">Solutions</a>
-        <a href="workflow.html">Workflow</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="contact.html">Contact</a>
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a
+          href="about.html"
+          class="active"
+        >
+          About
+        </a>
+
+        <a href="solutions.html">
+          Solutions
+        </a>
+
+        <a href="workflow.html">
+          Workflow
+        </a>
+
+        <a href="pricing.html">
+          Pricing
+        </a>
+
+        <a href="contact.html">
+          Contact
+        </a>
+
       </div>
 
+
       <div class="nav-actions">
-        <a href="login.html" class="btn-small login-btn">
+
+        <a
+          href="login.html"
+          class="btn-small login-btn"
+        >
           Login
         </a>
 
-        <a href="login.html" class="btn-small btn-primary">
+
+        <a
+          href="login.html"
+          class="btn-small btn-primary"
+        >
           Get Started
         </a>
+
       </div>
 
     </nav>
+
   </header>
 
 
-  <!-- HERO -->
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+
   <main>
+
+
+    <!-- ==========================================================
+         HERO
+         ========================================================== -->
 
     <section class="hero">
 
       <div class="eyebrow">
+
         <span class="dot"></span>
+
         About VANTA AI
+
       </div>
 
+
       <h1>
+
         Intelligence built for
+
         <span class="gradient-text">
           real work.
         </span>
+
       </h1>
 
+
       <p>
+
         VANTA AI is an intelligent workspace designed to bring
         powerful AI capabilities into one focused, simple and
         professional environment.
+
       </p>
 
     </section>
 
 
-    <!-- WHY VANTA -->
+
+    <!-- ==========================================================
+         WHY VANTA
+         ========================================================== -->
+
     <section class="section">
 
       <div class="container section-grid">
 
+
         <div class="visual-card">
+
           <div class="orb"></div>
+
 
           <div class="visual-label">
             Human · Intelligence
           </div>
+
         </div>
+
 
 
         <div class="content">
@@ -567,27 +1230,39 @@
             Why VANTA
           </div>
 
+
           <h2>
+
             AI should feel like a workspace,
             not another complicated tool.
+
           </h2>
 
-          <p>
-            Modern AI is powerful, but using multiple disconnected
-            tools can quickly become overwhelming.
-          </p>
 
           <p>
+
+            Modern AI is powerful, but using multiple disconnected
+            tools can quickly become overwhelming.
+
+          </p>
+
+
+          <p>
+
             VANTA AI is designed around a different idea:
             bring useful intelligence into a focused environment
             where people can create, experiment and turn ideas
             into useful outcomes.
+
           </p>
 
+
           <p>
+
             The goal is not to replace human thinking.
             It is to make that thinking faster, clearer and
             more productive.
+
           </p>
 
         </div>
@@ -597,10 +1272,15 @@
     </section>
 
 
-    <!-- PRINCIPLES -->
+
+    <!-- ==========================================================
+         PRINCIPLES
+         ========================================================== -->
+
     <section class="section principles">
 
       <div class="container">
+
 
         <div class="section-heading">
 
@@ -608,61 +1288,94 @@
             Our Approach
           </div>
 
+
           <h2>
             Built around a few simple principles.
           </h2>
 
+
           <p>
+
             Every part of VANTA AI is intended to keep the
             experience focused, useful and easy to understand.
+
           </p>
 
         </div>
 
 
+
         <div class="principle-grid">
+
 
           <article class="principle">
 
-            <div class="number">01</div>
+            <div class="number">
+              01
+            </div>
 
-            <h3>Simplicity</h3>
+
+            <h3>
+              Simplicity
+            </h3>
+
 
             <p>
+
               Powerful technology should not require a
               complicated interface. VANTA keeps the experience
               clean and focused.
+
             </p>
 
           </article>
 
 
+
           <article class="principle">
 
-            <div class="number">02</div>
+            <div class="number">
+              02
+            </div>
 
-            <h3>Useful Intelligence</h3>
+
+            <h3>
+              Useful Intelligence
+            </h3>
+
 
             <p>
+
               AI should help users accomplish something meaningful —
               from generating ideas to accelerating everyday work.
+
             </p>
 
           </article>
+
 
 
           <article class="principle">
 
-            <div class="number">03</div>
+            <div class="number">
+              03
+            </div>
 
-            <h3>Human Control</h3>
+
+            <h3>
+              Human Control
+            </h3>
+
 
             <p>
+
               The person remains in control. AI provides assistance,
               while decisions and creativity stay with the user.
+
             </p>
 
           </article>
+
 
         </div>
 
@@ -671,7 +1384,11 @@
     </section>
 
 
-    <!-- CTA -->
+
+    <!-- ==========================================================
+         CTA
+         ========================================================== -->
+
     <section class="cta">
 
       <div class="cta-box">
@@ -680,19 +1397,30 @@
           VANTA AI
         </div>
 
+
         <h2>
+
           Make advanced AI feel
+
           <span class="gradient-text">
             accessible.
           </span>
+
         </h2>
 
+
         <p>
+
           Explore the VANTA AI workspace and turn ideas into
           practical results through a focused AI experience.
+
         </p>
 
-        <a href="login.html" class="cta-btn">
+
+        <a
+          href="login.html"
+          class="cta-btn"
+        >
           Enter VANTA AI
         </a>
 
@@ -703,7 +1431,11 @@
   </main>
 
 
-  <!-- FOOTER -->
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+
   <footer>
 
     <div class="footer-inner">
@@ -712,6 +1444,7 @@
         © 2026 VANTA AI. All rights reserved.
       </div>
 
+
       <div>
         Intelligent workspace for real work.
       </div>
@@ -719,6 +1452,7 @@
     </div>
 
   </footer>
+
 
 </body>
 </html>
